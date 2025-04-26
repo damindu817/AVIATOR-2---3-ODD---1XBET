@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Xtreme Aviator Predictor - Final Fixed</title>
+  <title>Xtreme Aviator Predictor - Final Fixed (Corrected)</title>
   <style>
     body {
       background-color: #000;
@@ -135,73 +135,86 @@
   <footer>POWERED BY XTREME PREDICTOR © 2025</footer>
 
 <script>
-  let signals = [];
-  let currentIndex = -1;
-  let loadingStartTime = null;
+let signals = [];
+let currentIndex = 0;
+let currentPhase = "waiting"; // waiting | showing | loading
 
-  async function fetchSignals() {
-    try {
-      const res = await fetch('signals.json');
-      signals = await res.json();
-    } catch (err) {
-      console.error("Failed to load signals:", err);
-    }
+async function fetchSignals() {
+  try {
+    const res = await fetch('signals.json');
+    signals = await res.json();
+  } catch (err) {
+    console.error("Failed to load signals:", err);
+  }
+}
+
+function updateLiveClock() {
+  const now = new Date();
+  const optionsDate = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+  const optionsTime = { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true };
+
+  document.getElementById("liveTime").textContent = now.toLocaleTimeString('en-US', optionsTime);
+  document.getElementById("liveDate").textContent = now.toLocaleDateString('en-US', optionsDate);
+}
+
+function updateSignalDisplay() {
+  const now = new Date();
+
+  if (currentIndex >= signals.length) {
+    document.getElementById("signalTime").textContent = "Signal Complete";
+    document.getElementById("signalTime").classList.add("signal-complete");
+    document.getElementById("oddValue").textContent = "ODD - --×";
+    return;
   }
 
-  function updateLiveClock() {
-    const now = new Date();
-    const optionsDate = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-    const optionsTime = { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true };
+  const signal = signals[currentIndex];
+  const signalTime = new Date(`${signal.date}T${signal.time}`);
+  const startShowTime = new Date(signalTime.getTime() - 30000);
+  const endShowTime = new Date(signalTime.getTime() + 60000);
 
-    document.getElementById("liveTime").textContent = now.toLocaleTimeString('en-US', optionsTime);
-    document.getElementById("liveDate").textContent = now.toLocaleDateString('en-US', optionsDate);
+  if (now < startShowTime) {
+    if (currentPhase !== "waiting") {
+      currentPhase = "waiting";
+      document.getElementById("signalTime").innerHTML = '<span class="loading-dots">Next Signal Loading</span>';
+      document.getElementById("signalTime").classList.remove("signal-complete");
+      document.getElementById("oddValue").textContent = "ODD - --×";
+    }
+    return;
   }
 
-  function updateSignalDisplay() {
-    const now = new Date();
-    let found = false;
-
-    for (let i = 0; i < signals.length; i++) {
-      const signalTime = new Date(`${signals[i].date}T${signals[i].time}`);
-      const showFrom = new Date(signalTime.getTime() - 30000);
-      const showUntil = new Date(signalTime.getTime() + 60000);
-
-      if (now >= showFrom && now < showUntil) {
-        document.getElementById("signalTime").textContent = signals[i].time;
-        document.getElementById("signalTime").classList.remove("signal-complete");
-        document.getElementById("oddValue").textContent = `ODD - ${parseFloat(signals[i].odd).toFixed(2)}×`;
-        currentIndex = i;
-        loadingStartTime = null;
-        found = true;
-        return;
-      }
+  if (now >= startShowTime && now < endShowTime) {
+    if (currentPhase !== "showing") {
+      currentPhase = "showing";
+      document.getElementById("signalTime").textContent = signal.time;
+      document.getElementById("signalTime").classList.remove("signal-complete");
+      document.getElementById("oddValue").textContent = `ODD - ${parseFloat(signal.odd).toFixed(2)}×`;
     }
-
-    if (!found) {
-      if (currentIndex >= 0 && currentIndex < signals.length - 1) {
-        if (loadingStartTime === null) loadingStartTime = now;
-        const elapsed = (now - loadingStartTime) / 1000;
-
-        if (elapsed < 6) {
-          document.getElementById("signalTime").innerHTML = '<span class="loading-dots">Next Signal Loading</span>';
-          document.getElementById("signalTime").classList.remove("signal-complete");
-          document.getElementById("oddValue").textContent = "ODD - --×";
-        }
-      } else {
-        document.getElementById("signalTime").textContent = "Signal Complete";
-        document.getElementById("signalTime").classList.add("signal-complete");
-        document.getElementById("oddValue").textContent = "ODD - --×";
-      }
-    }
+    return;
   }
 
-  window.addEventListener("load", async () => {
-    await fetchSignals();
-    updateLiveClock();
-    updateSignalDisplay();
-    setInterval(updateLiveClock, 1000);
-    setInterval(updateSignalDisplay, 1000);
-  });
+  if (now >= endShowTime && now < new Date(endShowTime.getTime() + 6000)) {
+    if (currentPhase !== "loading") {
+      currentPhase = "loading";
+      document.getElementById("signalTime").innerHTML = '<span class="loading-dots">Next Signal Loading</span>';
+      document.getElementById("signalTime").classList.remove("signal-complete");
+      document.getElementById("oddValue").textContent = "ODD - --×";
+    }
+    return;
+  }
+
+  if (now >= new Date(endShowTime.getTime() + 6000)) {
+    currentIndex++;
+    currentPhase = "waiting";
+  }
+}
+
+window.addEventListener("load", async () => {
+  await fetchSignals();
+  updateLiveClock();
+  updateSignalDisplay();
+  setInterval(updateLiveClock, 1000);
+  setInterval(updateSignalDisplay, 1000);
+});
 </script>
 
 </body>
