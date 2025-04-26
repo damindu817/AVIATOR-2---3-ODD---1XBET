@@ -100,12 +100,12 @@
   </div>
 
   <div class="info-datetime">
-    <div>Live Time: <span id="liveTime">--:--:-- --</span></div>
-    <div>Date: <span id="liveDate">----</span></div>
+    <div>Live Time: <span id="liveTime">Loading...</span></div>
+    <div>Date: <span id="liveDate">Loading...</span></div>
   </div>
 
-  <div class="prediction-box" id="signalTime">--:--:--</div>
-  <div class="odd-box" id="oddValue">ODD - --×</div>
+  <div class="prediction-box" id="signalTime">Loading...</div>
+  <div class="odd-box" id="oddValue">ODD - Loading...</div>
 
   <div class="button-container">
     <a class="btn whatsapp" href="https://wa.me/xxxxxxxx" target="_blank">WhatsApp</a>
@@ -151,8 +151,6 @@
 
     document.getElementById("liveTime").textContent = now.toLocaleTimeString('en-US', optionsTime);
     document.getElementById("liveDate").textContent = now.toLocaleDateString('en-US', optionsDate);
-
-    requestAnimationFrame(updateLiveClock);
   }
 
   function updateSignalDisplay() {
@@ -198,8 +196,11 @@
   window.addEventListener("load", async () => {
     await fetchServerTime();
     await fetchSignals();
+
     updateLiveClock();
     updateSignalDisplay();
+
+    setInterval(updateLiveClock, 1000);
     setInterval(updateSignalDisplay, 1000);
   });
 </script>
