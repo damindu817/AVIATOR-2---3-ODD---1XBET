@@ -1,0 +1,185 @@
+
+<!DOCTYPE html>
+<html lang="si">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Xtreme Aviator Predictor</title>
+  <style>
+    body {
+      background-color: #000000;
+      color: #fff;
+      font-family: 'Segoe UI', sans-serif;
+      text-align: center;
+      padding: 20px;
+      margin-top: 50px;
+    }
+    .header-box {
+      background-color: #ff0000;
+      border: 2px solid white;
+      border-radius: 15px;
+      padding: 20px 30px;
+      margin: 0 auto 15px auto;
+      max-width: 400px;
+      box-shadow:
+        0 0 10px #ff0000,
+        0 0 20px #ff0000,
+        0 0 30px #ff0000;
+    }
+    .header-title {
+      font-size: 1.6em;
+      font-weight: 700;
+      color: #ffffff;
+    }
+    .info-datetime {
+      margin-top: 20px;
+      border: 2px solid white;
+      padding: 10px 18px;
+      border-radius: 10px;
+      display: inline-block;
+
+      font-size: 1.3em;
+      font-weight: 500;
+      margin: 10px auto;
+      line-height: 1.6;
+    }
+    .prediction-box {
+      width: 240px;
+      height: 240px;
+      border-radius: 50%;
+      border: 4px solid #00ffe7;
+      background: #111;
+      margin: 20px auto;
+      box-shadow: 0 0 15px #00ffe7, inset 0 0 20px #00ffe7;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.6em;
+      color: #00ffe7;
+    }
+    .odd-box {
+      margin-top: 0;
+      min-width: 220px;
+      padding: 16px 30px;
+      border-radius: 10px;
+      font-size: 1.3em;
+      color: #00ffe7;
+      background-color: #111;
+      border: 2px solid white;
+      box-shadow: 0 0 10px #00ffe7;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .button-container {
+      margin: 15px 0 5px 0;
+    }
+    .btn {
+      display: inline-block;
+      color: #fff;
+      padding: 10px 20px;
+      margin: 10px;
+      border-radius: 30px;
+      text-decoration: none;
+      font-weight: 600;
+      border: 2px solid #fff;
+      transition: all .3s ease-in-out;
+      box-shadow: 0 0 10px #fff;
+    }
+    .btn.whatsapp { background-color: #25d366; box-shadow: 0 0 12px #25d366; }
+    .btn.telegram { background-color: #08c; box-shadow: 0 0 12px #08c; }
+    .btn:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 20px #fff, 0 0 25px currentColor, inset 0 0 10px currentColor;
+    }
+    footer {
+      margin-top: 30px;
+      font-size: .9em;
+      color: #888;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="header-box">
+    <div class="header-title">XTREME AVIATOR PREDICTOR 2 ODD : 1XBET</div>
+  </div>
+
+  <div class="info-datetime">
+    <div>Live Time: <span id="liveTime">--:--:-- --</span></div>
+    <div>Date: <span id="liveDate">----</span></div>
+  </div>
+
+  <div class="prediction-box" id="signalTime">--:--:--</div>
+  <div class="odd-box" id="oddValue">ODD - --×</div>
+
+  <div class="button-container">
+    <a class="btn whatsapp" href="https://wa.me/xxxxxxxx" target="_blank">WhatsApp</a>
+    <a class="btn telegram" href="https://t.me/xxxxxxxx" target="_blank">Telegram</a>
+  </div>
+
+  <footer>POWERED BY XTREME PREDICTOR © 2025</footer>
+
+
+<script>
+  let signals = [];
+
+  async function fetchSignals() {
+    try {
+      const res = await fetch('signals.json');
+      signals = await res.json();
+    } catch (error) {
+      console.error('Error loading signals:', error);
+    }
+  }
+
+  function updateLiveClock() {
+    const now = new Date();
+    const optionsDate = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+    const optionsTime = { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true };
+
+    document.getElementById("liveTime").textContent = now.toLocaleTimeString('en-US', optionsTime);
+    document.getElementById("liveDate").textContent = now.toLocaleDateString('en-US', optionsDate);
+
+    requestAnimationFrame(updateLiveClock);
+  }
+
+  function updateSignalDisplay() {
+    const now = new Date();
+    const nowDate = now.toISOString().split("T")[0];
+
+    const signal = signals.find(sig => {
+      const sigDateTime = new Date(`${sig.date}T${sig.time}`);
+      return sig.date === nowDate && Math.abs(sigDateTime - now) <= 1000;
+    });
+
+    const signalTimeBox = document.getElementById("signalTime");
+    const oddBox = document.getElementById("oddValue");
+
+    if (signal) {
+      signalTimeBox.textContent = signal.time;
+      signalTimeBox.style.color = "#9933ff";
+      signalTimeBox.style.borderColor = "#9933ff";
+      signalTimeBox.style.boxShadow = "0 0 15px #9933ff, inset 0 0 20px #9933ff";
+      oddBox.textContent = `ODD - ${parseFloat(signal.odd).toFixed(2)}×`;
+    } else {
+      signalTimeBox.innerHTML = "Loss Chart<br>Activation";
+      signalTimeBox.style.color = "#00bfff";
+      signalTimeBox.style.fontSize = "1.2em";
+      signalTimeBox.style.borderColor = "#00bfff";
+      signalTimeBox.style.boxShadow = "0 0 15px #00bfff, inset 0 0 20px #00bfff";
+      signalTimeBox.style.backgroundColor = "#001f3f";
+      oddBox.textContent = "ODD - --×";
+    }
+  }
+
+  window.addEventListener("load", async () => {
+    await fetchSignals();
+    updateLiveClock();
+    updateSignalDisplay();
+    setInterval(updateSignalDisplay, 1000);
+  });
+</script>
+
+
+</body>
+</html>
