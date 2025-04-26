@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Xtreme Aviator Predictor - Final Countdown Version</title>
+  <title>Xtreme Aviator Predictor</title>
   <style>
     body {
       background-color: #000;
@@ -47,7 +47,6 @@
       margin: 20px auto;
       box-shadow: 0 0 15px #00ffe7, inset 0 0 20px #00ffe7;
       display: flex;
-      flex-direction: column;
       align-items: center;
       justify-content: center;
       font-size: 1.2em;
@@ -111,45 +110,36 @@
       box-shadow: 0 0 15px #00ff88, inset 0 0 20px #00ff88 !important;
       font-size: 1.3em;
     }
-    .time-text {
-      font-size: 1.4em;
-      margin-bottom: 8px;
-    }
-    .countdown-text {
-      font-size: 1em;
-      color: #00ffff;
-    }
   </style>
 </head>
 <body>
 
-  <div class="header-box">
-    <div class="header-title">XTREME AVIATOR PREDICTOR 2 ODD : 1XBET</div>
-  </div>
+<div class="header-box">
+  <div class="header-title">XTREME AVIATOR PREDICTOR 2 ODD : 1XBET</div>
+</div>
 
-  <div class="info-datetime">
-    <div>Live Time: <span id="liveTime">--:--:--</span></div>
-    <div>Date: <span id="liveDate">--</span></div>
-  </div>
+<div class="info-datetime">
+  <div>Live Time: <span id="liveTime">--:--:--</span></div>
+  <div>Date: <span id="liveDate">--</span></div>
+</div>
 
-  <div class="prediction-box" id="signalBox">
-    <div class="time-text" id="signalTime">--:--:--</div>
-    <div class="countdown-text" id="countdown">Waiting...</div>
-  </div>
+<div class="prediction-box" id="signalBox">
+  <div id="signalDisplay">Next Signal Loading...</div>
+</div>
 
-  <div class="odd-box" id="oddValue">ODD - --×</div>
+<div class="odd-box" id="oddValue">Waiting for Next Signal...</div>
 
-  <div class="button-container">
-    <a class="btn whatsapp" href="https://wa.me/xxxxxxxx" target="_blank">WhatsApp</a>
-    <a class="btn telegram" href="https://t.me/xxxxxxxx" target="_blank">Telegram</a>
-  </div>
+<div class="button-container">
+  <a class="btn whatsapp" href="https://wa.me/xxxxxxxx" target="_blank">WhatsApp</a>
+  <a class="btn telegram" href="https://t.me/xxxxxxxx" target="_blank">Telegram</a>
+</div>
 
-  <footer>POWERED BY XTREME PREDICTOR © 2025</footer>
+<footer>POWERED BY XTREME PREDICTOR © 2025</footer>
 
 <script>
 let signals = [];
 let currentIndex = 0;
-let currentPhase = "waiting"; // waiting, showing, loading
+let currentPhase = "waiting";
 
 async function fetchSignals() {
   try {
@@ -177,10 +167,14 @@ function formatCountdown(seconds) {
 function updateSignalDisplay() {
   const now = new Date();
 
+  if (signals.length === 0) {
+    document.getElementById("signalDisplay").textContent = "Next Signal Loading...";
+    document.getElementById("oddValue").textContent = "Waiting for Next Signal...";
+    return;
+  }
+
   if (currentIndex >= signals.length) {
-    document.getElementById("signalTime").textContent = "Signal Complete";
-    document.getElementById("countdown").textContent = "";
-    document.getElementById("signalBox").classList.add("signal-complete");
+    document.getElementById("signalDisplay").textContent = "Signal Complete";
     document.getElementById("oddValue").textContent = "ODD - --×";
     return;
   }
@@ -189,32 +183,25 @@ function updateSignalDisplay() {
   const signalTime = new Date(`${signal.date}T${signal.time}`);
 
   if (now < signalTime) {
-    if (currentPhase !== "waiting") {
-      currentPhase = "waiting";
-    }
-    document.getElementById("signalTime").textContent = signal.time;
-    document.getElementById("countdown").textContent = `Upcoming in: ${formatCountdown(Math.floor((signalTime - now) / 1000))}`;
+    currentPhase = "waiting";
+    const secondsLeft = Math.floor((signalTime - now) / 1000);
+    document.getElementById("signalDisplay").textContent = `${signal.time} - Upcoming in: ${formatCountdown(secondsLeft)}`;
     document.getElementById("oddValue").textContent = `ODD - ${parseFloat(signal.odd).toFixed(2)}×`;
     return;
   }
 
   if (now >= signalTime && now < new Date(signalTime.getTime() + 60000)) {
-    if (currentPhase !== "showing") {
-      currentPhase = "showing";
-    }
-    document.getElementById("signalTime").textContent = signal.time;
-    document.getElementById("countdown").textContent = `End in: ${formatCountdown(Math.floor((signalTime.getTime() + 60000 - now) / 1000))}`;
+    currentPhase = "showing";
+    const secondsLeft = Math.floor((signalTime.getTime() + 60000 - now) / 1000);
+    document.getElementById("signalDisplay").textContent = `${signal.time} - End in: ${formatCountdown(secondsLeft)}`;
     document.getElementById("oddValue").textContent = `ODD - ${parseFloat(signal.odd).toFixed(2)}×`;
     return;
   }
 
   if (now >= new Date(signalTime.getTime() + 60000) && now < new Date(signalTime.getTime() + 66000)) {
-    if (currentPhase !== "loading") {
-      currentPhase = "loading";
-      document.getElementById("signalTime").innerHTML = '<span class="loading-dots">Next Signal Loading</span>';
-      document.getElementById("countdown").textContent = "";
-      document.getElementById("oddValue").textContent = "Waiting for Next Signal...";
-    }
+    currentPhase = "loading";
+    document.getElementById("signalDisplay").innerHTML = '<span class="loading-dots">Next Signal Loading...</span>';
+    document.getElementById("oddValue").textContent = "Waiting for Next Signal...";
     return;
   }
 
