@@ -47,15 +47,16 @@
       margin: 20px auto;
       box-shadow: 0 0 15px #00ffe7, inset 0 0 20px #00ffe7;
       display: flex;
+      flex-direction: column;
       align-items: center;
       justify-content: center;
-      font-size: 1.6em;
+      font-size: 1.2em;
       color: #00ffe7;
       text-align: center;
       padding: 10px;
     }
     .odd-box {
-      margin-top: 0;
+      margin-top: 10px;
       min-width: 220px;
       padding: 16px 30px;
       border-radius: 10px;
@@ -66,11 +67,6 @@
       box-shadow: 0 0 10px #00ffe7;
       margin-left: auto;
       margin-right: auto;
-    }
-    .countdown-box {
-      margin-top: 20px;
-      font-size: 1.3em;
-      color: #00ffff;
     }
     .button-container {
       margin: 15px 0 5px 0;
@@ -115,6 +111,14 @@
       box-shadow: 0 0 15px #00ff88, inset 0 0 20px #00ff88 !important;
       font-size: 1.3em;
     }
+    .time-text {
+      font-size: 1.4em;
+      margin-bottom: 8px;
+    }
+    .countdown-text {
+      font-size: 1em;
+      color: #00ffff;
+    }
   </style>
 </head>
 <body>
@@ -128,9 +132,12 @@
     <div>Date: <span id="liveDate">--</span></div>
   </div>
 
-  <div class="prediction-box" id="signalTime">--:--:--</div>
+  <div class="prediction-box" id="signalBox">
+    <div class="time-text" id="signalTime">--:--:--</div>
+    <div class="countdown-text" id="countdown">Waiting...</div>
+  </div>
+
   <div class="odd-box" id="oddValue">ODD - --×</div>
-  <div class="countdown-box" id="countdown">Waiting...</div>
 
   <div class="button-container">
     <a class="btn whatsapp" href="https://wa.me/xxxxxxxx" target="_blank">WhatsApp</a>
@@ -172,9 +179,9 @@ function updateSignalDisplay() {
 
   if (currentIndex >= signals.length) {
     document.getElementById("signalTime").textContent = "Signal Complete";
-    document.getElementById("signalTime").classList.add("signal-complete");
+    document.getElementById("countdown").textContent = "";
+    document.getElementById("signalBox").classList.add("signal-complete");
     document.getElementById("oddValue").textContent = "ODD - --×";
-    document.getElementById("countdown").textContent = "Completed";
     return;
   }
 
@@ -184,10 +191,9 @@ function updateSignalDisplay() {
   if (now < signalTime) {
     if (currentPhase !== "waiting") {
       currentPhase = "waiting";
-      document.getElementById("signalTime").textContent = signal.time;
-      document.getElementById("signalTime").classList.remove("signal-complete");
       document.getElementById("oddValue").textContent = `ODD - ${parseFloat(signal.odd).toFixed(2)}×`;
     }
+    document.getElementById("signalTime").textContent = signal.time;
     const secondsLeft = Math.floor((signalTime - now) / 1000);
     document.getElementById("countdown").textContent = `Upcoming in: ${formatCountdown(secondsLeft)}`;
     return;
@@ -198,6 +204,7 @@ function updateSignalDisplay() {
       currentPhase = "showing";
     }
     const secondsLeft = Math.floor((signalTime.getTime() + 60000 - now) / 1000);
+    document.getElementById("signalTime").textContent = signal.time;
     document.getElementById("countdown").textContent = `End in: ${formatCountdown(secondsLeft)}`;
     return;
   }
@@ -206,11 +213,9 @@ function updateSignalDisplay() {
     if (currentPhase !== "loading") {
       currentPhase = "loading";
       document.getElementById("signalTime").innerHTML = '<span class="loading-dots">Next Signal Loading</span>';
-      document.getElementById("signalTime").classList.remove("signal-complete");
+      document.getElementById("countdown").textContent = "";
       document.getElementById("oddValue").textContent = "ODD - --×";
     }
-    const secondsLeft = Math.floor((signalTime.getTime() + 66000 - now) / 1000);
-    document.getElementById("countdown").textContent = `Loading: ${formatCountdown(secondsLeft)}`;
     return;
   }
 
