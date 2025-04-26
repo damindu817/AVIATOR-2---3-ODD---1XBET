@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Xtreme Aviator Predictor - Countdown Version</title>
+  <title>Xtreme Aviator Predictor - Final Countdown Version</title>
   <style>
     body {
       background-color: #000;
@@ -191,11 +191,10 @@ function updateSignalDisplay() {
   if (now < signalTime) {
     if (currentPhase !== "waiting") {
       currentPhase = "waiting";
-      document.getElementById("oddValue").textContent = `ODD - ${parseFloat(signal.odd).toFixed(2)}×`;
     }
     document.getElementById("signalTime").textContent = signal.time;
-    const secondsLeft = Math.floor((signalTime - now) / 1000);
-    document.getElementById("countdown").textContent = `Upcoming in: ${formatCountdown(secondsLeft)}`;
+    document.getElementById("countdown").textContent = `Upcoming in: ${formatCountdown(Math.floor((signalTime - now) / 1000))}`;
+    document.getElementById("oddValue").textContent = `ODD - ${parseFloat(signal.odd).toFixed(2)}×`;
     return;
   }
 
@@ -203,9 +202,9 @@ function updateSignalDisplay() {
     if (currentPhase !== "showing") {
       currentPhase = "showing";
     }
-    const secondsLeft = Math.floor((signalTime.getTime() + 60000 - now) / 1000);
     document.getElementById("signalTime").textContent = signal.time;
-    document.getElementById("countdown").textContent = `End in: ${formatCountdown(secondsLeft)}`;
+    document.getElementById("countdown").textContent = `End in: ${formatCountdown(Math.floor((signalTime.getTime() + 60000 - now) / 1000))}`;
+    document.getElementById("oddValue").textContent = `ODD - ${parseFloat(signal.odd).toFixed(2)}×`;
     return;
   }
 
@@ -214,7 +213,7 @@ function updateSignalDisplay() {
       currentPhase = "loading";
       document.getElementById("signalTime").innerHTML = '<span class="loading-dots">Next Signal Loading</span>';
       document.getElementById("countdown").textContent = "";
-      document.getElementById("oddValue").textContent = "ODD - --×";
+      document.getElementById("oddValue").textContent = "Waiting for Next Signal...";
     }
     return;
   }
