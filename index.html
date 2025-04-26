@@ -53,6 +53,16 @@
       color: #00ffe7;
       text-align: center;
       padding: 10px;
+      flex-direction: column;
+    }
+    .signal-time {
+      font-size: 2em;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+    .countdown-timer {
+      font-size: 1.5em;
+      margin-top: 5px;
     }
     .odd-box {
       margin-top: 10px;
@@ -190,14 +200,20 @@ function updateSignalDisplay() {
 
   if (now < signalTime) {
     const secondsLeft = Math.floor((signalTime - now) / 1000);
-    document.getElementById("signalDisplay").textContent = `${signal.time} - Upcoming in: ${formatCountdown(secondsLeft)}`;
+    document.getElementById("signalDisplay").innerHTML = `
+      <div class="signal-time">${signal.time}</div>
+      <div class="countdown-timer">Upcoming in: ${formatCountdown(secondsLeft)}</div>
+    `;
     document.getElementById("oddValue").textContent = `ODD - ${parseFloat(signal.odd).toFixed(2)}×`;
     return;
   }
 
   if (now >= signalTime && now < new Date(signalTime.getTime() + 60000)) {
     const secondsLeft = Math.floor((signalTime.getTime() + 60000 - now) / 1000);
-    document.getElementById("signalDisplay").textContent = `${signal.time} - End in: ${formatCountdown(secondsLeft)}`;
+    document.getElementById("signalDisplay").innerHTML = `
+      <div class="signal-time">${signal.time}</div>
+      <div class="countdown-timer">End in: ${formatCountdown(secondsLeft)}</div>
+    `;
     document.getElementById("oddValue").textContent = `ODD - ${parseFloat(signal.odd).toFixed(2)}×`;
     return;
   }
