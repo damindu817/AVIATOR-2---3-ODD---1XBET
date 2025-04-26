@@ -134,7 +134,7 @@
   </div>
 
   <div class="prediction-box" id="signalTime">--:--:--</div>
-  <div class="odd-box" id="oddValue">Place Auto Bet Odd - --×</div>
+  <div class="odd-box" id="oddValue">ODD - --×</div>
 
   <div class="button-container">
     <a class="btn whatsapp" href="https://wa.me/xxxxxxxx" target="_blank">WhatsApp</a>
@@ -205,7 +205,7 @@
       const elapsed = (now - loadingStartTime) / 1000;
 
       if (elapsed < 6) {
-        document.getElementById("signalTime").innerHTML = '<span class="loading-dots">NEXT SIGNAL LOADING</span>';
+        document.getElementById("signalTime").innerHTML = '<span class="loading-dots">Next Signal Loading</span>';
         document.getElementById("signalTime").classList.remove("signal-complete");
         document.getElementById("oddValue").textContent = "ODD - --×";
       }
