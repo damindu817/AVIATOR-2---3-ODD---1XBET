@@ -20,10 +20,7 @@
       padding: 20px 30px;
       margin: 0 auto 15px auto;
       max-width: 400px;
-      box-shadow:
-        0 0 10px #ff0000,
-        0 0 20px #ff0000,
-        0 0 30px #ff0000;
+      box-shadow: 0 0 10px #ff0000, 0 0 20px #ff0000, 0 0 30px #ff0000;
     }
     .header-title {
       font-size: 1.6em;
@@ -119,6 +116,24 @@
 
 <script>
   let signals = [];
+  let timeOffset = 0;
+
+  async function fetchServerTime() {
+    try {
+      const response = await fetch("https://worldtimeapi.org/api/ip");
+      const data = await response.json();
+      const serverTime = new Date(data.utc_datetime).getTime();
+      const localTime = new Date().getTime();
+      timeOffset = serverTime - localTime;
+    } catch (error) {
+      console.warn("Server time fetch failed, using local time.");
+      timeOffset = 0;
+    }
+  }
+
+  function getSyncedTime() {
+    return new Date(new Date().getTime() + timeOffset);
+  }
 
   async function fetchSignals() {
     try {
@@ -130,7 +145,7 @@
   }
 
   function updateLiveClock() {
-    const now = new Date();
+    const now = getSyncedTime();
     const optionsDate = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
     const optionsTime = { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true };
 
@@ -141,7 +156,7 @@
   }
 
   function updateSignalDisplay() {
-    const now = new Date();
+    const now = getSyncedTime();
     const nowDate = now.toISOString().split("T")[0];
     let nextSignal = null;
 
@@ -181,6 +196,7 @@
   }
 
   window.addEventListener("load", async () => {
+    await fetchServerTime();
     await fetchSignals();
     updateLiveClock();
     updateSignalDisplay();
