@@ -4,10 +4,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Xtreme Aviator Predictor - Fixed</title>
+  <title>Xtreme Aviator Predictor - Final Fixed</title>
   <style>
     body {
-      background-color: #000000;
+      background-color: #000;
       color: #fff;
       font-family: 'Segoe UI', sans-serif;
       text-align: center;
@@ -178,23 +178,18 @@
     }
 
     if (!found) {
-      const lastSignal = signals[signals.length - 1];
-      const lastTime = new Date(`${lastSignal.date}T${lastSignal.time}`);
-      const finalTime = new Date(lastTime.getTime() + 60000);
+      if (currentIndex >= 0 && currentIndex < signals.length - 1) {
+        if (loadingStartTime === null) loadingStartTime = now;
+        const elapsed = (now - loadingStartTime) / 1000;
 
-      if (now > finalTime) {
+        if (elapsed < 6) {
+          document.getElementById("signalTime").innerHTML = '<span class="loading-dots">Next Signal Loading</span>';
+          document.getElementById("signalTime").classList.remove("signal-complete");
+          document.getElementById("oddValue").textContent = "ODD - --×";
+        }
+      } else {
         document.getElementById("signalTime").textContent = "Signal Complete";
         document.getElementById("signalTime").classList.add("signal-complete");
-        document.getElementById("oddValue").textContent = "ODD - --×";
-        return;
-      }
-
-      if (loadingStartTime === null) loadingStartTime = now;
-      const elapsed = (now - loadingStartTime) / 1000;
-
-      if (elapsed < 6) {
-        document.getElementById("signalTime").innerHTML = '<span class="loading-dots">Next Signal Loading</span>';
-        document.getElementById("signalTime").classList.remove("signal-complete");
         document.getElementById("oddValue").textContent = "ODD - --×";
       }
     }
