@@ -51,6 +51,8 @@
       justify-content: center;
       font-size: 1.6em;
       color: #00ffe7;
+      text-align: center;
+      padding: 10px;
     }
     .odd-box {
       margin-top: 0;
@@ -90,6 +92,33 @@
       margin-top: 30px;
       font-size: .9em;
       color: #888;
+    }
+
+    @keyframes blinkDots {
+      0% { content: ""; }
+      33% { content: "."; }
+      66% { content: ".."; }
+      100% { content: "..."; }
+    }
+
+    .loading-dots::after {
+      content: "";
+      animation: blinkDots 1s steps(3, end) infinite;
+    }
+
+    .loading-dots {
+      font-size: 1.1em;
+      display: inline-block;
+      text-align: center;
+      max-width: 90%;
+    }
+
+    .signal-complete {
+      background-color: #004d00 !important;
+      color: #00ff88 !important;
+      border-color: #00ff88 !important;
+      box-shadow: 0 0 15px #00ff88, inset 0 0 20px #00ff88 !important;
+      font-size: 1.3em;
     }
   </style>
 </head>
@@ -143,30 +172,41 @@
 
     for (let i = 0; i < signals.length; i++) {
       const signalTime = new Date(`${signals[i].date}T${signals[i].time}`);
-      const showFrom = new Date(signalTime.getTime() - 30000); // show 30s before
+      const showFrom = new Date(signalTime.getTime() - 30000);
       const showUntil = new Date(signalTime);
       showUntil.setMinutes(showUntil.getMinutes() + 1);
       showUntil.setSeconds(0);
 
       if (now >= showFrom && now < showUntil) {
         document.getElementById("signalTime").textContent = signals[i].time;
+        document.getElementById("signalTime").classList.remove("signal-complete");
         document.getElementById("oddValue").textContent = `ODD - ${parseFloat(signals[i].odd).toFixed(2)}×`;
         currentIndex = i;
         loadingStartTime = null;
         found = true;
-        break;
+        return;
       }
     }
 
     if (!found) {
-      if (loadingStartTime === null) {
-        loadingStartTime = now;
+      const lastSignal = signals[signals.length - 1];
+      const lastTime = new Date(`${lastSignal.date}T${lastSignal.time}`);
+      lastTime.setMinutes(lastTime.getMinutes() + 1);
+      lastTime.setSeconds(0);
+
+      if (now > lastTime) {
+        document.getElementById("signalTime").textContent = "Signal Complete";
+        document.getElementById("signalTime").classList.add("signal-complete");
+        document.getElementById("oddValue").textContent = "ODD - --×";
+        return;
       }
 
+      if (loadingStartTime === null) loadingStartTime = now;
       const elapsed = (now - loadingStartTime) / 1000;
+
       if (elapsed < 6) {
-        let dots = ".".repeat(Math.floor((elapsed % 3) + 1));
-        document.getElementById("signalTime").textContent = "Next Signal Loading" + dots;
+        document.getElementById("signalTime").innerHTML = '<span class="loading-dots">ඊළඟ සිග්නලය ලෝඩ් වෙමින්</span>';
+        document.getElementById("signalTime").classList.remove("signal-complete");
         document.getElementById("oddValue").textContent = "ODD - --×";
       }
     }
