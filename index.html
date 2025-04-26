@@ -1,18 +1,20 @@
 <!DOCTYPE html>
 <html lang="si">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Xtreme Aviator Predictor</title>
   <style>
     body {
-      background-color: #000000;
+      background-color: #000;
       color: #fff;
       font-family: 'Segoe UI', sans-serif;
       text-align: center;
       padding: 20px;
       margin-top: 50px;
     }
+    .hidden { visibility: hidden; }
+    .visible { visibility: visible; }
     .header-box {
       background-color: #ff0000;
       border: 2px solid white;
@@ -22,11 +24,7 @@
       max-width: 400px;
       box-shadow: 0 0 10px #ff0000, 0 0 20px #ff0000, 0 0 30px #ff0000;
     }
-    .header-title {
-      font-size: 1.6em;
-      font-weight: 700;
-      color: #ffffff;
-    }
+    .header-title { font-size: 1.6em; font-weight: 700; color: #fff; }
     .info-datetime {
       margin-top: 20px;
       border: 2px solid white;
@@ -35,7 +33,6 @@
       display: inline-block;
       font-size: 1.3em;
       font-weight: 500;
-      margin: 10px auto;
       line-height: 1.6;
     }
     .prediction-box {
@@ -53,7 +50,6 @@
       color: #00ffe7;
     }
     .odd-box {
-      margin-top: 0;
       min-width: 220px;
       padding: 16px 30px;
       border-radius: 10px;
@@ -62,12 +58,9 @@
       background-color: #111;
       border: 2px solid white;
       box-shadow: 0 0 10px #00ffe7;
-      margin-left: auto;
-      margin-right: auto;
+      margin: 0 auto;
     }
-    .button-container {
-      margin: 15px 0 5px 0;
-    }
+    .button-container { margin: 15px 0 5px 0; }
     .btn {
       display: inline-block;
       color: #fff;
@@ -99,13 +92,13 @@
     <div class="header-title">XTREME AVIATOR PREDICTOR 2 ODD : 1XBET</div>
   </div>
 
-  <div class="info-datetime">
-    <div>Live Time: <span id="liveTime">Loading...</span></div>
-    <div>Date: <span id="liveDate">Loading...</span></div>
+  <div class="info-datetime visible" id="datetimeBox">
+    <div>Live Time: <span id="liveTime"></span></div>
+    <div>Date: <span id="liveDate"></span></div>
   </div>
 
-  <div class="prediction-box" id="signalTime">Loading...</div>
-  <div class="odd-box" id="oddValue">ODD - Loading...</div>
+  <div class="prediction-box visible" id="signalTime">--:--:--</div>
+  <div class="odd-box visible" id="oddValue">ODD - --×</div>
 
   <div class="button-container">
     <a class="btn whatsapp" href="https://wa.me/xxxxxxxx" target="_blank">WhatsApp</a>
@@ -126,8 +119,7 @@
       const localTime = new Date().getTime();
       timeOffset = serverTime - localTime;
     } catch (error) {
-      console.warn("Server time fetch failed, using local time.");
-      timeOffset = 0;
+      console.warn("Server time fetch failed.");
     }
   }
 
@@ -148,7 +140,6 @@
     const now = getSyncedTime();
     const optionsDate = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
     const optionsTime = { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true };
-
     document.getElementById("liveTime").textContent = now.toLocaleTimeString('en-US', optionsTime);
     document.getElementById("liveDate").textContent = now.toLocaleDateString('en-US', optionsDate);
   }
@@ -193,14 +184,14 @@
     }
   }
 
-  window.addEventListener("load", async () => {
+  window.addEventListener("DOMContentLoaded", async () => {
+    updateLiveClock(); // Show immediately
+    setInterval(updateLiveClock, 1000);
+
     await fetchServerTime();
     await fetchSignals();
 
-    updateLiveClock();
     updateSignalDisplay();
-
-    setInterval(updateLiveClock, 1000);
     setInterval(updateSignalDisplay, 1000);
   });
 </script>
