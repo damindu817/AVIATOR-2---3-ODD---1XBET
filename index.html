@@ -93,8 +93,14 @@
       font-size: .9em;
       color: #888;
     }
+    @keyframes blinkDots {
+      0% { content: ''; }
+      33% { content: '.'; }
+      66% { content: '..'; }
+      100% { content: '...'; }
+    }
     .loading-dots::after {
-      content: "";
+      content: "...";
       animation: blinkDots 1s steps(3, end) infinite;
     }
     .loading-dots {
@@ -112,6 +118,7 @@
     }
   </style>
 </head>
+
 <body>
 
 <div class="header-box">
@@ -124,7 +131,7 @@
 </div>
 
 <div class="prediction-box" id="signalBox">
-  <div id="signalDisplay">Next Signal Loading...</div>
+  <div id="signalDisplay">Next Signal<br><span class="loading-dots">Loading</span></div>
 </div>
 
 <div class="odd-box" id="oddValue">Waiting for Next Signal...</div>
@@ -139,7 +146,6 @@
 <script>
 let signals = [];
 let currentIndex = 0;
-let currentPhase = "waiting";
 
 async function fetchSignals() {
   try {
@@ -152,10 +158,10 @@ async function fetchSignals() {
 
 function updateLiveClock() {
   const now = new Date();
-  const optionsDate = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-  const optionsTime = { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true };
-  document.getElementById("liveTime").textContent = now.toLocaleTimeString('en-US', optionsTime);
-  document.getElementById("liveDate").textContent = now.toLocaleDateString('en-US', optionsDate);
+  const time = now.toLocaleTimeString('en-GB', { hour12: false });
+  const date = now.toLocaleDateString('en-GB', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+  document.getElementById("liveTime").textContent = time;
+  document.getElementById("liveDate").textContent = date;
 }
 
 function formatCountdown(seconds) {
@@ -168,7 +174,7 @@ function updateSignalDisplay() {
   const now = new Date();
 
   if (signals.length === 0) {
-    document.getElementById("signalDisplay").textContent = "Next Signal Loading...";
+    document.getElementById("signalDisplay").innerHTML = 'Next Signal<br><span class="loading-dots">Loading</span>';
     document.getElementById("oddValue").textContent = "Waiting for Next Signal...";
     return;
   }
@@ -183,7 +189,6 @@ function updateSignalDisplay() {
   const signalTime = new Date(`${signal.date}T${signal.time}`);
 
   if (now < signalTime) {
-    currentPhase = "waiting";
     const secondsLeft = Math.floor((signalTime - now) / 1000);
     document.getElementById("signalDisplay").textContent = `${signal.time} - Upcoming in: ${formatCountdown(secondsLeft)}`;
     document.getElementById("oddValue").textContent = `ODD - ${parseFloat(signal.odd).toFixed(2)}×`;
@@ -191,7 +196,6 @@ function updateSignalDisplay() {
   }
 
   if (now >= signalTime && now < new Date(signalTime.getTime() + 60000)) {
-    currentPhase = "showing";
     const secondsLeft = Math.floor((signalTime.getTime() + 60000 - now) / 1000);
     document.getElementById("signalDisplay").textContent = `${signal.time} - End in: ${formatCountdown(secondsLeft)}`;
     document.getElementById("oddValue").textContent = `ODD - ${parseFloat(signal.odd).toFixed(2)}×`;
@@ -199,15 +203,13 @@ function updateSignalDisplay() {
   }
 
   if (now >= new Date(signalTime.getTime() + 60000) && now < new Date(signalTime.getTime() + 66000)) {
-    currentPhase = "loading";
-    document.getElementById("signalDisplay").innerHTML = '<span class="loading-dots">Next Signal Loading...</span>';
+    document.getElementById("signalDisplay").innerHTML = 'Next Signal<br><span class="loading-dots">Loading</span>';
     document.getElementById("oddValue").textContent = "Waiting for Next Signal...";
     return;
   }
 
   if (now >= new Date(signalTime.getTime() + 66000)) {
     currentIndex++;
-    currentPhase = "waiting";
   }
 }
 
