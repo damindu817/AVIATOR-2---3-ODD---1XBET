@@ -1,4 +1,5 @@
-<!DOCTYPE html><html lang="si">
+<!DOCTYPE html>
+<html lang="si">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -53,6 +54,7 @@
       text-align: center;
       padding: 10px;
       flex-direction: column;
+      transition: all 0.5s ease;
     }
     .signal-time {
       font-size: 2em;
@@ -75,6 +77,7 @@
       box-shadow: 0 0 10px #00ffe7;
       margin-left: auto;
       margin-right: auto;
+      transition: all 0.5s ease;
     }
     .button-container {
       margin: 15px 0 5px 0;
@@ -118,25 +121,38 @@
       text-align: center;
       max-width: 90%;
     }
-    .signal-complete {
-      background-color: #004d00 !important;
-      color: #00ff88 !important;
-      border-color: #00ff88 !important;
-      box-shadow: 0 0 15px #00ff88, inset 0 0 20px #00ff88 !important;
-      font-size: 1.3em;
+    .highlight {
+      background-color: #003300 !important;
+      box-shadow: 0 0 20px #00ff88, inset 0 0 10px #00ff88 !important;
     }
   </style>
-</head><body><div class="header-box">
+</head>
+
+<body>
+
+<div class="header-box">
   <div class="header-title">XTREME AVIATOR PREDICTOR 2 ODD : 1XBET</div>
-</div><div class="info-datetime">
+</div>
+
+<div class="info-datetime">
   <div>Live Time: <span id="liveTime">--:--:--</span></div>
   <div>Date: <span id="liveDate">--</span></div>
-</div><div class="prediction-box" id="signalBox">
+</div>
+
+<div class="prediction-box" id="signalBox">
   <div id="signalDisplay">Next Signal<br><span class="loading-dots">Loading</span></div>
-</div><div class="odd-box" id="oddValue">Waiting for Next Signal...</div><div class="button-container">
+</div>
+
+<div class="odd-box" id="oddValue">Waiting for Next Signal...</div>
+
+<div class="button-container">
   <a class="btn whatsapp" href="https://wa.me/xxxxxxxx" target="_blank">WhatsApp</a>
   <a class="btn telegram" href="https://t.me/xxxxxxxx" target="_blank">Telegram</a>
-</div><footer>POWERED BY XTREME PREDICTOR © 2025</footer><script>
+</div>
+
+<footer>POWERED BY XTREME PREDICTOR © 2025</footer>
+
+<script>
 let signals = [];
 let currentIndex = 0;
 
@@ -144,6 +160,7 @@ async function fetchSignals() {
   try {
     const res = await fetch('signals.json?v=' + new Date().getTime());
     signals = await res.json();
+    updateSignalImmediately();
   } catch (err) {
     console.error("Failed to load signals:", err);
   }
@@ -163,18 +180,31 @@ function formatCountdown(seconds) {
   return `${m}:${s}s`;
 }
 
+function updateSignalImmediately() {
+  const now = new Date();
+  for (let i = 0; i < signals.length; i++) {
+    const signalTime = new Date(`${signals[i].date}T${signals[i].time}`);
+    if (now < signalTime) {
+      currentIndex = i;
+      break;
+    }
+  }
+}
+
 function updateSignalDisplay() {
   const now = new Date();
+  const box = document.getElementById('signalBox');
+  const odd = document.getElementById('oddValue');
 
   if (signals.length === 0) {
     document.getElementById("signalDisplay").innerHTML = 'Next Signal<br><span class="loading-dots">Loading</span>';
-    document.getElementById("oddValue").textContent = "Waiting for Next Signal...";
+    odd.textContent = "Waiting for Next Signal...";
     return;
   }
 
   if (currentIndex >= signals.length) {
     document.getElementById("signalDisplay").textContent = "Signal Complete";
-    document.getElementById("oddValue").textContent = "ODD - --×";
+    odd.textContent = "ODD - --×";
     return;
   }
 
@@ -187,7 +217,8 @@ function updateSignalDisplay() {
       <div class="signal-time">${signal.time}</div>
       <div class="countdown-timer">Upcoming in: ${formatCountdown(secondsLeft)}</div>
     `;
-    document.getElementById("oddValue").textContent = `ODD - ${parseFloat(signal.odd).toFixed(2)}×`;
+    odd.textContent = `ODD - ${parseFloat(signal.odd).toFixed(2)}×`;
+    box.classList.add('highlight');
     return;
   }
 
@@ -197,17 +228,12 @@ function updateSignalDisplay() {
       <div class="signal-time">${signal.time}</div>
       <div class="countdown-timer">End in: ${formatCountdown(secondsLeft)}</div>
     `;
-    document.getElementById("oddValue").textContent = `ODD - ${parseFloat(signal.odd).toFixed(2)}×`;
+    odd.textContent = `ODD - ${parseFloat(signal.odd).toFixed(2)}×`;
+    box.classList.add('highlight');
     return;
   }
 
-  if (now >= new Date(signalTime.getTime() + 60000) && now < new Date(signalTime.getTime() + 66000)) {
-    document.getElementById("signalDisplay").innerHTML = 'Next Signal<br><span class="loading-dots">Loading</span>';
-    document.getElementById("oddValue").textContent = "Waiting for Next Signal...";
-    return;
-  }
-
-  if (now >= new Date(signalTime.getTime() + 66000)) {
+  if (now >= new Date(signalTime.getTime() + 60000)) {
     currentIndex++;
   }
 }
@@ -219,5 +245,7 @@ window.addEventListener("load", async () => {
   setInterval(updateLiveClock, 1000);
   setInterval(updateSignalDisplay, 1000);
 });
-</script></body>
+</script>
+
+</body>
 </html>
