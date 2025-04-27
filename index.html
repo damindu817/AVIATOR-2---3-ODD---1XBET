@@ -1,5 +1,4 @@
-<!DOCTYPE html>
-<html lang="si">
+<!DOCTYPE html><html lang="si">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -127,39 +126,23 @@
       font-size: 1.3em;
     }
   </style>
-</head>
-
-<body>
-
-<div class="header-box">
+</head><body><div class="header-box">
   <div class="header-title">XTREME AVIATOR PREDICTOR 2 ODD : 1XBET</div>
-</div>
-
-<div class="info-datetime">
+</div><div class="info-datetime">
   <div>Live Time: <span id="liveTime">--:--:--</span></div>
   <div>Date: <span id="liveDate">--</span></div>
-</div>
-
-<div class="prediction-box" id="signalBox">
+</div><div class="prediction-box" id="signalBox">
   <div id="signalDisplay">Next Signal<br><span class="loading-dots">Loading</span></div>
-</div>
-
-<div class="odd-box" id="oddValue">Waiting for Next Signal...</div>
-
-<div class="button-container">
+</div><div class="odd-box" id="oddValue">Waiting for Next Signal...</div><div class="button-container">
   <a class="btn whatsapp" href="https://wa.me/xxxxxxxx" target="_blank">WhatsApp</a>
   <a class="btn telegram" href="https://t.me/xxxxxxxx" target="_blank">Telegram</a>
-</div>
-
-<footer>POWERED BY XTREME PREDICTOR © 2025</footer>
-
-<script>
+</div><footer>POWERED BY XTREME PREDICTOR © 2025</footer><script>
 let signals = [];
 let currentIndex = 0;
 
 async function fetchSignals() {
   try {
-    const res = await fetch('signals.json');
+    const res = await fetch('signals.json?v=' + new Date().getTime());
     signals = await res.json();
   } catch (err) {
     console.error("Failed to load signals:", err);
@@ -236,7 +219,5 @@ window.addEventListener("load", async () => {
   setInterval(updateLiveClock, 1000);
   setInterval(updateSignalDisplay, 1000);
 });
-</script>
-
-</body>
+</script></body>
 </html>
