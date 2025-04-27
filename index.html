@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Xtreme Aviator Predictor</title>
+  <link rel="icon" href="https://upload.wikimedia.org/wikipedia/commons/3/3c/Aviator_helmet_icon.png">
   <style>
     body {
       background-color: #000;
@@ -12,6 +13,11 @@
       text-align: center;
       padding: 20px;
       margin-top: 50px;
+      opacity: 0;
+      transition: opacity 2s ease;
+    }
+    body.loaded {
+      opacity: 1;
     }
     .header-box {
       background-color: #ff0000;
@@ -79,6 +85,18 @@
       margin-right: auto;
       transition: all 0.5s ease;
     }
+    .purple-glow {
+      border-color: #800080;
+      box-shadow: 0 0 20px #800080, inset 0 0 20px #800080;
+    }
+    .red-glow {
+      border-color: #ff0000;
+      box-shadow: 0 0 20px #ff0000, inset 0 0 20px #ff0000;
+    }
+    .green-glow {
+      border-color: #00ff00;
+      box-shadow: 0 0 20px #00ff00, inset 0 0 20px #00ff00;
+    }
     .button-container {
       margin: 15px 0 5px 0;
     }
@@ -105,25 +123,15 @@
       font-size: .9em;
       color: #888;
     }
+    .loading-dots::after {
+      content: "...";
+      animation: blinkDots 1s steps(3, end) infinite;
+    }
     @keyframes blinkDots {
       0% { content: ''; }
       33% { content: '.'; }
       66% { content: '..'; }
       100% { content: '...'; }
-    }
-    .loading-dots::after {
-      content: "...";
-      animation: blinkDots 1s steps(3, end) infinite;
-    }
-    .loading-dots {
-      font-size: 1.1em;
-      display: inline-block;
-      text-align: center;
-      max-width: 90%;
-    }
-    .highlight {
-      background-color: #003300 !important;
-      box-shadow: 0 0 20px #00ff88, inset 0 0 10px #00ff88 !important;
     }
   </style>
 </head>
@@ -135,8 +143,8 @@
 </div>
 
 <div class="info-datetime">
-  <div>Live Time: <span id="liveTime">--:--:--</span></div>
-  <div>Date: <span id="liveDate">--</span></div>
+  <div>Live Time: <span id="liveTime"></span></div>
+  <div>Date: <span id="liveDate"></span></div>
 </div>
 
 <div class="prediction-box" id="signalBox">
@@ -152,14 +160,20 @@
 
 <footer>POWERED BY XTREME PREDICTOR © 2025</footer>
 
+<audio id="beepSound" src="https://actions.google.com/sounds/v1/alarms/beep_short.ogg"></audio>
+
 <script>
 let signals = [];
 let currentIndex = 0;
+let loadingPhase = true;
 
 async function fetchSignals() {
   try {
     const res = await fetch('signals.json?v=' + new Date().getTime());
     signals = await res.json();
+    setTimeout(() => {
+      loadingPhase = false;
+    }, 8000); // Show loading for 8 seconds
     updateSignalImmediately();
   } catch (err) {
     console.error("Failed to load signals:", err);
@@ -195,16 +209,24 @@ function updateSignalDisplay() {
   const now = new Date();
   const box = document.getElementById('signalBox');
   const odd = document.getElementById('oddValue');
+  const beep = document.getElementById('beepSound');
 
-  if (signals.length === 0) {
+  if (loadingPhase) {
     document.getElementById("signalDisplay").innerHTML = 'Next Signal<br><span class="loading-dots">Loading</span>';
     odd.textContent = "Waiting for Next Signal...";
     return;
   }
 
+  if (signals.length === 0) {
+    document.getElementById("signalDisplay").textContent = "No Signals Available.";
+    odd.textContent = "No Signals.";
+    return;
+  }
+
   if (currentIndex >= signals.length) {
-    document.getElementById("signalDisplay").textContent = "Signal Complete";
-    odd.textContent = "ODD - --×";
+    box.className = 'prediction-box green-glow';
+    document.getElementById("signalDisplay").innerHTML = "Completed";
+    odd.textContent = "Chart End";
     return;
   }
 
@@ -218,18 +240,18 @@ function updateSignalDisplay() {
       <div class="countdown-timer">Upcoming in: ${formatCountdown(secondsLeft)}</div>
     `;
     odd.textContent = `ODD - ${parseFloat(signal.odd).toFixed(2)}×`;
-    box.classList.add('highlight');
+    box.className = 'prediction-box purple-glow';
     return;
   }
 
   if (now >= signalTime && now < new Date(signalTime.getTime() + 60000)) {
-    const secondsLeft = Math.floor((signalTime.getTime() + 60000 - now) / 1000);
     document.getElementById("signalDisplay").innerHTML = `
       <div class="signal-time">${signal.time}</div>
-      <div class="countdown-timer">End in: ${formatCountdown(secondsLeft)}</div>
+      <div class="countdown-timer">LIVE</div>
     `;
     odd.textContent = `ODD - ${parseFloat(signal.odd).toFixed(2)}×`;
-    box.classList.add('highlight');
+    box.className = 'prediction-box red-glow';
+    beep.play();
     return;
   }
 
@@ -239,6 +261,7 @@ function updateSignalDisplay() {
 }
 
 window.addEventListener("load", async () => {
+  document.body.classList.add('loaded');
   await fetchSignals();
   updateLiveClock();
   updateSignalDisplay();
