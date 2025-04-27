@@ -173,7 +173,7 @@ async function fetchSignals() {
     signals = await res.json();
     setTimeout(() => {
       loadingPhase = false;
-    }, 8000); // Show loading for 8 seconds
+    }, 8000);
     updateSignalImmediately();
   } catch (err) {
     console.error("Failed to load signals:", err);
@@ -232,6 +232,7 @@ function updateSignalDisplay() {
 
   const signal = signals[currentIndex];
   const signalTime = new Date(`${signal.date}T${signal.time}`);
+  const endTime = new Date(signalTime.getTime() + 60000);
 
   if (now < signalTime) {
     const secondsLeft = Math.floor((signalTime - now) / 1000);
@@ -244,10 +245,11 @@ function updateSignalDisplay() {
     return;
   }
 
-  if (now >= signalTime && now < new Date(signalTime.getTime() + 60000)) {
+  if (now >= signalTime && now < endTime) {
+    const secondsLeft = Math.floor((endTime - now) / 1000);
     document.getElementById("signalDisplay").innerHTML = `
       <div class="signal-time">${signal.time}</div>
-      <div class="countdown-timer">LIVE</div>
+      <div class="countdown-timer">End in: ${formatCountdown(secondsLeft)}</div>
     `;
     odd.textContent = `ODD - ${parseFloat(signal.odd).toFixed(2)}×`;
     box.className = 'prediction-box red-glow';
@@ -255,7 +257,7 @@ function updateSignalDisplay() {
     return;
   }
 
-  if (now >= new Date(signalTime.getTime() + 60000)) {
+  if (now >= endTime) {
     currentIndex++;
   }
 }
