@@ -247,6 +247,7 @@ function updateSignalDisplay() {
         <div class="countdown-timer loading-text"><span class="loading-dots">Loading</span></div>
       `;
       odd.textContent = "Waiting for Next Signal...";
+      box.className = 'prediction-box'; // Remove previous glow during loading
       return;
     } else {
       loadingNextSignal = false;
