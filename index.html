@@ -66,10 +66,22 @@
       font-size: 2em;
       font-weight: bold;
       margin-bottom: 10px;
+      color: #ffffff;
+    }
+    .purple-text {
+      text-shadow: 0 0 10px #800080, 0 0 20px #800080;
+    }
+    .red-text {
+      text-shadow: 0 0 10px #ff0000, 0 0 20px #ff0000;
+    }
+    .loading-text {
+      text-shadow: 0 0 10px #00bfff, 0 0 20px #00bfff;
+      color: #ffffff;
     }
     .countdown-timer {
       font-size: 1.5em;
       margin-top: 5px;
+      color: #ffffff;
     }
     .odd-box {
       margin-top: 10px;
@@ -148,7 +160,10 @@
 </div>
 
 <div class="prediction-box" id="signalBox">
-  <div id="signalDisplay">Next Signal<br><span class="loading-dots">Loading</span></div>
+  <div id="signalDisplay">
+    <div class="countdown-timer loading-text">Next Signal</div>
+    <div class="countdown-timer loading-text"><span class="loading-dots">Loading</span></div>
+  </div>
 </div>
 
 <div class="odd-box" id="oddValue">Waiting for Next Signal...</div>
@@ -166,14 +181,13 @@
 let signals = [];
 let currentIndex = 0;
 let loadingPhase = true;
+let beepPlayed = false;
 
 async function fetchSignals() {
   try {
     const res = await fetch('signals.json?v=' + new Date().getTime());
     signals = await res.json();
-    setTimeout(() => {
-      loadingPhase = false;
-    }, 8000);
+    setTimeout(() => { loadingPhase = false; }, 8000);
     updateSignalImmediately();
   } catch (err) {
     console.error("Failed to load signals:", err);
@@ -212,21 +226,24 @@ function updateSignalDisplay() {
   const beep = document.getElementById('beepSound');
 
   if (loadingPhase) {
-    document.getElementById("signalDisplay").innerHTML = 'Next Signal<br><span class="loading-dots">Loading</span>';
+    document.getElementById("signalDisplay").innerHTML = `
+      <div class="countdown-timer loading-text">Next Signal</div>
+      <div class="countdown-timer loading-text"><span class="loading-dots">Loading</span></div>
+    `;
     odd.textContent = "Waiting for Next Signal...";
     return;
   }
 
   if (signals.length === 0) {
     document.getElementById("signalDisplay").textContent = "No Signals Available.";
-    odd.textContent = "No Signals.";
+    odd.textContent = "Signal Not Available";
     return;
   }
 
   if (currentIndex >= signals.length) {
     box.className = 'prediction-box green-glow';
     document.getElementById("signalDisplay").innerHTML = "Completed";
-    odd.textContent = "Chart End";
+    odd.textContent = "Signal Not Available";
     return;
   }
 
@@ -237,28 +254,33 @@ function updateSignalDisplay() {
   if (now < signalTime) {
     const secondsLeft = Math.floor((signalTime - now) / 1000);
     document.getElementById("signalDisplay").innerHTML = `
-      <div class="signal-time">${signal.time}</div>
+      <div class="signal-time purple-text">${signal.time}</div>
       <div class="countdown-timer">Upcoming in: ${formatCountdown(secondsLeft)}</div>
     `;
     odd.textContent = `ODD - ${parseFloat(signal.odd).toFixed(2)}×`;
     box.className = 'prediction-box purple-glow';
+    beepPlayed = false;
     return;
   }
 
   if (now >= signalTime && now < endTime) {
     const secondsLeft = Math.floor((endTime - now) / 1000);
     document.getElementById("signalDisplay").innerHTML = `
-      <div class="signal-time">${signal.time}</div>
+      <div class="signal-time red-text">${signal.time}</div>
       <div class="countdown-timer">End in: ${formatCountdown(secondsLeft)}</div>
     `;
     odd.textContent = `ODD - ${parseFloat(signal.odd).toFixed(2)}×`;
     box.className = 'prediction-box red-glow';
-    beep.play();
+    if (!beepPlayed) {
+      beep.play();
+      beepPlayed = true;
+    }
     return;
   }
 
   if (now >= endTime) {
     currentIndex++;
+    beepPlayed = false;
   }
 }
 
