@@ -1,151 +1,149 @@
 <!DOCTYPE html>
 <html lang="si">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Xtreme Aviator Predictor</title>
-  <link rel="icon" href="https://upload.wikimedia.org/wikipedia/commons/3/3c/Aviator_helmet_icon.png">
-  <style>
-    body {
-      background-color: #000;
-      color: #fff;
-      font-family: 'Segoe UI', sans-serif;
-      text-align: center;
-      padding: 20px;
-      margin-top: 50px;
-      opacity: 0;
-      transition: opacity 2s ease;
-    }
-    body.loaded {
-      opacity: 1;
-    }
-    .header-box {
-      background-color: #ff0000;
-      border: 2px solid white;
-      border-radius: 15px;
-      padding: 20px 30px;
-      margin: 0 auto 15px auto;
-      max-width: 400px;
-      box-shadow: 0 0 10px #ff0000, 0 0 20px #ff0000, 0 0 30px #ff0000;
-    }
-    .header-title {
-      font-size: 1.6em;
-      font-weight: 700;
-      color: #ffffff;
-    }
-    .info-datetime {
-      margin-top: 20px;
-      border: 2px solid white;
-      padding: 10px 18px;
-      border-radius: 10px;
-      display: inline-block;
-      font-size: 1.3em;
-      font-weight: 500;
-      margin: 10px auto;
-      line-height: 1.6;
-    }
-    .prediction-box {
-      width: 240px;
-      height: 240px;
-      border-radius: 50%;
-      border: 4px solid #00ffe7;
-      background: #111;
-      margin: 20px auto;
-      box-shadow: 0 0 15px #00ffe7, inset 0 0 20px #00ffe7;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.2em;
-      color: #00ffe7;
-      text-align: center;
-      padding: 10px;
-      flex-direction: column;
-      transition: all 0.5s ease;
-    }
-    .signal-time {
-      font-size: 2em;
-      font-weight: bold;
-      margin-bottom: 10px;
-      color: #ffffff;
-    }
-    .purple-text {
-      text-shadow: 0 0 10px #800080, 0 0 20px #800080;
-    }
-    .red-text {
-      text-shadow: 0 0 10px #ff0000, 0 0 20px #ff0000;
-    }
-    .loading-text {
-      text-shadow: 0 0 10px #00bfff, 0 0 20px #00bfff;
-      color: #ffffff;
-    }
-    .countdown-timer {
-      font-size: 1.5em;
-      margin-top: 5px;
-      color: #ffffff;
-    }
-    .odd-box {
-      margin-top: 10px;
-      min-width: 220px;
-      padding: 16px 30px;
-      border-radius: 10px;
-      font-size: 1.3em;
-      color: #00ffe7;
-      background-color: #111;
-      border: 2px solid white;
-      box-shadow: 0 0 10px #00ffe7;
-      margin-left: auto;
-      margin-right: auto;
-      transition: all 0.5s ease;
-    }
-    .purple-glow {
-      border-color: #800080;
-      box-shadow: 0 0 20px #800080, inset 0 0 20px #800080;
-    }
-    .red-glow {
-      border-color: #ff0000;
-      box-shadow: 0 0 20px #ff0000, inset 0 0 20px #ff0000;
-    }
-    .green-glow {
-      border-color: #00ff00;
-      box-shadow: 0 0 20px #00ff00, inset 0 0 20px #00ff00;
-    }
-    .button-container {
-      margin: 15px 0 5px 0;
-    }
-    .btn {
-      display: inline-block;
-      color: #fff;
-      padding: 10px 20px;
-      margin: 10px;
-      border-radius: 30px;
-      text-decoration: none;
-      font-weight: 600;
-      border: 2px solid #fff;
-      transition: all .3s ease-in-out;
-      box-shadow: 0 0 10px #fff;
-    }
-    .btn.whatsapp { background-color: #25d366; box-shadow: 0 0 12px #25d366; }
-    .btn.telegram { background-color: #08c; box-shadow: 0 0 12px #08c; }
-    .btn:hover {
-      transform: scale(1.05);
-      box-shadow: 0 0 20px #fff, 0 0 25px currentColor, inset 0 0 10px currentColor;
-    }
-    footer {
-      margin-top: 30px;
-      font-size: .9em;
-      color: #888;
-    }
-    .loading-dots::after {
-      content: "...";
-      animation: blinkDots 1s steps(3, end) infinite;
-    }
-    @keyframes blinkDots {
-      0% { content: ''; }
-      33% { content: '.'; }
-      66% { content: '..'; }
-      100% { content: '...'; }
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Xtreme Aviator Predictor</title>
+<link rel="icon" href="https://upload.wikimedia.org/wikipedia/commons/3/3c/Aviator_helmet_icon.png">
+<style>
+body {
+  background-color: #000;
+  color: #fff;
+  font-family: 'Segoe UI', sans-serif;
+  text-align: center;
+  padding: 20px;
+  margin-top: 50px;
+  opacity: 0;
+  transition: opacity 2s ease;
+}
+body.loaded { opacity: 1; }
+.header-box {
+  background-color: #ff0000;
+  border: 2px solid white;
+  border-radius: 15px;
+  padding: 20px 30px;
+  margin: 0 auto 15px auto;
+  max-width: 400px;
+  box-shadow: 0 0 10px #ff0000, 0 0 20px #ff0000, 0 0 30px #ff0000;
+}
+.header-title {
+  font-size: 1.6em;
+  font-weight: 700;
+  color: #ffffff;
+}
+.info-datetime {
+  margin-top: 20px;
+  border: 2px solid white;
+  padding: 10px 18px;
+  border-radius: 10px;
+  display: inline-block;
+  font-size: 1.3em;
+  font-weight: 500;
+  margin: 10px auto;
+  line-height: 1.6;
+}
+.prediction-box {
+  width: 240px;
+  height: 240px;
+  border-radius: 50%;
+  border: 4px solid #00ffe7;
+  background: #111;
+  margin: 20px auto;
+  box-shadow: 0 0 15px #00ffe7, inset 0 0 20px #00ffe7;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2em;
+  color: #00ffe7;
+  text-align: center;
+  padding: 10px;
+  flex-direction: column;
+  transition: all 0.5s ease;
+}
+.signal-time {
+  font-size: 2em;
+  font-weight: bold;
+  margin-bottom: 10px;
+  color: #ffffff;
+}
+.purple-text {
+  text-shadow: 0 0 10px #800080, 0 0 20px #800080;
+}
+.red-text {
+  text-shadow: 0 0 10px #ff0000, 0 0 20px #ff0000;
+}
+.loading-text {
+  text-shadow: 0 0 10px #00bfff, 0 0 20px #00bfff;
+  color: #ffffff;
+}
+.countdown-timer {
+  font-size: 1.5em;
+  margin-top: 5px;
+  color: #ffffff;
+}
+.odd-box {
+  margin-top: 10px;
+  min-width: 220px;
+  padding: 16px 30px;
+  border-radius: 10px;
+  font-size: 1.3em;
+  color: #00ffe7;
+  background-color: #111;
+  border: 2px solid white;
+  box-shadow: 0 0 10px #00ffe7;
+  margin-left: auto;
+  margin-right: auto;
+  transition: all 0.5s ease;
+}
+.purple-glow {
+  border-color: #800080;
+  box-shadow: 0 0 20px #800080, inset 0 0 20px #800080;
+}
+.red-glow {
+  border-color: #ff0000;
+  box-shadow: 0 0 20px #ff0000, inset 0 0 20px #ff0000;
+}
+.green-glow {
+  border-color: #00ff00;
+  box-shadow: 0 0 20px #00ff00, inset 0 0 20px #00ff00;
+}
+.button-container {
+  margin: 15px 0 5px 0;
+}
+.btn {
+  display: inline-block;
+  color: #fff;
+  padding: 10px 20px;
+  margin: 10px;
+  border-radius: 30px;
+  text-decoration: none;
+  font-weight: 600;
+  border: 2px solid #fff;
+  transition: all .3s ease-in-out;
+  box-shadow: 0 0 10px #fff;
+}
+.btn.whatsapp { background-color: #25d366; box-shadow: 0 0 12px #25d366; }
+.btn.telegram { background-color: #08c; box-shadow: 0 0 12px #08c; }
+.btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 20px #fff, 0 0 25px currentColor, inset 0 0 10px currentColor;
+}
+footer {
+  margin-top: 30px;
+  font-size: .9em;
+  color: #888;
+}
+.loading-dots::after {
+  content: "...";
+  animation: blinkDots 1s steps(3, end) infinite;
+}
+@keyframes blinkDots {
+  0% { content: ''; }
+  33% { content: '.'; }
+  66% { content: '..'; }
+  100% { content: '...'; }
+}
+</style>
 </head>
 
 <body>
@@ -182,6 +180,8 @@ let signals = [];
 let currentIndex = 0;
 let loadingPhase = true;
 let beepPlayed = false;
+let loadingNextSignal = false;
+let loadingStartTime = 0;
 
 async function fetchSignals() {
   try {
@@ -240,6 +240,19 @@ function updateSignalDisplay() {
     return;
   }
 
+  if (loadingNextSignal) {
+    if ((now - loadingStartTime) < 6000) {
+      document.getElementById("signalDisplay").innerHTML = `
+        <div class="countdown-timer loading-text">Next Signal</div>
+        <div class="countdown-timer loading-text"><span class="loading-dots">Loading</span></div>
+      `;
+      odd.textContent = "Waiting for Next Signal...";
+      return;
+    } else {
+      loadingNextSignal = false;
+    }
+  }
+
   if (currentIndex >= signals.length) {
     box.className = 'prediction-box green-glow';
     document.getElementById("signalDisplay").innerHTML = "Completed";
@@ -280,6 +293,8 @@ function updateSignalDisplay() {
 
   if (now >= endTime) {
     currentIndex++;
+    loadingNextSignal = true;
+    loadingStartTime = new Date();
     beepPlayed = false;
   }
 }
