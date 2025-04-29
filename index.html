@@ -166,6 +166,45 @@ footer {
 
 <div class="odd-box" id="oddValue">Waiting for Next Signal...</div>
 
+<div class="signal-timeline" id="historyContainer" style="display:flex;overflow-x:auto;padding:8px;background:#1d1d1d;border-radius:10px;gap:8px;margin-top:10px;"></div>
+
+<script>
+  const historyContainer = document.getElementById("historyContainer");
+
+  function addSignalToHistory(value, time) {
+    const box = document.createElement("div");
+    box.className = "signal-box";
+    box.style = "background:#2b2b2b;border-radius:6px;min-width:55px;padding:6px;flex-shrink:0;text-align:center;opacity:0;transform:scale(0.9);transition:all 0.4s ease;";
+    box.innerHTML = `<div style="font-size:13px;font-weight:bold;color:#00ffcc;">${value}</div><div style="font-size:10px;margin-top:3px;color:#aaa;">${time}</div>`;
+    historyContainer.appendChild(box);
+    setTimeout(() => {
+      box.style.opacity = 1;
+      box.style.transform = "scale(1)";
+      historyContainer.scrollLeft = historyContainer.scrollWidth;
+    }, 50);
+  }
+
+  // Modify original script to call addSignalToHistory at end of signal round
+  const originalUpdateSignalDisplay = updateSignalDisplay;
+  updateSignalDisplay = function () {
+    originalUpdateSignalDisplay();
+
+    if (!loadingNextSignal && currentIndex > 0 && currentIndex <= signals.length) {
+      const prevIndex = currentIndex - 1;
+      const signal = signals[prevIndex];
+      const now = new Date();
+      const endTime = new Date(`${signal.date}T${signal.time}`);
+      endTime.setMinutes(endTime.getMinutes() + 1);
+
+      if (now >= endTime && !signal._addedToHistory) {
+        addSignalToHistory(`${parseFloat(signal.odd).toFixed(2)}×`, signal.time);
+        signal._addedToHistory = true;
+      }
+    }
+  };
+</script>
+
+
 <div class="button-container">
   <a class="btn whatsapp" href="https://wa.me/xxxxxxxx" target="_blank">WhatsApp</a>
   <a class="btn telegram" href="https://t.me/xxxxxxxx" target="_blank">Telegram</a>
