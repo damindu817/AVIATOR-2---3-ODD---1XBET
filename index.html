@@ -166,25 +166,29 @@ footer {
 
 <div class="odd-box" id="oddValue">Waiting for Next Signal...</div>
 
-<div class="signal-timeline" id="historyContainer" style="display:flex;overflow-x:auto;padding:8px;background:#1d1d1d;border-radius:10px;gap:8px;margin-top:10px;"></div>
+<!-- Signal History Timeline -->
+<div class="signal-timeline" id="historyContainer" style="display:flex;overflow-x:auto;padding:8px;background:#1d1d1d;border-radius:10px;gap:8px;margin-top:10px;">
+  <div id="noSignalMsg" style="font-size:12px;color:#888;margin:auto;">No signal history</div>
+</div>
 
 <script>
   const historyContainer = document.getElementById("historyContainer");
+  const noSignalMsg = document.getElementById("noSignalMsg");
 
   function addSignalToHistory(value, time) {
+    if (noSignalMsg) noSignalMsg.remove();
     const box = document.createElement("div");
     box.className = "signal-box";
-    box.style = "background:#2b2b2b;border-radius:6px;min-width:55px;padding:6px;flex-shrink:0;text-align:center;opacity:0;transform:scale(0.9);transition:all 0.4s ease;";
-    box.innerHTML = `<div style="font-size:13px;font-weight:bold;color:#00ffcc;">${value}</div><div style="font-size:10px;margin-top:3px;color:#aaa;">${time}</div>`;
+    box.style = "background:#2a2a2a;border-radius:8px;min-width:60px;padding:6px 8px;flex-shrink:0;text-align:center;opacity:0;transform:translateY(10px);transition:all 0.4s ease;border:1px solid #00ffc8;";
+    box.innerHTML = `<div style='font-size:14px;font-weight:bold;color:#00ffc8;'>${value}</div><div style='font-size:11px;margin-top:4px;color:#bbb;'>${time}</div>`;
     historyContainer.appendChild(box);
     setTimeout(() => {
       box.style.opacity = 1;
-      box.style.transform = "scale(1)";
+      box.style.transform = "translateY(0)";
       historyContainer.scrollLeft = historyContainer.scrollWidth;
     }, 50);
   }
 
-  // Modify original script to call addSignalToHistory at end of signal round
   const originalUpdateSignalDisplay = updateSignalDisplay;
   updateSignalDisplay = function () {
     originalUpdateSignalDisplay();
