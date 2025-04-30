@@ -143,6 +143,52 @@ footer {
   66% { content: '..'; }
   100% { content: '...'; }
 }
+
+.timeline-box {
+  border: 1px solid #444;
+  border-radius: 10px;
+  background-color: #111;
+  padding: 10px;
+  margin: 20px auto 0 auto;
+  max-width: 400px;
+  box-shadow: 0 0 8px #222;
+}
+.history-strip {
+  display: flex;
+  overflow-x: auto;
+  gap: 6px;
+  padding: 8px;
+  max-width: 100%;
+  box-sizing: border-box;
+  justify-content: flex-start;
+  scrollbar-width: none;
+}
+.history-strip::-webkit-scrollbar {
+  display: none;
+}
+.history-box {
+  background: #1a1a1a;
+  border-radius: 8px;
+  padding: 6px 10px;
+  min-width: 70px;
+  text-align: center;
+  color: #fff;
+  font-weight: 600;
+  font-size: 0.95em;
+  border: 1px solid #333;
+}
+.history-box.highlight {
+  background: #800080;
+  color: #ffeb3b;
+  border: 1px solid #ffffff;
+}
+.history-box time {
+  display: block;
+  font-size: 0.75em;
+  margin-top: 3px;
+  color: #bbb;
+}
+
 </style>
 </head>
 
@@ -166,47 +212,12 @@ footer {
 
 <div class="odd-box" id="oddValue">Waiting for Next Signal...</div>
 
-<!-- Signal History Timeline -->
-<div class="signal-timeline" id="historyContainer" style="display:flex;overflow-x:auto;padding:8px;background:#1d1d1d;border-radius:10px;gap:8px;margin-top:10px;">
-  <div id="noSignalMsg" style="font-size:12px;color:#888;margin:auto;">No signal history</div>
+<div class="timeline-box">
+  <div id="historyMessage" style="color:#aaa; text-align:center; padding:10px;">Waiting for signal history...</div>
+  <div class="history-strip" id="historyStrip">
+    <!-- Signal history boxes will appear here -->
+  </div>
 </div>
-
-<script>
-  const historyContainer = document.getElementById("historyContainer");
-  const noSignalMsg = document.getElementById("noSignalMsg");
-
-  function addSignalToHistory(value, time) {
-    if (noSignalMsg) noSignalMsg.remove();
-    const box = document.createElement("div");
-    box.className = "signal-box";
-    box.style = "background:#2a2a2a;border-radius:8px;min-width:60px;padding:6px 8px;flex-shrink:0;text-align:center;opacity:0;transform:translateY(10px);transition:all 0.4s ease;border:1px solid #00ffc8;";
-    box.innerHTML = `<div style='font-size:14px;font-weight:bold;color:#00ffc8;'>${value}</div><div style='font-size:11px;margin-top:4px;color:#bbb;'>${time}</div>`;
-    historyContainer.appendChild(box);
-    setTimeout(() => {
-      box.style.opacity = 1;
-      box.style.transform = "translateY(0)";
-      historyContainer.scrollLeft = historyContainer.scrollWidth;
-    }, 50);
-  }
-
-  const originalUpdateSignalDisplay = updateSignalDisplay;
-  updateSignalDisplay = function () {
-    originalUpdateSignalDisplay();
-
-    if (!loadingNextSignal && currentIndex > 0 && currentIndex <= signals.length) {
-      const prevIndex = currentIndex - 1;
-      const signal = signals[prevIndex];
-      const now = new Date();
-      const endTime = new Date(`${signal.date}T${signal.time}`);
-      endTime.setMinutes(endTime.getMinutes() + 1);
-
-      if (now >= endTime && !signal._addedToHistory) {
-        addSignalToHistory(`${parseFloat(signal.odd).toFixed(2)}×`, signal.time);
-        signal._addedToHistory = true;
-      }
-    }
-  };
-</script>
 
 
 <div class="button-container">
@@ -223,6 +234,19 @@ let signals = [];
 let currentIndex = 0;
 let loadingPhase = true;
 let beepPlayed = false;
+
+function addToHistory(signal) {
+  const strip = document.getElementById('historyStrip');
+  const msg = document.getElementById('historyMessage');
+  if (msg) msg.style.display = 'none';
+  if (!strip) return;
+  const box = document.createElement('div');
+  box.className = 'history-box highlight';
+  box.innerHTML = `<div>${parseFloat(signal.odd).toFixed(2)}x</div><time>${signal.time}</time>`;
+  strip.appendChild(box);
+  setTimeout(() => box.classList.remove('highlight'), 3000);
+}
+
 let loadingNextSignal = false;
 let loadingStartTime = 0;
 
@@ -336,6 +360,7 @@ function updateSignalDisplay() {
   }
 
   if (now >= endTime) {
+    addToHistory(signal);
     currentIndex++;
     loadingNextSignal = true;
     loadingStartTime = new Date();
