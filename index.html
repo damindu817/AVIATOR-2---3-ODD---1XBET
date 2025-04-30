@@ -290,23 +290,27 @@ function renderInitialHistory() {
 
 
 
+
 function addToHistory(signal) {
   const strip = document.getElementById('historyStrip');
   const msg = document.getElementById('historyMessage');
   if (msg) msg.style.display = 'none';
   if (!strip) return;
 
-  // Remove any existing highlights
+  // Remove existing highlight
   const highlighted = strip.querySelector('.history-box.highlight');
   if (highlighted) highlighted.classList.remove('highlight');
 
+  // Create new history box
   const box = document.createElement('div');
   box.className = 'history-box highlight';
   box.innerHTML = `<div>${parseFloat(signal.odd).toFixed(2)}x</div><time>${signal.time}</time>`;
   strip.appendChild(box);
 
-  setTimeout(() => box.classList.remove('highlight'), 3000);
+  // Optional: scroll to new item smoothly
+  box.scrollIntoView({ behavior: 'smooth', inline: 'end' });
 }
+
 
 
 let loadingNextSignal = false;
