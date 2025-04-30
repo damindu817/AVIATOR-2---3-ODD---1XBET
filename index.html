@@ -452,6 +452,23 @@ window.addEventListener("load", async () => {
   setInterval(updateLiveClock, 1000);
   setInterval(updateSignalDisplay, 1000);
 });
+
+// Real-time JSON fetch every 10 seconds
+setInterval(async () => {
+  try {
+    const res = await fetch('signals.json?v=' + new Date().getTime());
+    const newSignals = await res.json();
+
+    if (JSON.stringify(newSignals) !== JSON.stringify(signals)) {
+      signals = newSignals;
+      updateSignalImmediately();
+      renderInitialHistory(); // Optional: refresh timeline
+    }
+  } catch (err) {
+    console.error("Live update error:", err);
+  }
+}, 10000); // 10 seconds
+
 </script>
 
 </body>
