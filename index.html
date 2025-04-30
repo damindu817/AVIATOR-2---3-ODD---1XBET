@@ -198,6 +198,23 @@ footer {
   color: #bbb;
 }
 
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.history-box {
+  animation: fadeInUp 0.5s ease forwards;
+  opacity: 0;
+  transform: translateY(10px);
+}
+
 </style>
 </head>
 
@@ -272,17 +289,25 @@ function renderInitialHistory() {
 }
 
 
+
 function addToHistory(signal) {
   const strip = document.getElementById('historyStrip');
   const msg = document.getElementById('historyMessage');
   if (msg) msg.style.display = 'none';
   if (!strip) return;
+
+  // Remove any existing highlights
+  const highlighted = strip.querySelector('.history-box.highlight');
+  if (highlighted) highlighted.classList.remove('highlight');
+
   const box = document.createElement('div');
   box.className = 'history-box highlight';
   box.innerHTML = `<div>${parseFloat(signal.odd).toFixed(2)}x</div><time>${signal.time}</time>`;
   strip.appendChild(box);
+
   setTimeout(() => box.classList.remove('highlight'), 3000);
 }
+
 
 let loadingNextSignal = false;
 let loadingStartTime = 0;
