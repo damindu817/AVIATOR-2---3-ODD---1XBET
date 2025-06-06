@@ -3,362 +3,248 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<meta name="theme-color" content="#0f0f13">
-<title>Xtreme Aviator Predictor Pro</title>
+<title>Xtreme Aviator Predictor</title>
 <link rel="icon" href="https://upload.wikimedia.org/wikipedia/commons/3/3c/Aviator_helmet_icon.png">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
-:root {
-  --primary: #6a11cb;
-  --secondary: #2575fc;
-  --accent: #00ffe7;
-  --danger: #ff3860;
-  --success: #2ecc71;
-  --dark: #0f0f13;
-  --darker: #0a0a0d;
-  --light: #f8f9fa;
-  --gray: #6c757d;
-  --neon-glow: 0 0 15px currentColor;
-  --pink: #ff1493;
-  --hotpink: #ff69b4;
-}
-
+/* Base Styles */
 * {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
   -webkit-user-select: none;
+  -khtml-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html, body {
+  height: 100%;
+  overflow-x: hidden;
+  touch-action: manipulation;
 }
 
 body {
-  background: linear-gradient(135deg, var(--darker), var(--dark));
-  color: var(--light);
-  font-family: 'Poppins', 'Segoe UI', sans-serif;
-  min-height: 100vh;
-  padding: 1rem;
-  overflow-x: hidden;
-  position: relative;
-}
-
-body::before {
-  content: '';
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: radial-gradient(circle at 20% 30%, rgba(106, 17, 203, 0.15) 0%, transparent 40%),
-              radial-gradient(circle at 80% 70%, rgba(37, 117, 252, 0.15) 0%, transparent 40%);
-  pointer-events: none;
-  z-index: -1;
-}
-
-/* Loading Animation */
-.loading-screen {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: var(--dark);
+  background: linear-gradient(135deg, #0f0f1a 0%, #1a1a2e 100%);
+  color: #fff;
+  font-family: 'Segoe UI', Roboto, -apple-system, BlinkMacSystemFont, sans-serif;
+  text-align: center;
+  margin: 0;
+  padding: 0;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  z-index: 9999;
-  transition: opacity 0.8s ease;
-}
-
-.loading-screen.hidden {
+  min-height: 100vh;
   opacity: 0;
-  pointer-events: none;
+  animation: fadeIn 1s ease forwards;
 }
 
-.loader {
-  width: 80px;
-  height: 80px;
+@keyframes fadeIn {
+  to { opacity: 1; }
+}
+
+/* Header with Shine Effect */
+.header-container {
   position: relative;
-  margin-bottom: 1.5rem;
+  padding: 15px 0;
+  margin-bottom: 20px;
+  background: linear-gradient(to right, #1a1a2e, #16213e, #1a1a2e);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+  overflow: hidden;
 }
 
-.loader::before,
-.loader::after {
+.header-container::before {
   content: '';
   position: absolute;
   top: 0;
-  left: 0;
+  left: -100%;
   width: 100%;
   height: 100%;
-  border-radius: 50%;
-  border: 4px solid transparent;
-  border-top-color: var(--accent);
-  animation: spin 1.5s linear infinite;
-}
-
-.loader::after {
-  border-top-color: var(--secondary);
-  animation-delay: 0.3s;
-}
-
-@keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
-}
-
-.loading-text {
-  color: var(--light);
-  font-size: 1.2rem;
-  margin-top: 1rem;
-  text-align: center;
-}
-
-.loading-dots::after {
-  content: '...';
-  animation: blinkDots 1.5s infinite;
-}
-
-@keyframes blinkDots {
-  0%, 20% { content: '.'; }
-  40% { content: '..'; }
-  60%, 100% { content: '...'; }
-}
-
-/* Main Content */
-.container {
-  max-width: 480px;
-  margin: 0 auto;
-  opacity: 0;
-  transform: translateY(20px);
-  animation: fadeInUp 0.8s ease-out 0.5s forwards;
-}
-
-@keyframes fadeInUp {
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-/* Header */
-.header {
-  background: linear-gradient(135deg, var(--primary), var(--secondary));
-  border-radius: 15px;
-  padding: 1.5rem;
-  margin-bottom: 1.5rem;
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
-  position: relative;
-  overflow: hidden;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.header::after {
-  content: '';
-  position: absolute;
-  top: -50%;
-  left: -50%;
-  width: 200%;
-  height: 200%;
   background: linear-gradient(
-    to bottom right,
-    rgba(255, 255, 255, 0) 0%,
-    rgba(255, 255, 255, 0.1) 50%,
-    rgba(255, 255, 255, 0) 100%
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.2),
+    transparent
   );
-  transform: rotate(30deg);
-  animation: shine 5s infinite;
+  animation: shine 3s infinite;
 }
 
 @keyframes shine {
-  0% { transform: translateX(-100%) rotate(30deg); }
-  100% { transform: translateX(100%) rotate(30deg); }
+  0% { left: -100%; }
+  20% { left: 100%; }
+  100% { left: 100%; }
 }
 
 .header-title {
-  font-size: 1.3rem;
+  font-size: 1.2rem;
   font-weight: 700;
-  text-align: center;
+  color: #fff;
   text-transform: uppercase;
   letter-spacing: 1px;
-  background: linear-gradient(to right, #fff, #f3f3f3);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+  margin: 0;
+  padding: 10px 20px;
   position: relative;
   z-index: 1;
+  text-shadow: 0 0 10px rgba(0, 195, 255, 0.7);
 }
 
-/* Clock - Compact Design */
+/* Clock Section */
 .clock-container {
-  display: flex;
-  justify-content: space-between;
-  background: rgba(15, 15, 19, 0.7);
+  background: rgba(10, 10, 20, 0.7);
   border-radius: 12px;
-  padding: 0.8rem;
-  margin-bottom: 1.5rem;
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.05);
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  padding: 12px;
+  margin: 0 auto 20px;
+  width: 90%;
+  max-width: 300px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(5px);
 }
 
-.clock-item {
-  text-align: center;
-  flex: 1;
+.clock-time, .clock-date {
+  margin: 5px 0;
+  font-size: 1rem;
+  font-weight: 500;
 }
 
-.clock-label {
-  font-size: 0.7rem;
-  color: var(--gray);
-  margin-bottom: 0.2rem;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-}
-
-.clock-value {
-  font-size: 0.9rem;
-  font-weight: 600;
-  color: var(--light);
-}
-
-/* Prediction Box - Circular Design */
-.prediction-container {
+/* Signal Circle - Enhanced Design */
+.signal-container {
   position: relative;
-  margin-bottom: 1.5rem;
-}
-
-.prediction-box {
-  background: rgba(15, 15, 19, 0.7);
-  border-radius: 50%;
-  padding: 1.5rem;
-  text-align: center;
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.05);
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
-  transition: all 0.3s ease;
-  position: relative;
-  overflow: hidden;
+  margin: 20px auto;
   width: 200px;
   height: 200px;
-  margin: 0 auto;
   display: flex;
-  flex-direction: column;
   justify-content: center;
   align-items: center;
 }
 
-.prediction-box::before {
+.signal-circle {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 2;
+  background: radial-gradient(circle at center, #111 0%, #000 100%);
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+  border: 3px solid transparent;
+  transition: all 0.5s ease;
+}
+
+.signal-circle::before {
   content: '';
   position: absolute;
-  top: -2px;
-  left: -2px;
-  right: -2px;
-  bottom: -2px;
+  top: -5px;
+  left: -5px;
+  right: -5px;
+  bottom: -5px;
   border-radius: 50%;
-  background: linear-gradient(45deg, var(--primary), var(--secondary), var(--accent));
   z-index: -1;
   opacity: 0;
-  transition: opacity 0.3s ease;
+  transition: opacity 0.5s ease;
 }
 
-.prediction-box.active::before {
+.signal-circle.purple::before {
+  background: radial-gradient(circle at center, rgba(128, 0, 128, 0.8) 0%, transparent 70%);
   opacity: 1;
-  animation: borderGlow 2s linear infinite;
+  box-shadow: 0 0 30px rgba(128, 0, 128, 0.6);
+  border-color: #800080;
 }
 
-@keyframes borderGlow {
-  0% { filter: blur(5px); opacity: 0.7; }
-  50% { filter: blur(7px); opacity: 0.9; }
-  100% { filter: blur(5px); opacity: 0.7; }
+.signal-circle.red::before {
+  background: radial-gradient(circle at center, rgba(255, 0, 0, 0.8) 0%, transparent 70%);
+  opacity: 1;
+  box-shadow: 0 0 30px rgba(255, 0, 0, 0.6);
+  border-color: #ff0000;
+}
+
+.signal-circle.green::before {
+  background: radial-gradient(circle at center, rgba(0, 255, 0, 0.8) 0%, transparent 70%);
+  opacity: 1;
+  box-shadow: 0 0 30px rgba(0, 255, 0, 0.6);
+  border-color: #00ff00;
 }
 
 .signal-time {
-  font-size: 1.8rem;
+  font-size: 1.3rem;
   font-weight: 700;
-  margin-bottom: 0.5rem;
-  background: linear-gradient(to right, var(--accent), #00c8ff);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+  margin-bottom: 5px;
 }
 
 .countdown-timer {
-  font-size: 1.2rem;
-  font-weight: 600;
-  color: var(--light);
-  margin-bottom: 0.5rem;
+  font-size: 0.9rem;
+  font-weight: 500;
+  margin-top: 5px;
 }
 
-.signal-status {
-  font-size: 1rem;
-  color: var(--gray);
-  font-weight: 500;
+.purple-text {
+  color: #c77dff;
+  text-shadow: 0 0 10px rgba(199, 125, 255, 0.7);
+}
+
+.red-text {
+  color: #ff6b6b;
+  text-shadow: 0 0 10px rgba(255, 107, 107, 0.7);
+}
+
+.loading-text {
+  color: #64dfdf;
+  text-shadow: 0 0 10px rgba(100, 223, 223, 0.7);
 }
 
 /* Odd Box */
 .odd-box {
-  background: rgba(15, 15, 19, 0.7);
+  background: rgba(10, 10, 20, 0.7);
   border-radius: 12px;
-  padding: 1rem;
-  text-align: center;
-  font-size: 1.2rem;
-  font-weight: 700;
-  margin-bottom: 1.5rem;
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.05);
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  padding: 12px;
+  margin: 10px auto;
+  width: 90%;
+  max-width: 250px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #64dfdf;
+  backdrop-filter: blur(5px);
   transition: all 0.3s ease;
 }
 
-.odd-box.active {
-  color: var(--accent);
-  text-shadow: var(--neon-glow);
-  border-color: var(--accent);
+.odd-box.purple {
+  color: #c77dff;
+  box-shadow: 0 0 20px rgba(199, 125, 255, 0.3);
 }
 
-/* Timeline */
+.odd-box.red {
+  color: #ff6b6b;
+  box-shadow: 0 0 20px rgba(255, 107, 107, 0.3);
+}
+
+/* History Timeline */
 .timeline-container {
-  background: rgba(15, 15, 19, 0.7);
-  border-radius: 16px;
-  padding: 1rem;
-  margin-bottom: 1.5rem;
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.05);
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  background: rgba(10, 10, 20, 0.7);
+  border-radius: 12px;
+  padding: 15px;
+  margin: 20px auto;
+  width: 90%;
+  max-width: 400px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(5px);
 }
 
-.timeline-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 1rem;
-}
-
-.timeline-title {
+.history-title {
   font-size: 1rem;
   font-weight: 600;
-  color: var(--light);
-}
-
-.timeline-clear {
-  background: none;
-  border: none;
-  color: var(--gray);
-  font-size: 0.8rem;
-  cursor: pointer;
-  transition: color 0.2s ease;
-}
-
-.timeline-clear:hover {
-  color: var(--danger);
+  margin-bottom: 10px;
+  color: #a5a5a5;
 }
 
 .history-strip {
   display: flex;
-  gap: 0.8rem;
   overflow-x: auto;
-  padding-bottom: 0.5rem;
+  gap: 8px;
+  padding: 5px;
   scrollbar-width: none;
 }
 
@@ -366,311 +252,277 @@ body::before {
   display: none;
 }
 
-/* History Items - Pink with White Outline */
 .history-item {
-  background: linear-gradient(135deg, rgba(255, 105, 180, 0.8), rgba(255, 20, 147, 0.8));
-  border-radius: 10px;
-  padding: 0.8rem 1rem;
-  min-width: 80px;
+  background: rgba(20, 20, 40, 0.8);
+  border-radius: 8px;
+  padding: 8px 12px;
+  min-width: 70px;
   text-align: center;
+  color: #fff;
+  font-weight: 600;
+  font-size: 0.9rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
   flex-shrink: 0;
-  border: 2px solid white;
-  transition: all 0.3s ease;
-  animation: fadeIn 0.5s ease-out forwards;
+  animation: fadeInUp 0.5s ease forwards;
   opacity: 0;
-  transform: translateY(10px);
 }
 
-@keyframes fadeIn {
+.history-item.highlight {
+  background: linear-gradient(135deg, #800080 0%, #4b0082 100%);
+  color: #fff;
+  box-shadow: 0 0 15px rgba(128, 0, 128, 0.5);
+}
+
+.history-item time {
+  display: block;
+  font-size: 0.7rem;
+  margin-top: 3px;
+  color: #bbb;
+  font-weight: 400;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
   to {
     opacity: 1;
     transform: translateY(0);
   }
 }
 
-.history-item.highlight {
-  background: linear-gradient(135deg, rgba(255, 0, 128, 0.9), rgba(199, 21, 133, 0.9));
-  box-shadow: 0 0 15px rgba(255, 105, 180, 0.5);
-  border-color: white;
-}
-
-.history-odd {
-  font-size: 1.1rem;
-  font-weight: 700;
-  margin-bottom: 0.3rem;
-  color: white;
-}
-
-.history-time {
-  font-size: 0.7rem;
-  color: white;
-}
-
-.empty-message {
-  text-align: center;
-  color: var(--gray);
-  font-size: 0.9rem;
-  padding: 1rem 0;
-}
-
 /* Buttons */
 .button-container {
   display: flex;
   justify-content: center;
-  gap: 1rem;
-  margin-bottom: 1.5rem;
+  gap: 15px;
+  margin: 20px 0;
+  padding: 0 15px;
 }
 
 .btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 0.8rem 1.5rem;
-  border-radius: 50px;
-  font-weight: 600;
+  color: #fff;
+  padding: 12px 20px;
+  border-radius: 30px;
   text-decoration: none;
-  transition: all 0.3s ease;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  font-weight: 600;
+  font-size: 0.9rem;
   border: none;
-  cursor: pointer;
-  position: relative;
-  overflow: hidden;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  min-width: 120px;
 }
 
-.btn::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-  transition: 0.5s;
+.btn.whatsapp {
+  background: linear-gradient(135deg, #25D366 0%, #128C7E 100%);
 }
 
-.btn:hover::before {
-  left: 100%;
+.btn.telegram {
+  background: linear-gradient(135deg, #0088cc 0%, #005b8c 100%);
 }
 
-.btn i {
-  margin-right: 0.5rem;
-  font-size: 1.1rem;
+.btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
 }
 
-.btn-whatsapp {
-  background: linear-gradient(135deg, #25D366, #128C7E);
-  color: white;
-}
-
-.btn-telegram {
-  background: linear-gradient(135deg, #0088cc, #004d7a);
-  color: white;
+.btn:active {
+  transform: translateY(0);
 }
 
 /* Footer */
-.footer {
-  text-align: center;
-  color: var(--gray);
+footer {
+  margin-top: auto;
+  padding: 15px;
   font-size: 0.8rem;
-  padding: 1rem 0;
-  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  color: #666;
+  background: rgba(10, 10, 20, 0.7);
+  backdrop-filter: blur(5px);
 }
 
-/* Status Colors */
-.status-waiting {
-  color: var(--accent);
+/* Loading Animation */
+.loading-dots::after {
+  content: '...';
+  animation: blinkDots 1.5s steps(3, end) infinite;
 }
 
-.status-active {
-  color: var(--danger);
-  animation: pulse 1.5s infinite;
-}
-
-@keyframes pulse {
-  0% { opacity: 0.7; }
-  50% { opacity: 1; }
-  100% { opacity: 0.7; }
-}
-
-.status-completed {
-  color: var(--success);
+@keyframes blinkDots {
+  0% { content: ''; }
+  33% { content: '.'; }
+  66% { content: '..'; }
+  100% { content: '...'; }
 }
 
 /* Responsive Adjustments */
-@media (max-width: 400px) {
+@media (max-width: 480px) {
   .header-title {
-    font-size: 1.1rem;
-  }
-  
-  .signal-time {
-    font-size: 1.5rem;
-  }
-  
-  .countdown-timer {
     font-size: 1rem;
+    padding: 10px 15px;
   }
   
-  .btn {
-    padding: 0.7rem 1.2rem;
-    font-size: 0.9rem;
-  }
-  
-  .prediction-box {
+  .signal-container {
     width: 180px;
     height: 180px;
   }
+  
+  .signal-time {
+    font-size: 1.1rem;
+  }
+  
+  .btn {
+    padding: 10px 15px;
+    min-width: 110px;
+    font-size: 0.85rem;
+  }
+}
+
+/* No Signal Message */
+.no-signal-message {
+  color: #777;
+  font-size: 0.9rem;
+  padding: 10px;
+  text-align: center;
 }
 </style>
 </head>
 
 <body>
-<!-- Loading Screen -->
-<div class="loading-screen">
-  <div class="loader"></div>
-  <div class="loading-text">Initializing Predictor<span class="loading-dots"></span></div>
+
+<div class="header-container">
+  <h1 class="header-title">XTREME AVIATOR PREDICTOR 2 ODD : 1XBET</h1>
 </div>
 
-<!-- Main Content -->
-<div class="container">
-  <!-- Header -->
-  <div class="header">
-    <h1 class="header-title">XTREME AVIATOR PREDICTOR PRO</h1>
-  </div>
-  
-  <!-- Live Clock -->
-  <div class="clock-container">
-    <div class="clock-item">
-      <div class="clock-label">Time</div>
-      <div class="clock-value" id="liveTime">00:00:00</div>
+<div class="clock-container">
+  <div class="clock-time">Live Time: <span id="liveTime"></span></div>
+  <div class="clock-date">Date: <span id="liveDate"></span></div>
+</div>
+
+<div class="signal-container">
+  <div class="signal-circle" id="signalCircle">
+    <div id="signalDisplay">
+      <div class="countdown-timer loading-text">Next Signal</div>
+      <div class="countdown-timer loading-text"><span class="loading-dots">Loading</span></div>
     </div>
-    <div class="clock-item">
-      <div class="clock-label">Date</div>
-      <div class="clock-value" id="liveDate">Day, Month Year</div>
-    </div>
-  </div>
-  
-  <!-- Prediction Box -->
-  <div class="prediction-container">
-    <div class="prediction-box" id="signalBox">
-      <div id="signalDisplay">
-        <div class="signal-time">--:--</div>
-        <div class="countdown-timer">Next Signal</div>
-        <div class="signal-status status-waiting">Loading predictor data<span class="loading-dots"></span></div>
-      </div>
-    </div>
-  </div>
-  
-  <!-- Odd Box -->
-  <div class="odd-box" id="oddValue">
-    Waiting for next signal...
-  </div>
-  
-  <!-- Timeline -->
-  <div class="timeline-container">
-    <div class="timeline-header">
-      <div class="timeline-title">Recent Signals</div>
-      <button class="timeline-clear" id="clearHistory">Clear</button>
-    </div>
-    <div id="historyMessage" class="empty-message">No signal history available</div>
-    <div class="history-strip" id="historyStrip">
-      <!-- History items will be added here dynamically -->
-    </div>
-  </div>
-  
-  <!-- Buttons -->
-  <div class="button-container">
-    <a href="https://chat.whatsapp.com/BE39Aj6enbP3SNkfmn8DeG" target="_blank" class="btn btn-whatsapp">
-      <i class="fab fa-whatsapp"></i> WhatsApp
-    </a>
-    <a href="https://t.me/+Ems_0HKtv_gwZmQ1" target="_blank" class="btn btn-telegram">
-      <i class="fab fa-telegram"></i> Telegram
-    </a>
-  </div>
-  
-  <!-- Footer -->
-  <div class="footer">
-    POWERED BY XTREME PREDICTOR © 2025
   </div>
 </div>
 
-<!-- Audio for notifications -->
+<div class="odd-box" id="oddValue">Waiting for Next Signal...</div>
+
+<div class="timeline-container">
+  <div class="history-title">SIGNAL HISTORY</div>
+  <div id="historyMessage" class="no-signal-message">No signal history available</div>
+  <div class="history-strip" id="historyStrip">
+    <!-- Signal history items will appear here -->
+  </div>
+</div>
+
+<div class="button-container">
+  <a class="btn whatsapp" href="https://chat.whatsapp.com/BE39Aj6enbP3SNkfmn8DeG" target="_blank">WhatsApp</a>
+  <a class="btn telegram" href="https://t.me/+Ems_0HKtv_gwZmQ1" target="_blank">Telegram</a>
+</div>
+
+<footer>POWERED BY XTREME PREDICTOR © 2025</footer>
+
 <audio id="beepSound" src="https://actions.google.com/sounds/v1/alarms/beep_short.ogg"></audio>
-<audio id="alertSound" src="https://actions.google.com/sounds/v1/alarms/alarm_clock.ogg"></audio>
 
 <script>
-// Disable right-click and copy-paste
+let signals = [];
+let currentIndex = 0;
+let loadingPhase = true;
+let beepPlayed = false;
+
+// Disable zooming and scrolling
+document.addEventListener('touchmove', function(e) {
+  e.preventDefault();
+}, { passive: false });
+
+document.addEventListener('gesturestart', function(e) {
+  e.preventDefault();
+});
+
+// Prevent context menu
 document.addEventListener('contextmenu', function(e) {
   e.preventDefault();
 });
 
-document.addEventListener('copy', function(e) {
-  e.preventDefault();
-});
+function renderInitialHistory() {
+  const now = new Date();
+  const strip = document.getElementById('historyStrip');
+  const msg = document.getElementById('historyMessage');
 
-// Loading screen transition
-window.addEventListener('load', function() {
-  setTimeout(function() {
-    document.querySelector('.loading-screen').classList.add('hidden');
-  }, 2000);
-});
+  let lastPassedIndex = -1;
+  signals.forEach((signal, i) => {
+    const signalTime = new Date(`${signal.date}T${signal.time}`);
+    if (signalTime < now) {
+      const item = document.createElement('div');
+      item.className = 'history-item';
+      item.innerHTML = `<div>${parseFloat(signal.odd).toFixed(2)}x</div><time>${signal.time}</time>`;
+      strip.appendChild(item);
+      lastPassedIndex = i;
+    }
+  });
 
-// Main application
-let signals = [];
-let currentIndex = 0;
-let beepPlayed = false;
+  if (lastPassedIndex >= 0) {
+    const items = strip.querySelectorAll('.history-item');
+    items[items.length - 1].classList.add('highlight');
+    if (msg) msg.style.display = 'none';
+  } else {
+    if (msg) msg.style.display = 'block';
+  }
+}
+
+function addToHistory(signal) {
+  const strip = document.getElementById('historyStrip');
+  const msg = document.getElementById('historyMessage');
+  if (msg) msg.style.display = 'none';
+  if (!strip) return;
+
+  // Remove existing highlight
+  const highlighted = strip.querySelector('.history-item.highlight');
+  if (highlighted) highlighted.classList.remove('highlight');
+
+  // Create new history item
+  const item = document.createElement('div');
+  item.className = 'history-item highlight';
+  item.innerHTML = `<div>${parseFloat(signal.odd).toFixed(2)}x</div><time>${signal.time}</time>`;
+  strip.appendChild(item);
+
+  // Scroll to new item smoothly
+  item.scrollIntoView({ behavior: 'smooth', inline: 'end' });
+}
+
 let loadingNextSignal = false;
 let loadingStartTime = 0;
 
-// DOM Elements
-const signalBox = document.getElementById('signalBox');
-const signalDisplay = document.getElementById('signalDisplay');
-const oddValue = document.getElementById('oddValue');
-const historyStrip = document.getElementById('historyStrip');
-const historyMessage = document.getElementById('historyMessage');
-const clearHistoryBtn = document.getElementById('clearHistory');
-const beepSound = document.getElementById('beepSound');
-const alertSound = document.getElementById('alertSound');
+async function fetchSignals() {
+  try {
+    const res = await fetch('signals.json?v=' + new Date().getTime());
+    signals = await res.json();
+    setTimeout(() => { loadingPhase = false; }, 8000);
+    updateSignalImmediately();
+  } catch (err) {
+    console.error("Failed to load signals:", err);
+  }
+}
 
-// Format time for countdown
+function updateLiveClock() {
+  const now = new Date();
+  const time = now.toLocaleTimeString('en-GB', { hour12: false });
+  const date = now.toLocaleDateString('en-GB', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+  document.getElementById("liveTime").textContent = time;
+  document.getElementById("liveDate").textContent = date;
+}
+
 function formatCountdown(seconds) {
   const m = Math.floor(seconds / 60).toString().padStart(2, '0');
   const s = (seconds % 60).toString().padStart(2, '0');
   return `${m}:${s}`;
 }
 
-// Update live clock
-function updateLiveClock() {
-  const now = new Date();
-  const time = now.toLocaleTimeString('en-GB', { hour12: false });
-  const date = now.toLocaleDateString('en-GB', { 
-    weekday: 'long', 
-    year: 'numeric', 
-    month: 'long', 
-    day: 'numeric' 
-  });
-  document.getElementById("liveTime").textContent = time;
-  document.getElementById("liveDate").textContent = date;
-}
-
-// Fetch signals from JSON
-async function fetchSignals() {
-  try {
-    const res = await fetch('signals.json?v=' + new Date().getTime());
-    signals = await res.json();
-    updateSignalImmediately();
-    renderInitialHistory();
-  } catch (err) {
-    console.error("Failed to load signals:", err);
-    signalDisplay.innerHTML = `
-      <div class="signal-time">--:--</div>
-      <div class="countdown-timer">Error</div>
-      <div class="signal-status status-waiting">Failed to load signals</div>
-    `;
-    oddValue.textContent = "Connection Error";
-  }
-}
-
-// Update signal index based on current time
 function updateSignalImmediately() {
   const now = new Date();
   for (let i = 0; i < signals.length; i++) {
@@ -682,144 +534,93 @@ function updateSignalImmediately() {
   }
 }
 
-// Render initial history
-function renderInitialHistory() {
-  const now = new Date();
-  let hasHistory = false;
-
-  signals.forEach((signal, i) => {
-    const signalTime = new Date(`${signal.date}T${signal.time}`);
-    if (signalTime < now) {
-      addToHistory(signal, false);
-      hasHistory = true;
-    }
-  });
-
-  historyMessage.style.display = hasHistory ? 'none' : 'block';
-}
-
-// Add new signal to history
-function addToHistory(signal, scroll = true) {
-  // Remove existing highlight
-  const highlighted = historyStrip.querySelector('.history-item.highlight');
-  if (highlighted) highlighted.classList.remove('highlight');
-  
-  // Create new history item
-  const historyItem = document.createElement('div');
-  historyItem.className = 'history-item highlight';
-  historyItem.innerHTML = `
-    <div class="history-odd">${parseFloat(signal.odd).toFixed(2)}x</div>
-    <div class="history-time">${signal.time}</div>
-  `;
-  
-  // Add animation delay based on number of existing items
-  const delay = Math.min(historyStrip.children.length * 0.1, 0.5);
-  historyItem.style.animationDelay = `${delay}s`;
-  
-  historyStrip.appendChild(historyItem);
-  historyMessage.style.display = 'none';
-  
-  // Scroll to new item if requested
-  if (scroll) {
-    setTimeout(() => {
-      historyItem.scrollIntoView({ behavior: 'smooth', inline: 'end' });
-    }, 300);
-  }
-}
-
-// Clear history
-clearHistoryBtn.addEventListener('click', function() {
-  historyStrip.innerHTML = '';
-  historyMessage.style.display = 'block';
-});
-
-// Update signal display
 function updateSignalDisplay() {
   const now = new Date();
-  
+  const circle = document.getElementById('signalCircle');
+  const odd = document.getElementById('oddValue');
+  const beep = document.getElementById('beepSound');
+
+  if (loadingPhase) {
+    document.getElementById("signalDisplay").innerHTML = `
+      <div class="countdown-timer loading-text">Next Signal</div>
+      <div class="countdown-timer loading-text"><span class="loading-dots">Loading</span></div>
+    `;
+    odd.textContent = "Waiting for Next Signal...";
+    odd.className = 'odd-box';
+    circle.className = 'signal-circle';
+    return;
+  }
+
   if (signals.length === 0) {
-    signalDisplay.innerHTML = `
-      <div class="signal-time">--:--</div>
-      <div class="countdown-timer">No Signals</div>
-      <div class="signal-status status-waiting">Waiting for data</div>
+    document.getElementById("signalDisplay").innerHTML = `
+      <div class="signal-time">No Signals</div>
+      <div class="countdown-timer">Available</div>
     `;
-    oddValue.textContent = "Signal Not Available";
-    signalBox.classList.remove('active');
+    odd.textContent = "Signal Not Available";
+    odd.className = 'odd-box';
+    circle.className = 'signal-circle';
     return;
   }
-  
-  if (currentIndex >= signals.length) {
-    signalDisplay.innerHTML = `
-      <div class="signal-time">--:--</div>
-      <div class="countdown-timer">Completed</div>
-      <div class="signal-status status-completed">All signals processed</div>
-    `;
-    oddValue.textContent = "Signal Not Available";
-    signalBox.classList.remove('active');
-    return;
-  }
-  
-  const signal = signals[currentIndex];
-  const signalTime = new Date(`${signal.date}T${signal.time}`);
-  const endTime = new Date(signalTime.getTime() + 60000);
-  
-  // Loading state between signals
+
   if (loadingNextSignal) {
     if ((now - loadingStartTime) < 6000) {
-      signalDisplay.innerHTML = `
-        <div class="signal-time">${signal.time}</div>
-        <div class="countdown-timer">Processing</div>
-        <div class="signal-status status-waiting">Next signal loading<span class="loading-dots"></span></div>
+      document.getElementById("signalDisplay").innerHTML = `
+        <div class="countdown-timer loading-text">Next Signal</div>
+        <div class="countdown-timer loading-text"><span class="loading-dots">Loading</span></div>
       `;
-      oddValue.textContent = "Processing...";
-      signalBox.classList.remove('active');
+      odd.textContent = "Waiting for Next Signal...";
+      odd.className = 'odd-box';
+      circle.className = 'signal-circle';
       return;
     } else {
       loadingNextSignal = false;
     }
   }
-  
-  // Upcoming signal
+
+  if (currentIndex >= signals.length) {
+    circle.className = 'signal-circle green';
+    document.getElementById("signalDisplay").innerHTML = `
+      <div class="signal-time">Completed</div>
+      <div class="countdown-timer">All signals</div>
+    `;
+    odd.textContent = "Signal Not Available";
+    odd.className = 'odd-box';
+    return;
+  }
+
+  const signal = signals[currentIndex];
+  const signalTime = new Date(`${signal.date}T${signal.time}`);
+  const endTime = new Date(signalTime.getTime() + 60000);
+
   if (now < signalTime) {
     const secondsLeft = Math.floor((signalTime - now) / 1000);
-    signalDisplay.innerHTML = `
-      <div class="signal-time">${signal.time}</div>
-      <div class="countdown-timer">${formatCountdown(secondsLeft)}</div>
-      <div class="signal-status status-waiting">Next signal</div>
+    document.getElementById("signalDisplay").innerHTML = `
+      <div class="signal-time purple-text">${signal.time}</div>
+      <div class="countdown-timer">Upcoming in: ${formatCountdown(secondsLeft)}</div>
     `;
-    oddValue.textContent = `ODD: ${parseFloat(signal.odd).toFixed(2)}×`;
-    oddValue.classList.add('active');
-    signalBox.classList.add('active');
+    odd.textContent = `ODD - ${parseFloat(signal.odd).toFixed(2)}×`;
+    odd.className = 'odd-box purple';
+    circle.className = 'signal-circle purple';
     beepPlayed = false;
     return;
   }
-  
-  // Active signal
+
   if (now >= signalTime && now < endTime) {
     const secondsLeft = Math.floor((endTime - now) / 1000);
-    signalDisplay.innerHTML = `
-      <div class="signal-time">${signal.time}</div>
-      <div class="countdown-timer">${formatCountdown(secondsLeft)}</div>
-      <div class="signal-status status-active">ACTIVE NOW!</div>
+    document.getElementById("signalDisplay").innerHTML = `
+      <div class="signal-time red-text">${signal.time}</div>
+      <div class="countdown-timer">End in: ${formatCountdown(secondsLeft)}</div>
     `;
-    oddValue.textContent = `ODD: ${parseFloat(signal.odd).toFixed(2)}×`;
-    oddValue.classList.add('active');
-    signalBox.classList.add('active');
-    
-    // Play alert sound if not already played
+    odd.textContent = `ODD - ${parseFloat(signal.odd).toFixed(2)}×`;
+    odd.className = 'odd-box red';
+    circle.className = 'signal-circle red';
     if (!beepPlayed) {
-      alertSound.play();
+      beep.play();
       beepPlayed = true;
-      
-      // Vibrate if supported
-      if ('vibrate' in navigator) {
-        navigator.vibrate([200, 100, 200]);
-      }
     }
     return;
   }
-  
-  // Signal completed
+
   if (now >= endTime) {
     addToHistory(signal);
     currentIndex++;
@@ -829,30 +630,31 @@ function updateSignalDisplay() {
   }
 }
 
-// Initialize application
-window.addEventListener('load', async () => {
-  updateLiveClock();
-  setInterval(updateLiveClock, 1000);
-  
+window.addEventListener("load", async () => {
   await fetchSignals();
+  renderInitialHistory();
+  updateLiveClock();
   updateSignalDisplay();
+  setInterval(updateLiveClock, 1000);
   setInterval(updateSignalDisplay, 1000);
-  
-  // Real-time JSON fetch every 10 seconds
-  setInterval(async () => {
-    try {
-      const res = await fetch('signals.json?v=' + new Date().getTime());
-      const newSignals = await res.json();
-      
-      if (JSON.stringify(newSignals) !== JSON.stringify(signals)) {
-        signals = newSignals;
-        updateSignalImmediately();
-      }
-    } catch (err) {
-      console.error("Live update error:", err);
-    }
-  }, 10000);
 });
+
+// Real-time JSON fetch every 10 seconds
+setInterval(async () => {
+  try {
+    const res = await fetch('signals.json?v=' + new Date().getTime());
+    const newSignals = await res.json();
+
+    if (JSON.stringify(newSignals) !== JSON.stringify(signals)) {
+      signals = newSignals;
+      updateSignalImmediately();
+      renderInitialHistory();
+    }
+  } catch (err) {
+    console.error("Live update error:", err);
+  }
+}, 10000);
 </script>
+
 </body>
 </html>
