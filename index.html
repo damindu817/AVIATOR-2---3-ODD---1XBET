@@ -105,7 +105,7 @@ body {
   font-weight: 500;
 }
 
-/* Signal Circle - Original Design with Outline Only */
+/* Signal Circle - Modified Design */
 .signal-container {
   position: relative;
   margin: 20px auto;
@@ -134,17 +134,17 @@ body {
 
 .signal-circle.purple {
   border-color: #800080;
-  box-shadow: 0 0 0 3px rgba(128, 0, 128, 0.3), 0 0 20px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 0 0 3px rgba(128, 0, 128, 0.6), 0 0 20px rgba(0, 0, 0, 0.5);
 }
 
 .signal-circle.red {
   border-color: #ff0000;
-  box-shadow: 0 0 0 3px rgba(255, 0, 0, 0.3), 0 0 20px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 0 0 3px rgba(255, 0, 0, 0.6), 0 0 20px rgba(0, 0, 0, 0.5);
 }
 
 .signal-circle.green {
   border-color: #00ff00;
-  box-shadow: 0 0 0 3px rgba(0, 255, 0, 0.3), 0 0 20px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 0 0 3px rgba(0, 255, 0, 0.6), 0 0 20px rgba(0, 0, 0, 0.5);
 }
 
 .signal-time {
@@ -160,13 +160,13 @@ body {
 }
 
 .purple-text {
-  color: #c77dff;
-  text-shadow: 0 0 10px rgba(199, 125, 255, 0.7);
+  color: #800080; /* Changed to match outline color */
+  text-shadow: 0 0 10px rgba(128, 0, 128, 0.7);
 }
 
 .red-text {
-  color: #ff6b6b;
-  text-shadow: 0 0 10px rgba(255, 107, 107, 0.7);
+  color: #ff0000; /* Changed to match outline color */
+  text-shadow: 0 0 10px rgba(255, 0, 0, 0.7);
 }
 
 .loading-text {
@@ -174,7 +174,7 @@ body {
   text-shadow: 0 0 10px rgba(100, 223, 223, 0.7);
 }
 
-/* Odd Box */
+/* Odd Box - Modified */
 .odd-box {
   background: rgba(10, 10, 20, 0.7);
   border-radius: 12px;
@@ -182,26 +182,26 @@ body {
   margin: 10px auto;
   width: 90%;
   max-width: 250px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.3); /* White outline */
+  box-shadow: none; /* Removed glow effect */
   font-size: 1.1rem;
   font-weight: 600;
-  color: #64dfdf;
+  color: #fff; /* White text for odd values */
   backdrop-filter: blur(5px);
   transition: all 0.3s ease;
 }
 
 .odd-box.purple {
-  color: #c77dff;
-  box-shadow: 0 0 20px rgba(199, 125, 255, 0.3);
+  border-color: #800080;
+  color: #800080; /* Purple text to match outline */
 }
 
 .odd-box.red {
-  color: #ff6b6b;
-  box-shadow: 0 0 20px rgba(255, 107, 107, 0.3);
+  border-color: #ff0000;
+  color: #ff0000; /* Red text to match outline */
 }
 
-/* History Timeline with White Outline */
+/* History Timeline */
 .timeline-container {
   background: rgba(10, 10, 20, 0.7);
   border-radius: 12px;
@@ -251,7 +251,6 @@ body {
 .history-item.highlight {
   background: linear-gradient(135deg, #800080 0%, #4b0082 100%);
   color: #fff;
-  box-shadow: 0 0 15px rgba(128, 0, 128, 0.5);
   border: 1px solid rgba(255, 255, 255, 0.5);
 }
 
