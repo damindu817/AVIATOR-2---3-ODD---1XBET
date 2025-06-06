@@ -174,7 +174,7 @@ body {
   font-size: clamp(1rem, 4vw, 1.1rem);
   font-weight: 700;
   margin-bottom: 5px;
-  background: linear-gradient(135deg, #ff4081, #7c4dff, #00bcd4);
+  background: linear-gradient(135deg, #ff4081, #9c27b0);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
@@ -187,7 +187,7 @@ body {
   font-size: clamp(1rem, 4vw, 1.1rem);
   font-weight: 700;
   margin-bottom: 10px;
-  background: linear-gradient(135deg, #7c4dff, #00bcd4, #ff4081);
+  background: linear-gradient(135deg, #9c27b0, #ff4081);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
@@ -291,6 +291,7 @@ body {
   padding: 5px;
   scrollbar-width: none;
   -webkit-overflow-scrolling: touch;
+  scroll-behavior: smooth;
 }
 
 .history-strip::-webkit-scrollbar {
@@ -507,6 +508,13 @@ function renderInitialHistory() {
     const items = strip.querySelectorAll('.history-item');
     items[items.length - 1].classList.add('highlight');
     if (msg) msg.style.display = 'none';
+    // Smooth scroll to the end
+    setTimeout(() => {
+      strip.scrollTo({
+        left: strip.scrollWidth,
+        behavior: 'smooth'
+      });
+    }, 100);
   } else {
     if (msg) msg.style.display = 'block';
   }
@@ -528,8 +536,13 @@ function addToHistory(signal) {
   item.innerHTML = `<div>${parseFloat(signal.odd).toFixed(2)}x</div><time>${signal.time}</time>`;
   strip.appendChild(item);
 
-  // Scroll to new item smoothly
-  item.scrollIntoView({ behavior: 'smooth', inline: 'end' });
+  // Smooth scroll to new item
+  setTimeout(() => {
+    strip.scrollTo({
+      left: strip.scrollWidth,
+      behavior: 'smooth'
+    });
+  }, 100);
 }
 
 let loadingNextSignal = false;
