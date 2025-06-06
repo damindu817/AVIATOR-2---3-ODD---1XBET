@@ -105,7 +105,7 @@ body {
   font-weight: 500;
 }
 
-/* Signal Circle - Enhanced Design */
+/* Signal Circle - Outline Only Design */
 .signal-container {
   position: relative;
   margin: 20px auto;
@@ -132,38 +132,19 @@ body {
   transition: all 0.5s ease;
 }
 
-.signal-circle::before {
-  content: '';
-  position: absolute;
-  top: -5px;
-  left: -5px;
-  right: -5px;
-  bottom: -5px;
-  border-radius: 50%;
-  z-index: -1;
-  opacity: 0;
-  transition: opacity 0.5s ease;
-}
-
-.signal-circle.purple::before {
-  background: radial-gradient(circle at center, rgba(128, 0, 128, 0.8) 0%, transparent 70%);
-  opacity: 1;
-  box-shadow: 0 0 30px rgba(128, 0, 128, 0.6);
+.signal-circle.purple {
   border-color: #800080;
+  box-shadow: 0 0 0 3px rgba(128, 0, 128, 0.6), 0 0 20px rgba(0, 0, 0, 0.5);
 }
 
-.signal-circle.red::before {
-  background: radial-gradient(circle at center, rgba(255, 0, 0, 0.8) 0%, transparent 70%);
-  opacity: 1;
-  box-shadow: 0 0 30px rgba(255, 0, 0, 0.6);
+.signal-circle.red {
   border-color: #ff0000;
+  box-shadow: 0 0 0 3px rgba(255, 0, 0, 0.6), 0 0 20px rgba(0, 0, 0, 0.5);
 }
 
-.signal-circle.green::before {
-  background: radial-gradient(circle at center, rgba(0, 255, 0, 0.8) 0%, transparent 70%);
-  opacity: 1;
-  box-shadow: 0 0 30px rgba(0, 255, 0, 0.6);
+.signal-circle.green {
   border-color: #00ff00;
+  box-shadow: 0 0 0 3px rgba(0, 255, 0, 0.6), 0 0 20px rgba(0, 0, 0, 0.5);
 }
 
 .signal-time {
@@ -220,7 +201,7 @@ body {
   box-shadow: 0 0 20px rgba(255, 107, 107, 0.3);
 }
 
-/* History Timeline */
+/* History Timeline with White Outline */
 .timeline-container {
   background: rgba(10, 10, 20, 0.7);
   border-radius: 12px;
@@ -228,7 +209,7 @@ body {
   margin: 20px auto;
   width: 90%;
   max-width: 400px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.3); /* White outline */
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
   backdrop-filter: blur(5px);
 }
@@ -261,7 +242,7 @@ body {
   color: #fff;
   font-weight: 600;
   font-size: 0.9rem;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.3); /* White outline */
   flex-shrink: 0;
   animation: fadeInUp 0.5s ease forwards;
   opacity: 0;
@@ -271,6 +252,7 @@ body {
   background: linear-gradient(135deg, #800080 0%, #4b0082 100%);
   color: #fff;
   box-shadow: 0 0 15px rgba(128, 0, 128, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.5); /* Brighter white outline for highlight */
 }
 
 .history-item time {
