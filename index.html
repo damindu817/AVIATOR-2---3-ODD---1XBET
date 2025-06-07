@@ -126,7 +126,7 @@ body {
   font-weight: 500;
 }
 
-/* Signal Circle - Responsive Design */
+/* Signal Circle with Ripple Effect */
 .signal-container {
   position: relative;
   margin: 20px auto;
@@ -152,6 +152,7 @@ body {
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
   border: 3px solid rgba(255, 255, 255, 0.3);
   transition: all 0.5s ease;
+  overflow: hidden;
 }
 
 .signal-circle.purple {
@@ -166,7 +167,36 @@ body {
 
 .signal-circle.green {
   border-color: #4caf50;
-  box-shadow: 0 0 10px rgba(76, 175, 80, 0.5); /* Reduced glow for completed state */
+  box-shadow: 0 0 10px rgba(76, 175, 80, 0.5);
+}
+
+/* Ripple Effect */
+.ripple {
+  position: absolute;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.3);
+  transform: scale(0);
+  animation: ripple 1.5s ease-out infinite;
+  pointer-events: none;
+}
+
+@keyframes ripple {
+  to {
+    transform: scale(4);
+    opacity: 0;
+  }
+}
+
+.ripple-purple {
+  background-color: rgba(156, 39, 176, 0.3);
+}
+
+.ripple-red {
+  background-color: rgba(244, 67, 54, 0.3);
+}
+
+.ripple-green {
+  background-color: rgba(76, 175, 80, 0.3);
 }
 
 /* Loading Text Styles with Vibrant Gradient */
@@ -242,7 +272,7 @@ body {
 
 .green-text {
   color: #4caf50;
-  text-shadow: 0 0 5px rgba(76, 175, 80, 0.5); /* Reduced glow for completed state */
+  text-shadow: 0 0 5px rgba(76, 175, 80, 0.5);
 }
 
 /* Odd Box - White Text and Outline Only */
@@ -338,7 +368,7 @@ body {
   }
 }
 
-/* Buttons - Updated with larger size and less rounded corners */
+/* Buttons */
 .button-container {
   display: flex;
   justify-content: center;
@@ -354,15 +384,15 @@ body {
   align-items: center;
   justify-content: center;
   color: #fff;
-  padding: 16px 25px; /* Increased padding */
-  border-radius: 10px; /* Less rounded corners */
+  padding: 16px 25px;
+  border-radius: 10px;
   text-decoration: none;
   font-weight: 600;
-  font-size: clamp(1rem, 3.5vw, 1.1rem); /* Larger text */
+  font-size: clamp(1rem, 3.5vw, 1.1rem);
   border: none;
   transition: all 0.3s ease;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-  min-width: 150px; /* Wider buttons */
+  min-width: 150px;
   flex-shrink: 0;
 }
 
@@ -472,6 +502,7 @@ let signals = [];
 let currentIndex = 0;
 let loadingPhase = true;
 let beepPlayed = false;
+let rippleInterval;
 
 // Disable zooming and scrolling
 document.addEventListener('touchmove', function(e) {
@@ -487,6 +518,40 @@ document.addEventListener('gesturestart', function(e) {
 document.addEventListener('contextmenu', function(e) {
   e.preventDefault();
 });
+
+function createRipple(colorClass) {
+  const circle = document.getElementById('signalCircle');
+  const ripple = document.createElement('span');
+  ripple.className = `ripple ${colorClass}`;
+  circle.appendChild(ripple);
+  
+  // Position ripple at center
+  const rect = circle.getBoundingClientRect();
+  ripple.style.left = `${rect.width/2 - 25}px`;
+  ripple.style.top = `${rect.height/2 - 25}px`;
+  
+  setTimeout(() => {
+    ripple.remove();
+  }, 1500);
+}
+
+function startRippleEffect(colorClass) {
+  stopRippleEffect();
+  createRipple(colorClass); // Initial ripple
+  rippleInterval = setInterval(() => {
+    createRipple(colorClass);
+  }, 1000); // New ripple every second
+}
+
+function stopRippleEffect() {
+  if (rippleInterval) {
+    clearInterval(rippleInterval);
+    rippleInterval = null;
+  }
+  document.querySelectorAll('.ripple').forEach(ripple => {
+    ripple.remove();
+  });
+}
 
 function renderInitialHistory() {
   const now = new Date();
@@ -600,6 +665,7 @@ function updateSignalDisplay() {
     odd.textContent = "Calculating optimal odds...";
     odd.className = 'odd-box';
     circle.className = 'signal-circle';
+    stopRippleEffect();
     return;
   }
 
@@ -611,6 +677,7 @@ function updateSignalDisplay() {
     odd.textContent = "Signal Not Available";
     odd.className = 'odd-box';
     circle.className = 'signal-circle green';
+    startRippleEffect('ripple-green');
     return;
   }
 
@@ -624,6 +691,7 @@ function updateSignalDisplay() {
       odd.textContent = "Calculating optimal odds...";
       odd.className = 'odd-box';
       circle.className = 'signal-circle';
+      stopRippleEffect();
       return;
     } else {
       loadingNextSignal = false;
@@ -638,6 +706,7 @@ function updateSignalDisplay() {
     odd.textContent = "Signal Not Available";
     odd.className = 'odd-box';
     circle.className = 'signal-circle green';
+    startRippleEffect('ripple-green');
     return;
   }
 
@@ -654,6 +723,7 @@ function updateSignalDisplay() {
     odd.textContent = `ODD - ${parseFloat(signal.odd).toFixed(2)}×`;
     odd.className = 'odd-box';
     circle.className = 'signal-circle purple';
+    startRippleEffect('ripple-purple');
     beepPlayed = false;
     return;
   }
@@ -667,6 +737,7 @@ function updateSignalDisplay() {
     odd.textContent = `ODD - ${parseFloat(signal.odd).toFixed(2)}×`;
     odd.className = 'odd-box';
     circle.className = 'signal-circle red';
+    startRippleEffect('ripple-red');
     if (!beepPlayed) {
       beep.play();
       beepPlayed = true;
@@ -680,6 +751,7 @@ function updateSignalDisplay() {
     loadingNextSignal = true;
     loadingStartTime = new Date();
     beepPlayed = false;
+    stopRippleEffect();
   }
 }
 
