@@ -1,712 +1,1101 @@
 <!DOCTYPE html>
-<html lang="si">
+<html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>XTREME AVIATOR DAILY BOOST 20× FREE SIGNALS 1XBET</title>
-<link rel="icon" href="https://upload.wikimedia.org/wikipedia/commons/3/3c/Aviator_helmet_icon.png">
-<style>
-/* Base Styles */
-* {
-  -webkit-touch-callout: none;
-  -webkit-user-select: none;
-  -khtml-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-  -webkit-tap-highlight-color: transparent;
-  box-sizing: border-box;
-}
-
-html, body {
-  height: 100%;
-  width: 100%;
-  overflow-x: hidden;
-  touch-action: pan-y;
-  -webkit-overflow-scrolling: touch;
-}
-
-body {
-  background: linear-gradient(135deg, #0f0f1a 0%, #1a1a2e 100%);
-  color: #fff;
-  font-family: 'Segoe UI', Roboto, -apple-system, BlinkMacSystemFont, sans-serif;
-  text-align: center;
-  margin: 0;
-  padding: 0;
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-  opacity: 0;
-  animation: fadeIn 1s ease forwards;
-  position: relative;
-  overflow-y: auto;
-}
-
-@keyframes fadeIn {
-  to { opacity: 1; }
-}
-
-/* Main Content Container */
-.main-container {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  max-width: 100%;
-  overflow-y: auto;
-  -webkit-overflow-scrolling: touch;
-  padding-bottom: 20px;
-}
-
-/* Header with Shine Effect */
-.header-container {
-  position: relative;
-  padding: 15px 0;
-  margin-bottom: 20px;
-  background: linear-gradient(to right, #1a1a2e, #16213e, #1a1a2e);
-  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
-  overflow: hidden;
-  width: 100%;
-  flex-shrink: 0;
-}
-
-.header-container::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(
-    90deg,
-    transparent,
-    rgba(255, 255, 255, 0.2),
-    transparent
-  );
-  animation: shine 3s infinite;
-}
-
-@keyframes shine {
-  0% { left: -100%; }
-  20% { left: 100%; }
-  100% { left: 100%; }
-}
-
-.header-title {
-  font-size: clamp(1rem, 4vw, 1.2rem);
-  font-weight: 700;
-  color: #fff;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  margin: 0;
-  padding: 10px 20px;
-  position: relative;
-  z-index: 1;
-  text-shadow: 0 0 10px rgba(0, 195, 255, 0.7);
-  word-break: break-word;
-}
-
-/* Clock Section */
-.clock-container {
-  background: rgba(10, 10, 20, 0.7);
-  border-radius: 12px;
-  padding: 12px;
-  margin: 0 auto 20px;
-  width: 90%;
-  max-width: 300px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-  backdrop-filter: blur(5px);
-  flex-shrink: 0;
-}
-
-.clock-time, .clock-date {
-  margin: 5px 0;
-  font-size: clamp(0.9rem, 3vw, 1rem);
-  font-weight: 500;
-}
-
-/* Signal Circle - Responsive Design */
-.signal-container {
-  position: relative;
-  margin: 20px auto;
-  width: min(200px, 50vw);
-  height: min(200px, 50vw);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-shrink: 0;
-}
-
-.signal-circle {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  border-radius: 50%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  z-index: 2;
-  background: radial-gradient(circle at center, #111 0%, #000 100%);
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
-  border: 3px solid rgba(255, 255, 255, 0.3);
-  transition: all 0.5s ease;
-}
-
-.signal-circle.purple {
-  border-color: #9c27b0;
-  box-shadow: 0 0 15px rgba(156, 39, 176, 0.7);
-}
-
-.signal-circle.red {
-  border-color: #f44336;
-  box-shadow: 0 0 15px rgba(244, 67, 54, 0.7);
-}
-
-.signal-circle.green {
-  border-color: #4caf50;
-  box-shadow: 0 0 10px rgba(76, 175, 80, 0.5); /* Reduced glow for completed state */
-}
-
-/* Loading Text Styles with Vibrant Gradient */
-.loading-title {
-  font-size: clamp(1rem, 4vw, 1.1rem);
-  font-weight: 700;
-  margin-bottom: 5px;
-  background: linear-gradient(135deg, #ff4081, #9c27b0);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-  text-align: center;
-  line-height: 1.3;
-  padding: 0 10px;
-}
-
-.loading-subtitle {
-  font-size: clamp(1rem, 4vw, 1.1rem);
-  font-weight: 700;
-  margin-bottom: 10px;
-  background: linear-gradient(135deg, #9c27b0, #ff4081);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-  text-align: center;
-  line-height: 1.3;
-  padding: 0 10px;
-}
-
-.loading-message {
-  font-size: clamp(0.7rem, 3vw, 0.8rem);
-  color: #fff;
-  margin-top: 10px;
-  text-align: center;
-  padding: 0 10px;
-}
-
-.loading-message::after {
-  content: '...';
-  animation: blinkDots 1.5s steps(3, end) infinite;
-}
-
-@keyframes blinkDots {
-  0% { content: '.'; }
-  33% { content: '..'; }
-  66% { content: '...'; }
-  100% { content: '.'; }
-}
-
-.signal-time {
-  font-size: clamp(1.1rem, 5vw, 1.3rem);
-  font-weight: 700;
-  margin-bottom: 5px;
-  padding: 0 10px;
-}
-
-.countdown-timer {
-  font-size: clamp(0.8rem, 3vw, 0.9rem);
-  font-weight: 500;
-  margin-top: 5px;
-  padding: 0 10px;
-}
-
-.purple-text {
-  color: #9c27b0;
-  text-shadow: 0 0 8px rgba(156, 39, 176, 0.7);
-}
-
-.red-text {
-  color: #f44336;
-  text-shadow: 0 0 8px rgba(244, 67, 54, 0.7);
-}
-
-.green-text {
-  color: #4caf50;
-  text-shadow: 0 0 5px rgba(76, 175, 80, 0.5); /* Reduced glow for completed state */
-}
-
-/* Odd Box - White Text and Outline Only */
-.odd-box {
-  background: rgba(10, 10, 20, 0.7);
-  border-radius: 12px;
-  padding: 12px;
-  margin: 10px auto;
-  width: 90%;
-  max-width: 250px;
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  box-shadow: none;
-  font-size: clamp(1rem, 4vw, 1.1rem);
-  font-weight: 600;
-  color: #fff;
-  backdrop-filter: blur(5px);
-  transition: all 0.3s ease;
-  flex-shrink: 0;
-}
-
-/* History Timeline */
-.timeline-container {
-  background: rgba(10, 10, 20, 0.7);
-  border-radius: 12px;
-  padding: 15px;
-  margin: 20px auto;
-  width: 90%;
-  max-width: 400px;
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-  backdrop-filter: blur(5px);
-  flex-shrink: 0;
-}
-
-.history-title {
-  font-size: clamp(0.9rem, 3vw, 1rem);
-  font-weight: 600;
-  margin-bottom: 10px;
-  color: #a5a5a5;
-}
-
-.history-strip {
-  display: flex;
-  overflow-x: auto;
-  gap: 8px;
-  padding: 5px;
-  scrollbar-width: none;
-  -webkit-overflow-scrolling: touch;
-  scroll-behavior: smooth;
-}
-
-.history-strip::-webkit-scrollbar {
-  display: none;
-}
-
-.history-item {
-  background: rgba(20, 20, 40, 0.8);
-  border-radius: 8px;
-  padding: 8px 12px;
-  min-width: 70px;
-  text-align: center;
-  color: #fff;
-  font-weight: 600;
-  font-size: clamp(0.8rem, 3vw, 0.9rem);
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  flex-shrink: 0;
-  animation: fadeInUp 0.5s ease forwards;
-  opacity: 0;
-}
-
-.history-item.highlight {
-  background: linear-gradient(135deg, #800080 0%, #4b0082 100%);
-  color: #fff;
-  border: 1px solid rgba(255, 255, 255, 0.5);
-}
-
-.history-item time {
-  display: block;
-  font-size: clamp(0.6rem, 2.5vw, 0.7rem);
-  margin-top: 3px;
-  color: #bbb;
-  font-weight: 400;
-}
-
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-/* Buttons - Updated with larger size and less rounded corners */
-.button-container {
-  display: flex;
-  justify-content: center;
-  gap: 15px;
-  margin: 20px 0;
-  padding: 0 15px;
-  flex-shrink: 0;
-  flex-wrap: wrap;
-}
-
-.btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  color: #fff;
-  padding: 16px 25px; /* Increased padding */
-  border-radius: 10px; /* Less rounded corners */
-  text-decoration: none;
-  font-weight: 600;
-  font-size: clamp(1rem, 3.5vw, 1.1rem); /* Larger text */
-  border: none;
-  transition: all 0.3s ease;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-  min-width: 150px; /* Wider buttons */
-  flex-shrink: 0;
-}
-
-.btn.whatsapp {
-  background: linear-gradient(135deg, #25D366 0%, #128C7E 100%);
-}
-
-.btn.telegram {
-  background: linear-gradient(135deg, #0088cc 0%, #005b8c 100%);
-}
-
-.btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
-}
-
-.btn:active {
-  transform: translateY(0);
-}
-
-/* Footer */
-footer {
-  margin-top: auto;
-  padding: 15px;
-  font-size: clamp(0.7rem, 3vw, 0.8rem);
-  color: #666;
-  background: rgba(10, 10, 20, 0.7);
-  backdrop-filter: blur(5px);
-  flex-shrink: 0;
-  width: 100%;
-}
-
-/* Responsive Adjustments */
-@media (max-width: 480px) {
-  .header-title {
-    padding: 10px 15px;
-  }
-  
-  .btn {
-    padding: 14px 20px;
-    min-width: 140px;
-    border-radius: 8px;
-  }
-}
-
-/* No Signal Message */
-.no-signal-message {
-  color: #777;
-  font-size: clamp(0.8rem, 3vw, 0.9rem);
-  padding: 10px;
-  text-align: center;
-}
-
-/* Hide scrollbar but allow scrolling */
-::-webkit-scrollbar {
-  display: none;
-  width: 0;
-  height: 0;
-  background: transparent;
-}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>XTREME AVIATOR PRO | 20× FREE SIGNALS</title>
+    <link rel="icon" href="https://upload.wikimedia.org/wikipedia/commons/3/3c/Aviator_helmet_icon.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+    /* Base Styles */
+    :root {
+        --primary: #6a11cb;
+        --secondary: #2575fc;
+        --success: #00b09b;
+        --danger: #ff416c;
+        --warning: #ff8a00;
+        --dark: #0f0f1a;
+        --darker: #0a0a12;
+        --light: #f8f9fa;
+        --card-bg: rgba(20, 20, 40, 0.8);
+        --text-primary: #ffffff;
+        --text-secondary: #b8c2cc;
+    }
+    
+    * {
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        -khtml-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+        -webkit-tap-highlight-color: transparent;
+        box-sizing: border-box;
+    }
+    
+    html, body {
+        height: 100%;
+        width: 100%;
+        overflow-x: hidden;
+        touch-action: pan-y;
+        -webkit-overflow-scrolling: touch;
+        font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    }
+    
+    body {
+        background: linear-gradient(135deg, var(--darker) 0%, var(--dark) 100%);
+        color: var(--text-primary);
+        margin: 0;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+        opacity: 0;
+        animation: fadeIn 0.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+        position: relative;
+        overflow-y: auto;
+    }
+    
+    @keyframes fadeIn {
+        to { opacity: 1; }
+    }
+    
+    /* Main Layout */
+    .app-container {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        max-width: 100%;
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+    
+    /* Header with Gradient */
+    .app-header {
+        position: relative;
+        padding: 18px 0;
+        background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+        width: 100%;
+        flex-shrink: 0;
+        z-index: 10;
+    }
+    
+    .header-content {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0 20px;
+    }
+    
+    .header-title {
+        font-size: clamp(0.9rem, 4vw, 1.1rem);
+        font-weight: 700;
+        color: var(--text-primary);
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        margin: 0;
+        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    }
+    
+    .header-actions {
+        display: flex;
+        gap: 15px;
+    }
+    
+    .notification-bell {
+        position: relative;
+        color: var(--text-primary);
+        font-size: 1.2rem;
+        cursor: pointer;
+        transition: transform 0.3s ease;
+    }
+    
+    .notification-bell:hover {
+        transform: scale(1.1);
+    }
+    
+    .notification-badge {
+        position: absolute;
+        top: -5px;
+        right: -5px;
+        background-color: var(--danger);
+        color: white;
+        border-radius: 50%;
+        width: 18px;
+        height: 18px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.6rem;
+        font-weight: bold;
+    }
+    
+    /* Tab Navigation */
+    .tab-container {
+        display: flex;
+        background: rgba(15, 15, 25, 0.9);
+        backdrop-filter: blur(5px);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        z-index: 5;
+    }
+    
+    .tab {
+        flex: 1;
+        text-align: center;
+        padding: 14px 0;
+        font-size: 0.85rem;
+        font-weight: 600;
+        color: var(--text-secondary);
+        cursor: pointer;
+        transition: all 0.3s ease;
+        position: relative;
+    }
+    
+    .tab.active {
+        color: var(--text-primary);
+    }
+    
+    .tab.active::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 50%;
+        height: 3px;
+        background: linear-gradient(90deg, var(--primary), var(--secondary));
+        border-radius: 3px 3px 0 0;
+    }
+    
+    /* Tab Content */
+    .tab-content {
+        display: none;
+        flex: 1;
+        overflow-y: auto;
+        padding-bottom: 20px;
+    }
+    
+    .tab-content.active {
+        display: flex;
+        flex-direction: column;
+    }
+    
+    /* Clock Section */
+    .clock-container {
+        background: var(--card-bg);
+        border-radius: 14px;
+        padding: 14px;
+        margin: 20px auto 15px;
+        width: 90%;
+        max-width: 320px;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+        backdrop-filter: blur(8px);
+        flex-shrink: 0;
+        animation: slideUp 0.6s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    
+    .clock-time, .clock-date {
+        margin: 6px 0;
+        font-size: clamp(0.9rem, 3.5vw, 1rem);
+        font-weight: 500;
+        display: flex;
+        justify-content: space-between;
+    }
+    
+    .clock-label {
+        color: var(--text-secondary);
+    }
+    
+    /* Signal Circle - Premium Design */
+    .signal-container {
+        position: relative;
+        margin: 20px auto;
+        width: min(220px, 55vw);
+        height: min(220px, 55vw);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-shrink: 0;
+        animation: pulse 2s infinite alternate;
+    }
+    
+    @keyframes pulse {
+        0% { transform: scale(1); }
+        100% { transform: scale(1.03); }
+    }
+    
+    .signal-circle {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        z-index: 2;
+        background: radial-gradient(circle at center, #111 0%, #000 100%);
+        box-shadow: 0 0 30px rgba(0, 0, 0, 0.6);
+        border: 4px solid;
+        transition: all 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+        animation: fadeInUp 0.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    
+    .signal-circle.purple {
+        border-color: var(--primary);
+        box-shadow: 0 0 25px rgba(106, 17, 203, 0.5);
+    }
+    
+    .signal-circle.red {
+        border-color: var(--danger);
+        box-shadow: 0 0 25px rgba(255, 65, 108, 0.5);
+    }
+    
+    .signal-circle.green {
+        border-color: var(--success);
+        box-shadow: 0 0 20px rgba(0, 176, 155, 0.4);
+    }
+    
+    .signal-content {
+        text-align: center;
+        padding: 0 15px;
+    }
+    
+    .signal-status {
+        font-size: clamp(0.9rem, 4vw, 1rem);
+        font-weight: 700;
+        margin-bottom: 8px;
+        background: linear-gradient(135deg, var(--primary), var(--secondary));
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+    }
+    
+    .signal-time {
+        font-size: clamp(1.3rem, 6vw, 1.6rem);
+        font-weight: 800;
+        margin: 5px 0;
+    }
+    
+    .signal-time.purple {
+        color: var(--primary);
+        text-shadow: 0 0 15px rgba(106, 17, 203, 0.7);
+    }
+    
+    .signal-time.red {
+        color: var(--danger);
+        text-shadow: 0 0 15px rgba(255, 65, 108, 0.7);
+    }
+    
+    .signal-time.green {
+        color: var(--success);
+        text-shadow: 0 0 12px rgba(0, 176, 155, 0.6);
+    }
+    
+    .countdown-timer {
+        font-size: clamp(0.9rem, 4vw, 1rem);
+        font-weight: 600;
+        margin-top: 8px;
+        color: var(--text-secondary);
+    }
+    
+    /* Odd Box - Premium Design */
+    .odd-box {
+        background: var(--card-bg);
+        border-radius: 14px;
+        padding: 16px;
+        margin: 15px auto;
+        width: 90%;
+        max-width: 280px;
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        font-size: clamp(1.1rem, 4.5vw, 1.3rem);
+        font-weight: 700;
+        color: var(--text-primary);
+        backdrop-filter: blur(8px);
+        text-align: center;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+        animation: slideUp 0.6s 0.1s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    
+    /* History Timeline - Enhanced */
+    .timeline-container {
+        background: var(--card-bg);
+        border-radius: 14px;
+        padding: 18px;
+        margin: 20px auto;
+        width: 90%;
+        max-width: 420px;
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+        backdrop-filter: blur(8px);
+        animation: slideUp 0.6s 0.2s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    
+    .history-title {
+        font-size: clamp(0.9rem, 3.5vw, 1rem);
+        font-weight: 600;
+        margin-bottom: 12px;
+        color: var(--text-secondary);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+    
+    .history-strip {
+        display: flex;
+        overflow-x: auto;
+        gap: 10px;
+        padding: 8px 5px;
+        scrollbar-width: none;
+        -webkit-overflow-scrolling: touch;
+        scroll-behavior: smooth;
+    }
+    
+    .history-strip::-webkit-scrollbar {
+        display: none;
+    }
+    
+    .history-item {
+        background: rgba(30, 30, 50, 0.9);
+        border-radius: 10px;
+        padding: 10px 14px;
+        min-width: 80px;
+        text-align: center;
+        color: var(--text-primary);
+        font-weight: 700;
+        font-size: clamp(0.9rem, 3.5vw, 1rem);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        flex-shrink: 0;
+        animation: fadeInUp 0.5s ease forwards;
+        opacity: 0;
+        transform: translateY(10px);
+        transition: all 0.3s ease;
+    }
+    
+    .history-item.highlight {
+        background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+        color: var(--text-primary);
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        transform: scale(1.05);
+        box-shadow: 0 4px 12px rgba(106, 17, 203, 0.3);
+    }
+    
+    .history-item time {
+        display: block;
+        font-size: clamp(0.7rem, 2.5vw, 0.8rem);
+        margin-top: 4px;
+        color: var(--text-secondary);
+        font-weight: 500;
+    }
+    
+    /* Buttons - Premium Design */
+    .button-container {
+        display: flex;
+        justify-content: center;
+        gap: 15px;
+        margin: 25px 0;
+        padding: 0 15px;
+        flex-shrink: 0;
+        flex-wrap: wrap;
+    }
+    
+    .btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--text-primary);
+        padding: 16px 28px;
+        border-radius: 12px;
+        text-decoration: none;
+        font-weight: 700;
+        font-size: clamp(1rem, 3.5vw, 1.1rem);
+        border: none;
+        transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+        box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+        min-width: 160px;
+        flex-shrink: 0;
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .btn::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0));
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+    
+    .btn:hover::after {
+        opacity: 1;
+    }
+    
+    .btn.whatsapp {
+        background: linear-gradient(135deg, #25D366 0%, #128C7E 100%);
+    }
+    
+    .btn.telegram {
+        background: linear-gradient(135deg, #0088cc 0%, #005b8c 100%);
+    }
+    
+    .btn:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+    }
+    
+    .btn:active {
+        transform: translateY(0);
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    }
+    
+    /* Social Buttons Container */
+    .social-container {
+        background: var(--card-bg);
+        border-radius: 14px;
+        padding: 15px;
+        margin: 15px auto;
+        width: 90%;
+        max-width: 420px;
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+        backdrop-filter: blur(8px);
+        animation: slideUp 0.6s 0.3s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    
+    .social-title {
+        font-size: clamp(0.9rem, 3.5vw, 1rem);
+        font-weight: 600;
+        margin-bottom: 15px;
+        color: var(--text-secondary);
+        text-align: center;
+    }
+    
+    /* Notifications Tab */
+    .notifications-container {
+        padding: 15px;
+    }
+    
+    .notification-item {
+        background: var(--card-bg);
+        border-radius: 12px;
+        padding: 15px;
+        margin-bottom: 12px;
+        border-left: 4px solid var(--primary);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        animation: fadeIn 0.5s ease forwards;
+        opacity: 0;
+    }
+    
+    .notification-item.unread {
+        border-left-color: var(--danger);
+        background: rgba(30, 30, 50, 0.9);
+    }
+    
+    .notification-header {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 8px;
+    }
+    
+    .notification-title {
+        font-weight: 700;
+        font-size: 0.95rem;
+        color: var(--text-primary);
+    }
+    
+    .notification-time {
+        font-size: 0.75rem;
+        color: var(--text-secondary);
+    }
+    
+    .notification-content {
+        font-size: 0.85rem;
+        color: var(--text-secondary);
+        line-height: 1.4;
+    }
+    
+    /* Footer */
+    .app-footer {
+        margin-top: auto;
+        padding: 15px;
+        font-size: clamp(0.7rem, 3vw, 0.8rem);
+        color: var(--text-secondary);
+        background: rgba(10, 10, 20, 0.9);
+        backdrop-filter: blur(8px);
+        text-align: center;
+        flex-shrink: 0;
+        width: 100%;
+    }
+    
+    /* Animations */
+    @keyframes slideUp {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+    
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(15px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+    
+    /* Loading Animation */
+    .loading-spinner {
+        width: 50px;
+        height: 50px;
+        border: 4px solid rgba(255, 255, 255, 0.1);
+        border-radius: 50%;
+        border-top-color: var(--primary);
+        animation: spin 1s ease-in-out infinite;
+        margin: 15px auto;
+    }
+    
+    @keyframes spin {
+        to { transform: rotate(360deg); }
+    }
+    
+    /* Empty State */
+    .empty-state {
+        text-align: center;
+        padding: 40px 20px;
+        color: var(--text-secondary);
+    }
+    
+    .empty-icon {
+        font-size: 2.5rem;
+        margin-bottom: 15px;
+        color: rgba(255, 255, 255, 0.2);
+    }
+    
+    .empty-text {
+        font-size: 0.9rem;
+    }
+    
+    /* Responsive Adjustments */
+    @media (max-width: 480px) {
+        .header-title {
+            font-size: 0.95rem;
+        }
+        
+        .btn {
+            padding: 14px 22px;
+            min-width: 140px;
+        }
+        
+        .clock-container, .timeline-container, .social-container {
+            width: 95%;
+        }
+    }
+    
+    /* Hide scrollbar but allow scrolling */
+    ::-webkit-scrollbar {
+        display: none;
+        width: 0;
+        height: 0;
+        background: transparent;
+    }
+    </style>
 </head>
 
 <body>
-<div class="main-container">
-  <div class="header-container">
-    <h1 class="header-title">XTREME AVIATOR DAILY BOOST 20× FREE SIGNALS 1XBET</h1>
-  </div>
-
-  <div class="clock-container">
-    <div class="clock-time">Live Time: <span id="liveTime"></span></div>
-    <div class="clock-date">Date: <span id="liveDate"></span></div>
-  </div>
-
-  <div class="signal-container">
-    <div class="signal-circle" id="signalCircle">
-      <div id="signalDisplay">
-        <div class="loading-title">PREDICTING</div>
-        <div class="loading-subtitle">NEXT SIGNAL</div>
-        <div class="loading-message">Analyzing patterns</div>
-      </div>
+<div class="app-container">
+    <header class="app-header">
+        <div class="header-content">
+            <h1 class="header-title">XTREME AVIATOR DAILY BOOST 20× FREE SIGNALS 1XBET</h1>
+            <div class="header-actions">
+                <div class="notification-bell" id="notificationBell">
+                    <i class="fas fa-bell"></i>
+                    <span class="notification-badge" id="notificationBadge">3</span>
+                </div>
+            </div>
+        </div>
+    </header>
+    
+    <div class="tab-container">
+        <div class="tab active" data-tab="signals">SIGNALS</div>
+        <div class="tab" data-tab="notifications">NOTIFICATIONS</div>
     </div>
-  </div>
-
-  <div class="odd-box" id="oddValue">Calculating optimal odds...</div>
-
-  <div class="timeline-container">
-    <div class="history-title">SIGNAL HISTORY</div>
-    <div id="historyMessage" class="no-signal-message">No signal history available</div>
-    <div class="history-strip" id="historyStrip">
-      <!-- Signal history items will appear here -->
+    
+    <!-- Signals Tab -->
+    <div class="tab-content active" id="signalsTab">
+        <div class="clock-container">
+            <div class="clock-time">
+                <span class="clock-label">Live Time:</span>
+                <span id="liveTime"></span>
+            </div>
+            <div class="clock-date">
+                <span class="clock-label">Date:</span>
+                <span id="liveDate"></span>
+            </div>
+        </div>
+        
+        <div class="signal-container">
+            <div class="signal-circle" id="signalCircle">
+                <div class="signal-content" id="signalDisplay">
+                    <div class="loading-spinner"></div>
+                    <div class="signal-status">PREDICTING</div>
+                    <div class="countdown-timer">Loading signal data...</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="odd-box" id="oddValue">
+            <i class="fas fa-calculator"></i> Calculating optimal odds...
+        </div>
+        
+        <div class="timeline-container">
+            <div class="history-title">
+                <span>SIGNAL HISTORY</span>
+                <span><i class="fas fa-history"></i></span>
+            </div>
+            <div id="historyMessage" class="empty-state">
+                <div class="empty-icon">
+                    <i class="fas fa-chart-line"></i>
+                </div>
+                <div class="empty-text">No signal history available</div>
+            </div>
+            <div class="history-strip" id="historyStrip">
+                <!-- Signal history items will appear here -->
+            </div>
+        </div>
+        
+        <div class="social-container">
+            <div class="social-title">JOIN OUR COMMUNITY</div>
+            <div class="button-container">
+                <a class="btn whatsapp" href="https://chat.whatsapp.com/BE39Aj6enbP3SNkfmn8DeG" target="_blank">
+                    <i class="fab fa-whatsapp"></i> WhatsApp
+                </a>
+                <a class="btn telegram" href="https://t.me/+Ems_0HKtv_gwZmQ1" target="_blank">
+                    <i class="fab fa-telegram"></i> Telegram
+                </a>
+            </div>
+        </div>
     </div>
-  </div>
-
-  <div class="button-container">
-    <a class="btn whatsapp" href="https://chat.whatsapp.com/BE39Aj6enbP3SNkfmn8DeG" target="_blank">WhatsApp</a>
-    <a class="btn telegram" href="https://t.me/+Ems_0HKtv_gwZmQ1" target="_blank">Telegram</a>
-  </div>
+    
+    <!-- Notifications Tab -->
+    <div class="tab-content" id="notificationsTab">
+        <div class="notifications-container">
+            <div class="notification-item unread">
+                <div class="notification-header">
+                    <div class="notification-title">New Signal Available</div>
+                    <div class="notification-time">2 min ago</div>
+                </div>
+                <div class="notification-content">
+                    New high-probability signal detected at 2.45x odds. Place your bet now!
+                </div>
+            </div>
+            
+            <div class="notification-item">
+                <div class="notification-header">
+                    <div class="notification-title">System Update</div>
+                    <div class="notification-time">1 hour ago</div>
+                </div>
+                <div class="notification-content">
+                    Our prediction algorithm has been upgraded for better accuracy. Expect improved signals.
+                </div>
+            </div>
+            
+            <div class="notification-item">
+                <div class="notification-header">
+                    <div class="notification-title">Welcome to XTREME AVIATOR PRO</div>
+                    <div class="notification-time">Yesterday</div>
+                </div>
+                <div class="notification-content">
+                    Thank you for joining our premium signal service. Check the signals tab for real-time predictions.
+                </div>
+            </div>
+            
+            <div class="empty-state" id="noNotifications" style="display: none;">
+                <div class="empty-icon">
+                    <i class="fas fa-bell-slash"></i>
+                </div>
+                <div class="empty-text">No notifications available</div>
+            </div>
+        </div>
+    </div>
 </div>
 
-<footer>POWERED BY XTREME PREDICTOR © 2025</footer>
+<footer class="app-footer">
+    POWERED BY XTREME PREDICTOR PRO © 2025
+</footer>
 
 <audio id="beepSound" src="https://actions.google.com/sounds/v1/alarms/beep_short.ogg"></audio>
+<audio id="notificationSound" src="https://actions.google.com/sounds/v1/alarms/beep_short.ogg"></audio>
 
 <script>
 let signals = [];
 let currentIndex = 0;
 let loadingPhase = true;
 let beepPlayed = false;
+let notifications = [
+    {
+        title: "New Signal Available",
+        content: "New high-probability signal detected at 2.45x odds. Place your bet now!",
+        time: "2 min ago",
+        unread: true
+    },
+    {
+        title: "System Update",
+        content: "Our prediction algorithm has been upgraded for better accuracy. Expect improved signals.",
+        time: "1 hour ago",
+        unread: false
+    },
+    {
+        title: "Welcome to XTREME AVIATOR PRO",
+        content: "Thank you for joining our premium signal service. Check the signals tab for real-time predictions.",
+        time: "Yesterday",
+        unread: false
+    }
+];
+
+// Sample signals data (will be replaced by actual fetch)
+let sampleSignals = [
+    { date: "2025-06-07", time: "10:15", odd: "1.85" },
+    { date: "2025-06-07", time: "10:30", odd: "2.10" },
+    { date: "2025-06-07", time: "10:45", odd: "1.95" },
+    { date: "2025-06-07", time: "11:00", odd: "2.25" },
+    { date: "2025-06-07", time: "11:15", odd: "1.75" },
+    { date: "2025-06-07", time: "11:30", odd: "2.50" },
+    { date: "2025-06-07", time: "11:45", odd: "1.90" },
+    { date: "2025-06-07", time: "12:00", odd: "2.15" }
+];
+
+// Initialize the app
+function initApp() {
+    setupTabs();
+    updateNotificationBadge();
+    loadSignals();
+    updateLiveClock();
+    setInterval(updateLiveClock, 1000);
+    setInterval(updateSignalDisplay, 1000);
+    setInterval(fetchSignals, 10000);
+    
+    // Play welcome sound
+    setTimeout(() => {
+        document.getElementById('notificationSound').play();
+    }, 1000);
+}
+
+// Setup tab navigation
+function setupTabs() {
+    const tabs = document.querySelectorAll('.tab');
+    tabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+            // Remove active class from all tabs and content
+            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+            
+            // Add active class to clicked tab and corresponding content
+            tab.classList.add('active');
+            const tabId = tab.getAttribute('data-tab') + 'Tab';
+            document.getElementById(tabId).classList.add('active');
+            
+            // Mark notifications as read when viewing them
+            if (tab.getAttribute('data-tab') === 'notifications') {
+                markNotificationsAsRead();
+            }
+        });
+    });
+    
+    // Notification bell click handler
+    document.getElementById('notificationBell').addEventListener('click', () => {
+        // Switch to notifications tab
+        document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+        document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+        
+        document.querySelector('.tab[data-tab="notifications"]').classList.add('active');
+        document.getElementById('notificationsTab').classList.add('active');
+        
+        // Mark notifications as read
+        markNotificationsAsRead();
+    });
+}
+
+// Mark all notifications as read
+function markNotificationsAsRead() {
+    notifications.forEach(notification => {
+        notification.unread = false;
+    });
+    updateNotificationBadge();
+}
+
+// Update notification badge count
+function updateNotificationBadge() {
+    const unreadCount = notifications.filter(n => n.unread).length;
+    const badge = document.getElementById('notificationBadge');
+    
+    if (unreadCount > 0) {
+        badge.textContent = unreadCount;
+        badge.style.display = 'flex';
+    } else {
+        badge.style.display = 'none';
+    }
+}
+
+// Load signals (using sample data for demonstration)
+function loadSignals() {
+    signals = sampleSignals;
+    setTimeout(() => { loadingPhase = false; }, 3000);
+    updateSignalImmediately();
+    renderInitialHistory();
+}
+
+// Fetch signals from JSON file
+async function fetchSignals() {
+    try {
+        const res = await fetch('signals.json?v=' + new Date().getTime());
+        signals = await res.json();
+        updateSignalImmediately();
+        renderInitialHistory();
+    } catch (err) {
+        console.error("Failed to load signals:", err);
+    }
+}
 
 // Disable zooming and scrolling
 document.addEventListener('touchmove', function(e) {
-  if (e.target.classList.contains('history-strip')) return;
-  e.preventDefault();
+    if (e.target.classList.contains('history-strip')) return;
+    e.preventDefault();
 }, { passive: false });
 
 document.addEventListener('gesturestart', function(e) {
-  e.preventDefault();
+    e.preventDefault();
 });
 
 // Prevent context menu
 document.addEventListener('contextmenu', function(e) {
-  e.preventDefault();
+    e.preventDefault();
 });
 
 function renderInitialHistory() {
-  const now = new Date();
-  const strip = document.getElementById('historyStrip');
-  const msg = document.getElementById('historyMessage');
+    const now = new Date();
+    const strip = document.getElementById('historyStrip');
+    const msg = document.getElementById('historyMessage');
 
-  let lastPassedIndex = -1;
-  signals.forEach((signal, i) => {
-    const signalTime = new Date(`${signal.date}T${signal.time}`);
-    if (signalTime < now) {
-      const item = document.createElement('div');
-      item.className = 'history-item';
-      item.innerHTML = `<div>${parseFloat(signal.odd).toFixed(2)}x</div><time>${signal.time}</time>`;
-      strip.appendChild(item);
-      lastPassedIndex = i;
+    // Clear existing history
+    strip.innerHTML = '';
+    
+    let lastPassedIndex = -1;
+    signals.forEach((signal, i) => {
+        const signalTime = new Date(`${signal.date}T${signal.time}`);
+        if (signalTime < now) {
+            const item = document.createElement('div');
+            item.className = 'history-item';
+            item.innerHTML = `<div>${parseFloat(signal.odd).toFixed(2)}x</div><time>${signal.time}</time>`;
+            strip.appendChild(item);
+            lastPassedIndex = i;
+            
+            // Animate each item with a delay
+            setTimeout(() => {
+                item.style.animation = `fadeInUp 0.5s ${i * 0.1}s ease forwards`;
+            }, 10);
+        }
+    });
+
+    if (lastPassedIndex >= 0) {
+        const items = strip.querySelectorAll('.history-item');
+        items[items.length - 1].classList.add('highlight');
+        if (msg) msg.style.display = 'none';
+        
+        // Smooth scroll to the end
+        setTimeout(() => {
+            strip.scrollTo({
+                left: strip.scrollWidth,
+                behavior: 'smooth'
+            });
+        }, 100);
+    } else {
+        if (msg) msg.style.display = 'flex';
     }
-  });
-
-  if (lastPassedIndex >= 0) {
-    const items = strip.querySelectorAll('.history-item');
-    items[items.length - 1].classList.add('highlight');
-    if (msg) msg.style.display = 'none';
-    // Smooth scroll to the end
-    setTimeout(() => {
-      strip.scrollTo({
-        left: strip.scrollWidth,
-        behavior: 'smooth'
-      });
-    }, 100);
-  } else {
-    if (msg) msg.style.display = 'block';
-  }
 }
 
 function addToHistory(signal) {
-  const strip = document.getElementById('historyStrip');
-  const msg = document.getElementById('historyMessage');
-  if (msg) msg.style.display = 'none';
-  if (!strip) return;
+    const strip = document.getElementById('historyStrip');
+    const msg = document.getElementById('historyMessage');
+    if (msg) msg.style.display = 'none';
+    if (!strip) return;
 
-  // Remove existing highlight
-  const highlighted = strip.querySelector('.history-item.highlight');
-  if (highlighted) highlighted.classList.remove('highlight');
+    // Remove existing highlight
+    const highlighted = strip.querySelector('.history-item.highlight');
+    if (highlighted) highlighted.classList.remove('highlight');
 
-  // Create new history item
-  const item = document.createElement('div');
-  item.className = 'history-item highlight';
-  item.innerHTML = `<div>${parseFloat(signal.odd).toFixed(2)}x</div><time>${signal.time}</time>`;
-  strip.appendChild(item);
+    // Create new history item
+    const item = document.createElement('div');
+    item.className = 'history-item highlight';
+    item.innerHTML = `<div>${parseFloat(signal.odd).toFixed(2)}x</div><time>${signal.time}</time>`;
+    strip.appendChild(item);
+    
+    // Animate the new item
+    setTimeout(() => {
+        item.style.animation = 'fadeInUp 0.5s ease forwards';
+    }, 10);
 
-  // Smooth scroll to new item
-  setTimeout(() => {
-    strip.scrollTo({
-      left: strip.scrollWidth,
-      behavior: 'smooth'
-    });
-  }, 100);
+    // Smooth scroll to new item
+    setTimeout(() => {
+        strip.scrollTo({
+            left: strip.scrollWidth,
+            behavior: 'smooth'
+        });
+    }, 100);
+    
+    // Add notification for new signal
+    addNotification(`Signal ${parseFloat(signal.odd).toFixed(2)}x completed`, `The signal at ${signal.time} has completed. Check results.`);
 }
 
-let loadingNextSignal = false;
-let loadingStartTime = 0;
-
-async function fetchSignals() {
-  try {
-    const res = await fetch('signals.json?v=' + new Date().getTime());
-    signals = await res.json();
-    setTimeout(() => { loadingPhase = false; }, 8000);
-    updateSignalImmediately();
-  } catch (err) {
-    console.error("Failed to load signals:", err);
-  }
+function addNotification(title, content) {
+    const now = new Date();
+    const timeOptions = { hour: '2-digit', minute: '2-digit' };
+    const timeString = now.toLocaleTimeString('en-US', timeOptions);
+    
+    notifications.unshift({
+        title: title,
+        content: content,
+        time: timeString,
+        unread: true
+    });
+    
+    updateNotificationBadge();
+    document.getElementById('notificationSound').play();
 }
 
 function updateLiveClock() {
-  const now = new Date();
-  const time = now.toLocaleTimeString('en-GB', { hour12: false });
-  const date = now.toLocaleDateString('en-GB', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
-  document.getElementById("liveTime").textContent = time;
-  document.getElementById("liveDate").textContent = date;
+    const now = new Date();
+    const timeOptions = { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false };
+    const dateOptions = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+    
+    document.getElementById("liveTime").textContent = now.toLocaleTimeString('en-GB', timeOptions);
+    document.getElementById("liveDate").textContent = now.toLocaleDateString('en-GB', dateOptions);
 }
 
 function formatCountdown(seconds) {
-  const m = Math.floor(seconds / 60).toString().padStart(2, '0');
-  const s = (seconds % 60).toString().padStart(2, '0');
-  return `${m}:${s}`;
+    const m = Math.floor(seconds / 60).toString().padStart(2, '0');
+    const s = (seconds % 60).toString().padStart(2, '0');
+    return `${m}:${s}`;
 }
 
 function updateSignalImmediately() {
-  const now = new Date();
-  for (let i = 0; i < signals.length; i++) {
-    const signalTime = new Date(`${signals[i].date}T${signals[i].time}`);
-    if (now < signalTime) {
-      currentIndex = i;
-      break;
+    const now = new Date();
+    for (let i = 0; i < signals.length; i++) {
+        const signalTime = new Date(`${signals[i].date}T${signals[i].time}`);
+        if (now < signalTime) {
+            currentIndex = i;
+            break;
+        }
     }
-  }
 }
 
 function updateSignalDisplay() {
-  const now = new Date();
-  const circle = document.getElementById('signalCircle');
-  const odd = document.getElementById('oddValue');
-  const beep = document.getElementById('beepSound');
+    const now = new Date();
+    const circle = document.getElementById('signalCircle');
+    const odd = document.getElementById('oddValue');
+    const beep = document.getElementById('beepSound');
+    const signalDisplay = document.getElementById('signalDisplay');
 
-  if (loadingPhase) {
-    document.getElementById("signalDisplay").innerHTML = `
-      <div class="loading-title">PREDICTING</div>
-      <div class="loading-subtitle">NEXT SIGNAL</div>
-      <div class="loading-message">Analyzing patterns</div>
-    `;
-    odd.textContent = "Calculating optimal odds...";
-    odd.className = 'odd-box';
-    circle.className = 'signal-circle';
-    return;
-  }
-
-  if (signals.length === 0) {
-    document.getElementById("signalDisplay").innerHTML = `
-      <div class="signal-time green-text">COMPLETED</div>
-      <div class="countdown-timer">Signal Round Finished</div>
-    `;
-    odd.textContent = "Signal Not Available";
-    odd.className = 'odd-box';
-    circle.className = 'signal-circle green';
-    return;
-  }
-
-  if (loadingNextSignal) {
-    if ((now - loadingStartTime) < 6000) {
-      document.getElementById("signalDisplay").innerHTML = `
-        <div class="loading-title">PREDICTING</div>
-        <div class="loading-subtitle">NEXT SIGNAL</div>
-        <div class="loading-message">Analyzing patterns</div>
-      `;
-      odd.textContent = "Calculating optimal odds...";
-      odd.className = 'odd-box';
-      circle.className = 'signal-circle';
-      return;
-    } else {
-      loadingNextSignal = false;
+    if (loadingPhase) {
+        signalDisplay.innerHTML = `
+            <div class="loading-spinner"></div>
+            <div class="signal-status">PREDICTING</div>
+            <div class="countdown-timer">Analyzing patterns...</div>
+        `;
+        odd.innerHTML = `<i class="fas fa-calculator"></i> Calculating optimal odds...`;
+        odd.className = 'odd-box';
+        circle.className = 'signal-circle';
+        return;
     }
-  }
 
-  if (currentIndex >= signals.length) {
-    document.getElementById("signalDisplay").innerHTML = `
-      <div class="signal-time green-text">COMPLETED</div>
-      <div class="countdown-timer">Signal Round Finished</div>
-    `;
-    odd.textContent = "Signal Not Available";
-    odd.className = 'odd-box';
-    circle.className = 'signal-circle green';
-    return;
-  }
-
-  const signal = signals[currentIndex];
-  const signalTime = new Date(`${signal.date}T${signal.time}`);
-  const endTime = new Date(signalTime.getTime() + 60000);
-
-  if (now < signalTime) {
-    const secondsLeft = Math.floor((signalTime - now) / 1000);
-    document.getElementById("signalDisplay").innerHTML = `
-      <div class="signal-time purple-text">${signal.time}</div>
-      <div class="countdown-timer">Upcoming in: ${formatCountdown(secondsLeft)}</div>
-    `;
-    odd.textContent = `ODD - ${parseFloat(signal.odd).toFixed(2)}×`;
-    odd.className = 'odd-box';
-    circle.className = 'signal-circle purple';
-    beepPlayed = false;
-    return;
-  }
-
-  if (now >= signalTime && now < endTime) {
-    const secondsLeft = Math.floor((endTime - now) / 1000);
-    document.getElementById("signalDisplay").innerHTML = `
-      <div class="signal-time red-text">${signal.time}</div>
-      <div class="countdown-timer">End in: ${formatCountdown(secondsLeft)}</div>
-    `;
-    odd.textContent = `ODD - ${parseFloat(signal.odd).toFixed(2)}×`;
-    odd.className = 'odd-box';
-    circle.className = 'signal-circle red';
-    if (!beepPlayed) {
-      beep.play();
-      beepPlayed = true;
+    if (signals.length === 0) {
+        signalDisplay.innerHTML = `
+            <div class="signal-time green">COMPLETED</div>
+            <div class="countdown-timer">Signal Round Finished</div>
+        `;
+        odd.innerHTML = `<i class="fas fa-info-circle"></i> Signal Not Available`;
+        odd.className = 'odd-box';
+        circle.className = 'signal-circle green';
+        return;
     }
-    return;
-  }
 
-  if (now >= endTime) {
-    addToHistory(signal);
-    currentIndex++;
-    loadingNextSignal = true;
-    loadingStartTime = new Date();
-    beepPlayed = false;
-  }
+    if (currentIndex >= signals.length) {
+        signalDisplay.innerHTML = `
+            <div class="signal-time green">COMPLETED</div>
+            <div class="countdown-timer">Signal Round Finished</div>
+        `;
+        odd.innerHTML = `<i class="fas fa-info-circle"></i> Signal Not Available`;
+        odd.className = 'odd-box';
+        circle.className = 'signal-circle green';
+        return;
+    }
+
+    const signal = signals[currentIndex];
+    const signalTime = new Date(`${signal.date}T${signal.time}`);
+    const endTime = new Date(signalTime.getTime() + 60000);
+
+    if (now < signalTime) {
+        const secondsLeft = Math.floor((signalTime - now) / 1000);
+        signalDisplay.innerHTML = `
+            <div class="signal-time purple">${signal.time}</div>
+            <div class="countdown-timer">Upcoming in: ${formatCountdown(secondsLeft)}</div>
+        `;
+        odd.innerHTML = `<i class="fas fa-chart-line"></i> ODD - ${parseFloat(signal.odd).toFixed(2)}×`;
+        odd.className = 'odd-box';
+        circle.className = 'signal-circle purple';
+        beepPlayed = false;
+        return;
+    }
+
+    if (now >= signalTime && now < endTime) {
+        const secondsLeft = Math.floor((endTime - now) / 1000);
+        signalDisplay.innerHTML = `
+            <div class="signal-time red">${signal.time}</div>
+            <div class="countdown-timer">End in: ${formatCountdown(secondsLeft)}</div>
+        `;
+        odd.innerHTML = `<i class="fas fa-chart-line"></i> ODD - ${parseFloat(signal.odd).toFixed(2)}×`;
+        odd.className = 'odd-box';
+        circle.className = 'signal-circle red';
+        if (!beepPlayed) {
+            beep.play();
+            beepPlayed = true;
+            addNotification(`Signal ${parseFloat(signal.odd).toFixed(2)}x Active`, `New signal is active now! Place your bet.`);
+        }
+        return;
+    }
+
+    if (now >= endTime) {
+        addToHistory(signal);
+        currentIndex++;
+        beepPlayed = false;
+    }
 }
 
-window.addEventListener("load", async () => {
-  await fetchSignals();
-  renderInitialHistory();
-  updateLiveClock();
-  updateSignalDisplay();
-  setInterval(updateLiveClock, 1000);
-  setInterval(updateSignalDisplay, 1000);
-});
-
-// Real-time JSON fetch every 10 seconds
-setInterval(async () => {
-  try {
-    const res = await fetch('signals.json?v=' + new Date().getTime());
-    const newSignals = await res.json();
-
-    if (JSON.stringify(newSignals) !== JSON.stringify(signals)) {
-      signals = newSignals;
-      updateSignalImmediately();
-      renderInitialHistory();
-    }
-  } catch (err) {
-    console.error("Live update error:", err);
-  }
-}, 10000);
+// Initialize the app when the page loads
+window.addEventListener("load", initApp);
 </script>
 
 </body>
