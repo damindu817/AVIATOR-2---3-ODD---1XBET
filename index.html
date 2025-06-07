@@ -338,7 +338,7 @@ body {
   }
 }
 
-/* Buttons */
+/* Buttons - Updated with larger size and less rounded corners */
 .button-container {
   display: flex;
   justify-content: center;
@@ -354,15 +354,15 @@ body {
   align-items: center;
   justify-content: center;
   color: #fff;
-  padding: 12px 20px;
-  border-radius: 30px;
+  padding: 16px 25px; /* Increased padding */
+  border-radius: 10px; /* Less rounded corners */
   text-decoration: none;
   font-weight: 600;
-  font-size: clamp(0.85rem, 3vw, 0.9rem);
+  font-size: clamp(1rem, 3.5vw, 1.1rem); /* Larger text */
   border: none;
   transition: all 0.3s ease;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-  min-width: 120px;
+  min-width: 150px; /* Wider buttons */
   flex-shrink: 0;
 }
 
@@ -402,8 +402,9 @@ footer {
   }
   
   .btn {
-    padding: 10px 15px;
-    min-width: 110px;
+    padding: 14px 20px;
+    min-width: 140px;
+    border-radius: 8px;
   }
 }
 
