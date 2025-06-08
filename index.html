@@ -703,42 +703,13 @@
     <!-- Notifications Tab -->
     <div class="tab-content" id="notificationsTab">
         <div class="notifications-container">
-            <div class="notification-item unread">
-                <div class="notification-header">
-                    <div class="notification-title">New Signal Available</div>
-                    <div class="notification-time">2 min ago</div>
-                </div>
-                <div class="notification-content">
-                    New high-probability signal detected at 2.45x odds. Place your bet now!
-                </div>
-            </div>
-            
-            <div class="notification-item">
-                <div class="notification-header">
-                    <div class="notification-title">System Update</div>
-                    <div class="notification-time">1 hour ago</div>
-                </div>
-                <div class="notification-content">
-                    Our prediction algorithm has been upgraded for better accuracy. Expect improved signals.
-                </div>
-            </div>
-            
-            <div class="notification-item">
-                <div class="notification-header">
-                    <div class="notification-title">Welcome to XTREME AVIATOR PRO</div>
-                    <div class="notification-time">Yesterday</div>
-                </div>
-                <div class="notification-content">
-                    Thank you for joining our premium signal service. Check the signals tab for real-time predictions.
-                </div>
-            </div>
-            
-            <div class="empty-state" id="noNotifications" style="display: none;">
+            <div id="noNotifications" class="empty-state" style="display: none;">
                 <div class="empty-icon">
                     <i class="fas fa-bell-slash"></i>
                 </div>
                 <div class="empty-text">No notifications available</div>
             </div>
+            <!-- Notifications will be dynamically inserted here -->
         </div>
     </div>
 </div>
@@ -755,38 +726,7 @@ let signals = [];
 let currentIndex = 0;
 let loadingPhase = true;
 let beepPlayed = false;
-let notifications = [
-    {
-        title: "New Signal Available",
-        content: "New high-probability signal detected at 2.45x odds. Place your bet now!",
-        time: "2 min ago",
-        unread: true
-    },
-    {
-        title: "System Update",
-        content: "Our prediction algorithm has been upgraded for better accuracy. Expect improved signals.",
-        time: "1 hour ago",
-        unread: false
-    },
-    {
-        title: "Welcome to XTREME AVIATOR PRO",
-        content: "Thank you for joining our premium signal service. Check the signals tab for real-time predictions.",
-        time: "Yesterday",
-        unread: false
-    }
-];
-
-// Sample signals data (will be replaced by actual fetch)
-let sampleSignals = [
-    { date: "2025-06-07", time: "10:15", odd: "1.85" },
-    { date: "2025-06-07", time: "10:30", odd: "2.10" },
-    { date: "2025-06-07", time: "10:45", odd: "1.95" },
-    { date: "2025-06-07", time: "11:00", odd: "2.25" },
-    { date: "2025-06-07", time: "11:15", odd: "1.75" },
-    { date: "2025-06-07", time: "11:30", odd: "2.50" },
-    { date: "2025-06-07", time: "11:45", odd: "1.90" },
-    { date: "2025-06-07", time: "12:00", odd: "2.15" }
-];
+let notifications = [];
 
 // Initialize the app
 function initApp() {
@@ -797,6 +737,7 @@ function initApp() {
     setInterval(updateLiveClock, 1000);
     setInterval(updateSignalDisplay, 1000);
     setInterval(fetchSignals, 10000);
+    setInterval(clearOldSignals, 3600000); // Clear old signals every hour
     
     // Play welcome sound
     setTimeout(() => {
@@ -845,6 +786,7 @@ function markNotificationsAsRead() {
         notification.unread = false;
     });
     updateNotificationBadge();
+    renderNotifications();
 }
 
 // Update notification badge count
@@ -860,11 +802,35 @@ function updateNotificationBadge() {
     }
 }
 
-// Load signals (using sample data for demonstration)
-function loadSignals() {
-    signals = sampleSignals;
-    setTimeout(() => { loadingPhase = false; }, 3000);
-    updateSignalImmediately();
+// Load signals from JSON
+async function loadSignals() {
+    try {
+        const res = await fetch('signals.json?v=' + new Date().getTime());
+        const data = await res.json();
+        signals = data.signals || [];
+        notifications = data.notifications || [];
+        renderNotifications();
+        
+        if (signals.length > 0) {
+            loadingPhase = false;
+            updateSignalImmediately();
+            renderInitialHistory();
+        }
+    } catch (err) {
+        console.error("Failed to load signals:", err);
+    }
+}
+
+// Clear signals older than 1 hour
+function clearOldSignals() {
+    const now = new Date();
+    const oneHourAgo = new Date(now.getTime() - 3600000);
+    
+    signals = signals.filter(signal => {
+        const signalTime = new Date(`${signal.date}T${signal.time}`);
+        return signalTime >= oneHourAgo;
+    });
+    
     renderInitialHistory();
 }
 
@@ -872,7 +838,8 @@ function loadSignals() {
 async function fetchSignals() {
     try {
         const res = await fetch('signals.json?v=' + new Date().getTime());
-        signals = await res.json();
+        const data = await res.json();
+        signals = data.signals || [];
         updateSignalImmediately();
         renderInitialHistory();
     } catch (err) {
@@ -880,20 +847,36 @@ async function fetchSignals() {
     }
 }
 
-// Disable zooming and scrolling
-document.addEventListener('touchmove', function(e) {
-    if (e.target.classList.contains('history-strip')) return;
-    e.preventDefault();
-}, { passive: false });
-
-document.addEventListener('gesturestart', function(e) {
-    e.preventDefault();
-});
-
-// Prevent context menu
-document.addEventListener('contextmenu', function(e) {
-    e.preventDefault();
-});
+// Render notifications
+function renderNotifications() {
+    const container = document.querySelector('.notifications-container');
+    if (!container) return;
+    
+    // Clear existing notifications
+    const existingNotifs = container.querySelectorAll('.notification-item');
+    existingNotifs.forEach(el => el.remove());
+    
+    if (notifications.length === 0) {
+        document.getElementById('noNotifications').style.display = 'flex';
+        return;
+    }
+    
+    document.getElementById('noNotifications').style.display = 'none';
+    
+    notifications.forEach((notification, index) => {
+        const notifEl = document.createElement('div');
+        notifEl.className = `notification-item ${notification.unread ? 'unread' : ''}`;
+        notifEl.innerHTML = `
+            <div class="notification-header">
+                <div class="notification-title">${notification.title}</div>
+                <div class="notification-time">${notification.time}</div>
+            </div>
+            <div class="notification-content">${notification.content}</div>
+        `;
+        notifEl.style.animation = `fadeIn 0.5s ${index * 0.1}s ease forwards`;
+        container.insertBefore(notifEl, document.getElementById('noNotifications'));
+    });
+}
 
 function renderInitialHistory() {
     const now = new Date();
@@ -924,14 +907,6 @@ function renderInitialHistory() {
         const items = strip.querySelectorAll('.history-item');
         items[items.length - 1].classList.add('highlight');
         if (msg) msg.style.display = 'none';
-        
-        // Smooth scroll to the end
-        setTimeout(() => {
-            strip.scrollTo({
-                left: strip.scrollWidth,
-                behavior: 'smooth'
-            });
-        }, 100);
     } else {
         if (msg) msg.style.display = 'flex';
     }
@@ -957,14 +932,6 @@ function addToHistory(signal) {
     setTimeout(() => {
         item.style.animation = 'fadeInUp 0.5s ease forwards';
     }, 10);
-
-    // Smooth scroll to new item
-    setTimeout(() => {
-        strip.scrollTo({
-            left: strip.scrollWidth,
-            behavior: 'smooth'
-        });
-    }, 100);
     
     // Add notification for new signal
     addNotification(`Signal ${parseFloat(signal.odd).toFixed(2)}x completed`, `The signal at ${signal.time} has completed. Check results.`);
@@ -983,6 +950,7 @@ function addNotification(title, content) {
     });
     
     updateNotificationBadge();
+    renderNotifications();
     document.getElementById('notificationSound').play();
 }
 
