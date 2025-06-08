@@ -1,22 +1,35 @@
-[
-  {
-    "date": "2025-05-13",
-    "time": "00:11:00",
-    "odd": 2
-  },
-  {
-    "date": "2025-05-13",
-    "time": "00:15:00",
-    "odd": 2
-  },
-  {
-    "date": "2025-05-13",
-    "time": "00:19:00",
-    "odd": 2
-  },
-  {
-    "date": "2025-05-13",
-    "time": "00:23:00",
-    "odd": 2
-  }
-]
+{
+  "lastUpdated": "2025-06-08T14:30:00",
+  "signals": [
+    {
+      "date": "2025-06-08",
+      "time": "14:45",
+      "odd": "1.85"
+    },
+    {
+      "date": "2025-06-08",
+      "time": "15:00",
+      "odd": "2.10"
+    }
+  ],
+  "notifications": [
+    {
+      "title": "Signal completed",
+      "content": "Signal round finished, guys!",
+      "time": "14:45",
+      "unread": false
+    },
+    {
+      "title": "Reminder",
+      "content": "Come back tomorrow same time",
+      "time": "14:45",
+      "unread": true
+    },
+    {
+      "title": "New Signal Available",
+      "content": "New high-probability signal detected at 2.10x odds. Place your bet now!",
+      "time": "15:00",
+      "unread": true
+    }
+  ]
+}
