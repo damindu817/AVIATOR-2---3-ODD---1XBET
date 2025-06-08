@@ -703,41 +703,11 @@
     <!-- Notifications Tab -->
     <div class="tab-content" id="notificationsTab">
         <div class="notifications-container">
-            <div class="notification-item unread">
-                <div class="notification-header">
-                    <div class="notification-title">New Signal Available</div>
-                    <div class="notification-time">2 min ago</div>
-                </div>
-                <div class="notification-content">
-                    New high-probability signal detected at 2.45x odds. Place your bet now!
-                </div>
-            </div>
-            
-            <div class="notification-item">
-                <div class="notification-header">
-                    <div class="notification-title">System Update</div>
-                    <div class="notification-time">1 hour ago</div>
-                </div>
-                <div class="notification-content">
-                    Our prediction algorithm has been upgraded for better accuracy. Expect improved signals.
-                </div>
-            </div>
-            
-            <div class="notification-item">
-                <div class="notification-header">
-                    <div class="notification-title">Welcome to XTREME AVIATOR PRO</div>
-                    <div class="notification-time">Yesterday</div>
-                </div>
-                <div class="notification-content">
-                    Thank you for joining our premium signal service. Check the signals tab for real-time predictions.
-                </div>
-            </div>
-            
-            <div class="empty-state" id="noNotifications" style="display: none;">
+            <div class="empty-state" id="noNotifications">
                 <div class="empty-icon">
                     <i class="fas fa-bell-slash"></i>
                 </div>
-                <div class="empty-text">No notifications available</div>
+                <div class="empty-text">Loading notifications...</div>
             </div>
         </div>
     </div>
@@ -755,26 +725,7 @@ let signals = [];
 let currentIndex = 0;
 let loadingPhase = true;
 let beepPlayed = false;
-let notifications = [
-    {
-        title: "New Signal Available",
-        content: "New high-probability signal detected at 2.45x odds. Place your bet now!",
-        time: "2 min ago",
-        unread: true
-    },
-    {
-        title: "System Update",
-        content: "Our prediction algorithm has been upgraded for better accuracy. Expect improved signals.",
-        time: "1 hour ago",
-        unread: false
-    },
-    {
-        title: "Welcome to XTREME AVIATOR PRO",
-        content: "Thank you for joining our premium signal service. Check the signals tab for real-time predictions.",
-        time: "Yesterday",
-        unread: false
-    }
-];
+let notifications = [];
 
 // Sample signals data (will be replaced by actual fetch)
 let sampleSignals = [
@@ -791,6 +742,7 @@ let sampleSignals = [
 // Initialize the app
 function initApp() {
     setupTabs();
+    fetchNotifications();
     updateNotificationBadge();
     loadSignals();
     updateLiveClock();
@@ -845,6 +797,7 @@ function markNotificationsAsRead() {
         notification.unread = false;
     });
     updateNotificationBadge();
+    renderNotifications();
 }
 
 // Update notification badge count
@@ -858,6 +811,50 @@ function updateNotificationBadge() {
     } else {
         badge.style.display = 'none';
     }
+}
+
+// Fetch notifications from JSON file
+async function fetchNotifications() {
+    try {
+        const res = await fetch('notifications.json?v=' + new Date().getTime());
+        const jsonData = await res.json();
+        notifications = jsonData;
+        renderNotifications();
+        updateNotificationBadge();
+    } catch (err) {
+        console.error("Failed to load notifications:", err);
+        document.getElementById('noNotifications').querySelector('.empty-text').textContent = "Failed to load notifications";
+    }
+}
+
+// Render notifications to the UI
+function renderNotifications() {
+    const container = document.querySelector('.notifications-container');
+    const emptyState = document.getElementById('noNotifications');
+    
+    if (notifications.length === 0) {
+        emptyState.style.display = 'flex';
+        emptyState.querySelector('.empty-text').textContent = "No notifications available";
+        container.innerHTML = '';
+        container.appendChild(emptyState);
+        return;
+    }
+    
+    emptyState.style.display = 'none';
+    container.innerHTML = '';
+    
+    notifications.forEach(n => {
+        const item = document.createElement('div');
+        item.className = 'notification-item' + (n.unread ? ' unread' : '');
+        item.innerHTML = `
+            <div class="notification-header">
+                <div class="notification-title">${n.title}</div>
+                <div class="notification-time">${n.time}</div>
+            </div>
+            <div class="notification-content">${n.content}</div>
+        `;
+        container.appendChild(item);
+    });
 }
 
 // Load signals (using sample data for demonstration)
@@ -984,6 +981,7 @@ function addNotification(title, content) {
     
     updateNotificationBadge();
     document.getElementById('notificationSound').play();
+    renderNotifications();
 }
 
 function updateLiveClock() {
