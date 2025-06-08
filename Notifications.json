@@ -1,17 +1,4 @@
 {
-  "lastUpdated": "2025-06-08T14:30:00",
-  "signals": [
-    {
-      "date": "2025-06-08",
-      "time": "14:45",
-      "odd": "1.85"
-    },
-    {
-      "date": "2025-06-08",
-      "time": "15:00",
-      "odd": "2.10"
-    }
-  ],
   "notifications": [
     {
       "title": "Signal completed",
@@ -23,12 +10,6 @@
       "title": "Reminder",
       "content": "Come back tomorrow same time",
       "time": "14:45",
-      "unread": true
-    },
-    {
-      "title": "New Signal Available",
-      "content": "New high-probability signal detected at 2.10x odds. Place your bet now!",
-      "time": "15:00",
       "unread": true
     }
   ]
