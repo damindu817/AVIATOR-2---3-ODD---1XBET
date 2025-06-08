@@ -3,12 +3,14 @@
         "title": "New Signal Available",
         "content": "New signal at 2.45x odds is live!",
         "time": "Just now",
+        "timestamp": "2025-06-08T10:30:00Z",
         "unread": true
     },
     {
         "title": "Daily Tip",
         "content": "Best odds usually come around xx:06 and xx:36. Stay ready!",
         "time": "30 min ago",
+        "timestamp": "2025-06-08T10:00:00Z",
         "unread": true
     }
 ]
