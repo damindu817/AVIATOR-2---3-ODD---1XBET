@@ -175,6 +175,7 @@
         flex: 1;
         overflow-y: auto;
         padding-bottom: 20px;
+        -webkit-overflow-scrolling: touch;
     }
     
     .tab-content.active {
@@ -458,10 +459,6 @@
         background: linear-gradient(135deg, #0088cc 0%, #005b8c 100%);
     }
     
-    .btn.clear-history {
-        background: linear-gradient(135deg, var(--danger) 0%, var(--warning) 100%);
-    }
-    
     .btn:hover {
         transform: translateY(-3px);
         box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
@@ -499,6 +496,7 @@
     /* Notifications Tab */
     .notifications-container {
         padding: 15px;
+        -webkit-overflow-scrolling: touch;
     }
     
     .notification-item {
@@ -638,7 +636,7 @@
 <div class="app-container">
     <header class="app-header">
         <div class="header-content">
-            <h1 class="header-title">XTREME AVIATOR BOOST 20× 1XBET</h1>
+            <h1 class="header-title">XTREME AVIATOR DAILY BOOST 20× FREE SIGNALS 1XBET</h1>
             <div class="header-actions">
                 <div class="notification-bell" id="notificationBell">
                     <i class="fas fa-bell"></i>
@@ -693,11 +691,6 @@
             </div>
             <div class="history-strip" id="historyStrip">
                 <!-- Signal history items will appear here -->
-            </div>
-            <div class="button-container" style="margin-top: 10px;">
-                <button class="btn clear-history" id="clearHistoryBtn">
-                    <i class="fas fa-trash"></i> Clear History
-                </button>
             </div>
         </div>
         
@@ -763,9 +756,6 @@ function initApp() {
     setTimeout(() => {
         document.getElementById('notificationSound').play();
     }, 1000);
-    
-    // Clear history button event
-    document.getElementById('clearHistoryBtn').addEventListener('click', clearHistory);
 }
 
 // Setup tab navigation
@@ -934,13 +924,12 @@ function renderNotifications() {
     });
 }
 
-// Load signals (using sample data for demonstration)
+// Load signals (using empty array initially)
 function loadSignals() {
-    // Start with empty signals array
     signals = [];
     setTimeout(() => { loadingPhase = false; }, 3000);
     updateSignalImmediately();
-    renderInitialHistory();
+    renderHistory();
 }
 
 // Fetch signals from JSON file
@@ -958,13 +947,6 @@ async function fetchSignals() {
     } catch (err) {
         console.error("Failed to load signals:", err);
     }
-}
-
-// Clear history function
-function clearHistory() {
-    historyItems = [];
-    renderHistory();
-    document.getElementById('historyMessage').style.display = 'flex';
 }
 
 // Clean up old history items (older than 1 hour)
@@ -1002,11 +984,14 @@ function renderHistory() {
         return timeB - timeA;
     });
     
+    // Store current scroll position
+    const wasScrolledToEnd = strip.scrollLeft + strip.clientWidth >= strip.scrollWidth - 10;
+    
     sortedHistory.forEach((item, i) => {
         const itemElement = document.createElement('div');
         itemElement.className = 'history-item';
         
-        // Mark if this is the most recent item (last in the original array)
+        // Mark if this is the most recent item
         if (i === 0) {
             itemElement.classList.add('highlight');
         }
@@ -1027,13 +1012,15 @@ function renderHistory() {
         }, 10);
     });
     
-    // Smooth scroll to the end
-    setTimeout(() => {
-        strip.scrollTo({
-            left: strip.scrollWidth,
-            behavior: 'smooth'
-        });
-    }, 100);
+    // Restore scroll position
+    if (wasScrolledToEnd) {
+        setTimeout(() => {
+            strip.scrollTo({
+                left: strip.scrollWidth,
+                behavior: 'smooth'
+            });
+        }, 100);
+    }
 }
 
 function renderInitialHistory() {
@@ -1199,10 +1186,14 @@ function updateSignalDisplay() {
     }
 }
 
-// Disable zooming and scrolling
+// Disable zooming but allow scrolling
 document.addEventListener('touchmove', function(e) {
-    if (e.target.classList.contains('history-strip')) return;
-    e.preventDefault();
+    // Only prevent default for non-scrollable elements
+    if (!e.target.classList.contains('history-strip') && 
+        !e.target.classList.contains('tab-content') &&
+        !e.target.classList.contains('notifications-container')) {
+        e.preventDefault();
+    }
 }, { passive: false });
 
 document.addEventListener('gesturestart', function(e) {
