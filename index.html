@@ -703,13 +703,42 @@
     <!-- Notifications Tab -->
     <div class="tab-content" id="notificationsTab">
         <div class="notifications-container">
-            <div id="noNotifications" class="empty-state" style="display: none;">
+            <div class="notification-item unread">
+                <div class="notification-header">
+                    <div class="notification-title">New Signal Available</div>
+                    <div class="notification-time">2 min ago</div>
+                </div>
+                <div class="notification-content">
+                    New high-probability signal detected at 2.45x odds. Place your bet now!
+                </div>
+            </div>
+            
+            <div class="notification-item">
+                <div class="notification-header">
+                    <div class="notification-title">System Update</div>
+                    <div class="notification-time">1 hour ago</div>
+                </div>
+                <div class="notification-content">
+                    Our prediction algorithm has been upgraded for better accuracy. Expect improved signals.
+                </div>
+            </div>
+            
+            <div class="notification-item">
+                <div class="notification-header">
+                    <div class="notification-title">Welcome to XTREME AVIATOR PRO</div>
+                    <div class="notification-time">Yesterday</div>
+                </div>
+                <div class="notification-content">
+                    Thank you for joining our premium signal service. Check the signals tab for real-time predictions.
+                </div>
+            </div>
+            
+            <div class="empty-state" id="noNotifications" style="display: none;">
                 <div class="empty-icon">
                     <i class="fas fa-bell-slash"></i>
                 </div>
                 <div class="empty-text">No notifications available</div>
             </div>
-            <!-- Notifications will be dynamically inserted here -->
         </div>
     </div>
 </div>
@@ -722,246 +751,156 @@
 <audio id="notificationSound" src="https://actions.google.com/sounds/v1/alarms/beep_short.ogg"></audio>
 
 <script>
-// Real-time Data Management System
 let signals = [];
 let currentIndex = 0;
 let loadingPhase = true;
 let beepPlayed = false;
-let notifications = [];
-let isPageVisible = true;
-let dataFetchInterval;
-let lastDataFetchTime = 0;
+let notifications = [
+    {
+        title: "New Signal Available",
+        content: "New high-probability signal detected at 2.45x odds. Place your bet now!",
+        time: "2 min ago",
+        unread: true
+    },
+    {
+        title: "System Update",
+        content: "Our prediction algorithm has been upgraded for better accuracy. Expect improved signals.",
+        time: "1 hour ago",
+        unread: false
+    },
+    {
+        title: "Welcome to XTREME AVIATOR PRO",
+        content: "Thank you for joining our premium signal service. Check the signals tab for real-time predictions.",
+        time: "Yesterday",
+        unread: false
+    }
+];
 
-// WebSocket Connection Manager
-let socket;
-let reconnectAttempts = 0;
-const maxReconnectAttempts = 5;
-const reconnectDelay = 3000;
+// Sample signals data (will be replaced by actual fetch)
+let sampleSignals = [
+    { date: "2025-06-07", time: "10:15", odd: "1.85" },
+    { date: "2025-06-07", time: "10:30", odd: "2.10" },
+    { date: "2025-06-07", time: "10:45", odd: "1.95" },
+    { date: "2025-06-07", time: "11:00", odd: "2.25" },
+    { date: "2025-06-07", time: "11:15", odd: "1.75" },
+    { date: "2025-06-07", time: "11:30", odd: "2.50" },
+    { date: "2025-06-07", time: "11:45", odd: "1.90" },
+    { date: "2025-06-07", time: "12:00", odd: "2.15" }
+];
 
-// Initialize the application
+// Initialize the app
 function initApp() {
     setupTabs();
-    setupVisibilityHandler();
-    initRealTimeUpdates();
+    updateNotificationBadge();
+    loadSignals();
     updateLiveClock();
     setInterval(updateLiveClock, 1000);
     setInterval(updateSignalDisplay, 1000);
+    setInterval(fetchSignals, 10000);
     
     // Play welcome sound
     setTimeout(() => {
-        document.getElementById('notificationSound').play().catch(e => console.log("Audio play failed:", e));
+        document.getElementById('notificationSound').play();
     }, 1000);
 }
 
-// Set up tab navigation
+// Setup tab navigation
 function setupTabs() {
     const tabs = document.querySelectorAll('.tab');
     tabs.forEach(tab => {
         tab.addEventListener('click', () => {
+            // Remove active class from all tabs and content
             document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
             document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
             
+            // Add active class to clicked tab and corresponding content
             tab.classList.add('active');
             const tabId = tab.getAttribute('data-tab') + 'Tab';
             document.getElementById(tabId).classList.add('active');
             
+            // Mark notifications as read when viewing them
             if (tab.getAttribute('data-tab') === 'notifications') {
                 markNotificationsAsRead();
             }
         });
     });
     
+    // Notification bell click handler
     document.getElementById('notificationBell').addEventListener('click', () => {
+        // Switch to notifications tab
         document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
         document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
         
         document.querySelector('.tab[data-tab="notifications"]').classList.add('active');
         document.getElementById('notificationsTab').classList.add('active');
         
+        // Mark notifications as read
         markNotificationsAsRead();
     });
 }
 
-// Set up page visibility detection
-function setupVisibilityHandler() {
-    document.addEventListener('visibilitychange', () => {
-        isPageVisible = !document.hidden;
-        if (isPageVisible) {
-            fetchData();
-            startDataFetchInterval();
-        } else {
-            clearInterval(dataFetchInterval);
-        }
-    });
-}
-
-// Initialize real-time updates (WebSocket with fallback)
-function initRealTimeUpdates() {
-    if ('WebSocket' in window) {
-        initWebSocket();
-    } else {
-        console.log("WebSocket not supported, using polling");
-        startDataFetchInterval();
-    }
-    fetchData(); // Initial data load
-}
-
-// WebSocket implementation
-function initWebSocket() {
-    const wsProtocol = window.location.protocol === 'https:' ? 'wss://' : 'ws://';
-    const wsUrl = wsProtocol + window.location.host + '/ws';
-    
-    socket = new WebSocket(wsUrl);
-
-    socket.onopen = (e) => {
-        console.log("WebSocket connection established");
-        reconnectAttempts = 0;
-        clearInterval(dataFetchInterval); // No need for polling if WS works
-    };
-
-    socket.onmessage = (event) => {
-        try {
-            const data = JSON.parse(event.data);
-            if (data.type === 'data_update') {
-                processDataUpdate(data.payload);
-            }
-        } catch (err) {
-            console.error("Error processing WebSocket message:", err);
-        }
-    };
-
-    socket.onclose = (e) => {
-        console.log("WebSocket closed, attempting to reconnect...");
-        if (reconnectAttempts < maxReconnectAttempts) {
-            setTimeout(() => {
-                reconnectAttempts++;
-                initWebSocket();
-            }, reconnectDelay);
-        } else {
-            console.log("Max reconnection attempts reached, falling back to polling");
-            startDataFetchInterval();
-        }
-    };
-
-    socket.onerror = (err) => {
-        console.error("WebSocket error:", err);
-        socket.close();
-    };
-}
-
-// Start polling if WebSocket fails
-function startDataFetchInterval() {
-    clearInterval(dataFetchInterval);
-    dataFetchInterval = setInterval(() => {
-        if (isPageVisible) {
-            fetchData();
-        }
-    }, 5000); // Poll every 5 seconds
-}
-
-// Fetch data from server
-async function fetchData() {
-    const now = Date.now();
-    if (now - lastDataFetchTime < 2000) return; // Rate limiting
-    lastDataFetchTime = now;
-    
-    try {
-        const [signalsRes, notificationsRes] = await Promise.all([
-            fetch('signals.json?v=' + now),
-            fetch('notifications.json?v=' + now)
-        ]);
-        
-        if (!signalsRes.ok || !notificationsRes.ok) throw new Error("Failed to fetch data");
-        
-        const signalsData = await signalsRes.json();
-        const notificationsData = await notificationsRes.json();
-        
-        processDataUpdate({
-            signals: signalsData.signals || signalsData,
-            notifications: notificationsData.notifications || notificationsData
-        });
-    } catch (err) {
-        console.error("Data fetch error:", err);
-    }
-}
-
-// Process updated data
-function processDataUpdate({signals: newSignals, notifications: newNotifications}) {
-    // Update signals if changed
-    if (JSON.stringify(signals) !== JSON.stringify(newSignals)) {
-        signals = newSignals;
-        updateSignalImmediately();
-        renderInitialHistory();
-        updateSignalDisplay();
-    }
-    
-    // Update notifications if changed
-    if (JSON.stringify(notifications) !== JSON.stringify(newNotifications)) {
-        notifications = newNotifications;
-        renderNotifications();
-        updateNotificationBadge();
-    }
-    
-    loadingPhase = false;
-}
-
-// Mark notifications as read
+// Mark all notifications as read
 function markNotificationsAsRead() {
     notifications.forEach(notification => {
         notification.unread = false;
     });
     updateNotificationBadge();
-    renderNotifications();
 }
 
-// Update notification badge
+// Update notification badge count
 function updateNotificationBadge() {
     const unreadCount = notifications.filter(n => n.unread).length;
     const badge = document.getElementById('notificationBadge');
     
     if (unreadCount > 0) {
-        badge.textContent = unreadCount > 9 ? '9+' : unreadCount.toString();
+        badge.textContent = unreadCount;
         badge.style.display = 'flex';
     } else {
         badge.style.display = 'none';
     }
 }
 
-// Render notifications
-function renderNotifications() {
-    const container = document.querySelector('.notifications-container');
-    if (!container) return;
-    
-    container.querySelectorAll('.notification-item').forEach(el => el.remove());
-    
-    if (notifications.length === 0) {
-        document.getElementById('noNotifications').style.display = 'flex';
-        return;
-    }
-    
-    document.getElementById('noNotifications').style.display = 'none';
-    
-    notifications.forEach((notification, index) => {
-        const notifEl = document.createElement('div');
-        notifEl.className = `notification-item ${notification.unread ? 'unread' : ''}`;
-        notifEl.innerHTML = `
-            <div class="notification-header">
-                <div class="notification-title">${notification.title}</div>
-                <div class="notification-time">${notification.time}</div>
-            </div>
-            <div class="notification-content">${notification.content}</div>
-        `;
-        notifEl.style.animationDelay = `${index * 0.1}s`;
-        container.insertBefore(notifEl, document.getElementById('noNotifications'));
-    });
+// Load signals (using sample data for demonstration)
+function loadSignals() {
+    signals = sampleSignals;
+    setTimeout(() => { loadingPhase = false; }, 3000);
+    updateSignalImmediately();
+    renderInitialHistory();
 }
 
-// Render signal history
+// Fetch signals from JSON file
+async function fetchSignals() {
+    try {
+        const res = await fetch('signals.json?v=' + new Date().getTime());
+        signals = await res.json();
+        updateSignalImmediately();
+        renderInitialHistory();
+    } catch (err) {
+        console.error("Failed to load signals:", err);
+    }
+}
+
+// Disable zooming and scrolling
+document.addEventListener('touchmove', function(e) {
+    if (e.target.classList.contains('history-strip')) return;
+    e.preventDefault();
+}, { passive: false });
+
+document.addEventListener('gesturestart', function(e) {
+    e.preventDefault();
+});
+
+// Prevent context menu
+document.addEventListener('contextmenu', function(e) {
+    e.preventDefault();
+});
+
 function renderInitialHistory() {
     const now = new Date();
     const strip = document.getElementById('historyStrip');
     const msg = document.getElementById('historyMessage');
 
+    // Clear existing history
     strip.innerHTML = '';
     
     let lastPassedIndex = -1;
@@ -974,6 +913,7 @@ function renderInitialHistory() {
             strip.appendChild(item);
             lastPassedIndex = i;
             
+            // Animate each item with a delay
             setTimeout(() => {
                 item.style.animation = `fadeInUp 0.5s ${i * 0.1}s ease forwards`;
             }, 10);
@@ -984,33 +924,52 @@ function renderInitialHistory() {
         const items = strip.querySelectorAll('.history-item');
         items[items.length - 1].classList.add('highlight');
         if (msg) msg.style.display = 'none';
+        
+        // Smooth scroll to the end
+        setTimeout(() => {
+            strip.scrollTo({
+                left: strip.scrollWidth,
+                behavior: 'smooth'
+            });
+        }, 100);
     } else {
         if (msg) msg.style.display = 'flex';
     }
 }
 
-// Add completed signal to history
 function addToHistory(signal) {
     const strip = document.getElementById('historyStrip');
     const msg = document.getElementById('historyMessage');
     if (msg) msg.style.display = 'none';
     if (!strip) return;
 
-    strip.querySelectorAll('.history-item.highlight').forEach(el => el.classList.remove('highlight'));
+    // Remove existing highlight
+    const highlighted = strip.querySelector('.history-item.highlight');
+    if (highlighted) highlighted.classList.remove('highlight');
 
+    // Create new history item
     const item = document.createElement('div');
     item.className = 'history-item highlight';
     item.innerHTML = `<div>${parseFloat(signal.odd).toFixed(2)}x</div><time>${signal.time}</time>`;
     strip.appendChild(item);
     
+    // Animate the new item
     setTimeout(() => {
         item.style.animation = 'fadeInUp 0.5s ease forwards';
     }, 10);
+
+    // Smooth scroll to new item
+    setTimeout(() => {
+        strip.scrollTo({
+            left: strip.scrollWidth,
+            behavior: 'smooth'
+        });
+    }, 100);
     
+    // Add notification for new signal
     addNotification(`Signal ${parseFloat(signal.odd).toFixed(2)}x completed`, `The signal at ${signal.time} has completed. Check results.`);
 }
 
-// Add new notification
 function addNotification(title, content) {
     const now = new Date();
     const timeOptions = { hour: '2-digit', minute: '2-digit' };
@@ -1024,11 +983,9 @@ function addNotification(title, content) {
     });
     
     updateNotificationBadge();
-    renderNotifications();
-    document.getElementById('notificationSound').play().catch(e => console.log("Notification sound failed:", e));
+    document.getElementById('notificationSound').play();
 }
 
-// Update live clock
 function updateLiveClock() {
     const now = new Date();
     const timeOptions = { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false };
@@ -1038,14 +995,12 @@ function updateLiveClock() {
     document.getElementById("liveDate").textContent = now.toLocaleDateString('en-GB', dateOptions);
 }
 
-// Format countdown timer
 function formatCountdown(seconds) {
     const m = Math.floor(seconds / 60).toString().padStart(2, '0');
     const s = (seconds % 60).toString().padStart(2, '0');
     return `${m}:${s}`;
 }
 
-// Update current signal index
 function updateSignalImmediately() {
     const now = new Date();
     for (let i = 0; i < signals.length; i++) {
@@ -1057,7 +1012,6 @@ function updateSignalImmediately() {
     }
 }
 
-// Update signal display
 function updateSignalDisplay() {
     const now = new Date();
     const circle = document.getElementById('signalCircle');
@@ -1126,7 +1080,7 @@ function updateSignalDisplay() {
         odd.className = 'odd-box';
         circle.className = 'signal-circle red';
         if (!beepPlayed) {
-            beep.play().catch(e => console.log("Beep sound failed:", e));
+            beep.play();
             beepPlayed = true;
             addNotification(`Signal ${parseFloat(signal.odd).toFixed(2)}x Active`, `New signal is active now! Place your bet.`);
         }
