@@ -771,8 +771,8 @@ function initApp() {
         fetchNotifications(true);
     }, 5000); // Check every 5 seconds
     
-    // Start cleanup intervals
-    historyCleanupInterval = setInterval(cleanupHistory, 60000); // Check every minute
+    // Start cleanup intervals (30 minutes for history)
+    historyCleanupInterval = setInterval(cleanupHistory, 1800000); // Check every 30 minutes
     notificationCleanupInterval = setInterval(cleanupNotifications, 60000); // Check every minute
     
     // Play welcome sound
@@ -1020,49 +1020,60 @@ async function fetchSignals(forceRefresh = false) {
             });
             
             signals = jsonData;
-            updateSignalImmediately();
+            
+            // Immediately check if there are no upcoming signals
+            const upcomingSignals = signals.filter(signal => {
+                const signalTime = new Date(`${signal.date}T${signal.time}`);
+                return signalTime > now;
+            });
+            
+            if (upcomingSignals.length === 0) {
+                loadingPhase = false;
+                if (loadingTimeout) {
+                    clearTimeout(loadingTimeout);
+                }
+                updateSignalImmediately();
+            } else {
+                updateSignalImmediately();
+            }
             
             // If we had new signals, add notification
-            if (hasNewSignals) {
-                const upcomingSignals = signals.filter(signal => {
-                    const signalTime = new Date(`${signal.date}T${signal.time}`);
-                    return signalTime > now;
-                });
+            if (hasNewSignals && upcomingSignals.length > 0) {
+                const nextSignal = upcomingSignals[0];
+                const signalTime = new Date(`${nextSignal.date}T${nextSignal.time}`);
+                const timeOptions = { hour: '2-digit', minute: '2-digit' };
+                const timeString = signalTime.toLocaleTimeString('en-US', timeOptions);
                 
-                if (upcomingSignals.length > 0) {
-                    const nextSignal = upcomingSignals[0];
-                    const signalTime = new Date(`${nextSignal.date}T${nextSignal.time}`);
-                    const timeOptions = { hour: '2-digit', minute: '2-digit' };
-                    const timeString = signalTime.toLocaleTimeString('en-US', timeOptions);
-                    
-                    addNotification(
-                        `New Signal Available (${parseFloat(nextSignal.odd).toFixed(2)}x)`,
-                        `Next signal at ${timeString} with odd ${parseFloat(nextSignal.odd).toFixed(2)}x. Get ready!`
-                    );
-                }
+                addNotification(
+                    `New Signal Available (${nextSignal.odd})`,
+                    `Next signal at ${timeString} with odd ${nextSignal.odd}. Get ready!`
+                );
+                
+                // Play beep for new signal
+                document.getElementById('beepSound').play();
             }
         } else {
-            // If no signals, clear the array
+            // If no signals, clear the array and show completed state
             signals = [];
+            loadingPhase = false;
+            if (loadingTimeout) {
+                clearTimeout(loadingTimeout);
+            }
+            updateSignalImmediately();
         }
     } catch (err) {
         console.error("Failed to load signals:", err);
-    } finally {
-        // Clear the loading timeout if signals were fetched before timeout
-        if (!loadingPhase && loadingTimeout) {
-            clearTimeout(loadingTimeout);
-        }
     }
 }
 
-// Clean up old history items (older than 1 hour)
+// Clean up old history items (older than 30 minutes)
 function cleanupHistory() {
     const now = new Date();
-    const oneHourAgo = new Date(now.getTime() - 60 * 60 * 1000);
+    const thirtyMinutesAgo = new Date(now.getTime() - 30 * 60 * 1000);
     
     historyItems = historyItems.filter(item => {
         const itemTime = new Date(`${item.date}T${item.time}`);
-        return itemTime > oneHourAgo;
+        return itemTime > thirtyMinutesAgo;
     });
     
     renderHistory();
@@ -1111,7 +1122,7 @@ function renderHistory() {
                 itemElement.classList.add('expired');
             }
             
-            itemElement.innerHTML = `<div>${parseFloat(item.odd).toFixed(2)}x</div><time>${item.time}</time>`;
+            itemElement.innerHTML = `<div>${item.odd}</div><time>${item.time}</time>`;
             strip.appendChild(itemElement);
             
             // Animate with requestAnimationFrame for smoother transitions
@@ -1176,8 +1187,8 @@ function addToHistory(signal) {
             
             // Add notification for completed signal
             addNotification(
-                `Signal ${parseFloat(signal.odd).toFixed(2)}x Completed`, 
-                `The signal at ${signal.time} with odd ${parseFloat(signal.odd).toFixed(2)}x has been completed. Check your results.`
+                `Signal ${signal.odd} Completed`, 
+                `The signal at ${signal.time} with odd ${signal.odd} has been completed. Check your results.`
             );
         }
     }
@@ -1273,7 +1284,7 @@ function updateSignalDisplay() {
             <div class="signal-time purple">${signal.time}</div>
             <div class="countdown-timer">Upcoming in: ${formatCountdown(secondsLeft)}</div>
         `;
-        odd.textContent = `ODD - ${parseFloat(signal.odd).toFixed(2)}×`;
+        odd.textContent = `ODD - ${signal.odd}`;
         odd.className = 'odd-box';
         circle.className = 'signal-circle purple';
         beepPlayed = false;
@@ -1287,7 +1298,7 @@ function updateSignalDisplay() {
             <div class="signal-time red">${signal.time}</div>
             <div class="countdown-timer">End in: ${formatCountdown(secondsLeft)}</div>
         `;
-        odd.textContent = `ODD - ${parseFloat(signal.odd).toFixed(2)}×`;
+        odd.textContent = `ODD - ${signal.odd}`;
         odd.className = 'odd-box';
         circle.className = 'signal-circle red';
         
@@ -1301,8 +1312,8 @@ function updateSignalDisplay() {
             const timeString = signalTime.toLocaleTimeString('en-US', timeOptions);
             
             addNotification(
-                `Signal ${parseFloat(signal.odd).toFixed(2)}x Active`, 
-                `Signal is now active! Place your bet with odd ${parseFloat(signal.odd).toFixed(2)}x before it ends at ${timeString}.`
+                `Signal ${signal.odd} Active`, 
+                `Signal is now active! Place your bet with odd ${signal.odd} before it ends at ${timeString}.`
             );
         }
         return;
