@@ -307,6 +307,24 @@
         color: var(--text-secondary);
     }
     
+    /* Loading dots animation */
+    .loading-dots {
+        display: inline-block;
+        position: relative;
+    }
+    
+    .loading-dots::after {
+        content: '...';
+        position: absolute;
+        animation: dotAnimation 1.5s infinite steps(3);
+        opacity: 0;
+    }
+    
+    @keyframes dotAnimation {
+        0%, 100% { opacity: 0; }
+        50% { opacity: 1; }
+    }
+    
     /* Odd Box - Premium Design */
     .odd-box {
         background: var(--card-bg);
@@ -679,9 +697,8 @@
         <div class="signal-container">
             <div class="signal-circle" id="signalCircle">
                 <div class="signal-content" id="signalDisplay">
-                    <div class="loading-spinner"></div>
-                    <div class="signal-status">PREDICTING</div>
-                    <div class="countdown-timer">Analyzing patterns...</div>
+                    <div class="signal-status">SYSTEM INITIALIZING</div>
+                    <div class="countdown-timer">Please wait<span class="loading-dots"></span></div>
                 </div>
             </div>
         </div>
@@ -751,6 +768,7 @@ let notificationCleanupInterval;
 let signalFetchInterval;
 let notificationFetchInterval;
 let loadingTimeout;
+let isFirstLoad = true;
 
 // Initialize the app
 function initApp() {
@@ -972,11 +990,12 @@ function renderNotifications() {
 function loadSignals() {
     signals = [];
     loadingPhase = true;
-    showLoadingState();
+    showInitialLoadingState();
     
     // Set minimum loading time of 8 seconds
     loadingTimeout = setTimeout(() => {
         loadingPhase = false;
+        isFirstLoad = false;
         fetchSignals(true);
     }, 8000);
     
@@ -984,13 +1003,24 @@ function loadSignals() {
     fetchSignals(true);
 }
 
-// Show loading state in signal display
+// Show initial loading state in signal display (first page load)
+function showInitialLoadingState() {
+    const signalDisplay = document.getElementById('signalDisplay');
+    signalDisplay.innerHTML = `
+        <div class="signal-status">SYSTEM INITIALIZING</div>
+        <div class="countdown-timer">Please wait<span class="loading-dots"></span></div>
+    `;
+    document.getElementById('oddValue').textContent = `Calculating optimal odds...`;
+    document.getElementById('signalCircle').className = 'signal-circle';
+}
+
+// Show loading state in signal display (between signals)
 function showLoadingState() {
     const signalDisplay = document.getElementById('signalDisplay');
     signalDisplay.innerHTML = `
         <div class="loading-spinner"></div>
         <div class="signal-status">PREDICTING</div>
-        <div class="countdown-timer">Analyzing patterns...</div>
+        <div class="countdown-timer">Analyzing patterns<span class="loading-dots"></span></div>
     `;
     document.getElementById('oddValue').textContent = `Calculating optimal odds...`;
     document.getElementById('signalCircle').className = 'signal-circle';
@@ -1029,6 +1059,7 @@ async function fetchSignals(forceRefresh = false) {
             
             if (upcomingSignals.length === 0) {
                 loadingPhase = false;
+                isFirstLoad = false;
                 if (loadingTimeout) {
                     clearTimeout(loadingTimeout);
                 }
@@ -1056,6 +1087,7 @@ async function fetchSignals(forceRefresh = false) {
             // If no signals, clear the array and show completed state
             signals = [];
             loadingPhase = false;
+            isFirstLoad = false;
             if (loadingTimeout) {
                 clearTimeout(loadingTimeout);
             }
@@ -1259,7 +1291,21 @@ function updateSignalDisplay() {
     const signalDisplay = document.getElementById('signalDisplay');
 
     if (loadingPhase) {
-        return; // Keep showing loading state
+        if (isFirstLoad) {
+            // Initial loading state (no spinner)
+            signalDisplay.innerHTML = `
+                <div class="signal-status">SYSTEM INITIALIZING</div>
+                <div class="countdown-timer">Please wait<span class="loading-dots"></span></div>
+            `;
+        } else {
+            // Between signals loading state (with spinner)
+            signalDisplay.innerHTML = `
+                <div class="loading-spinner"></div>
+                <div class="signal-status">PREDICTING</div>
+                <div class="countdown-timer">Analyzing patterns<span class="loading-dots"></span></div>
+            `;
+        }
+        return;
     }
 
     if (signals.length === 0 || currentIndex >= signals.length) {
@@ -1333,6 +1379,7 @@ function updateSignalDisplay() {
         // Only show loading if there's a gap of at least 1 second between signals
         if (!nextSignal || (nextStartTime - now >= 1000)) {
             loadingPhase = true;
+            isFirstLoad = false;
             showLoadingState();
             loadingTimeout = setTimeout(() => {
                 loadingPhase = false;
