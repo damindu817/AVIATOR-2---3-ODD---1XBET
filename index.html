@@ -1256,6 +1256,7 @@ function updateSignalDisplay() {
     const signalTime = new Date(`${signal.date}T${signal.time}`);
     const endTime = new Date(signalTime.getTime() + 60000);
 
+    // Signal is upcoming
     if (now < signalTime) {
         const secondsLeft = Math.floor((signalTime - now) / 1000);
         signalDisplay.innerHTML = `
@@ -1269,7 +1270,8 @@ function updateSignalDisplay() {
         return;
     }
 
-    if (now >= signalTime && now < endTime) {
+    // Signal is active (now >= signalTime && now < endTime)
+    if (now < endTime) {
         const secondsLeft = Math.floor((endTime - now) / 1000);
         signalDisplay.innerHTML = `
             <div class="signal-time red">${signal.time}</div>
@@ -1278,20 +1280,29 @@ function updateSignalDisplay() {
         odd.innerHTML = `<i class="fas fa-chart-line"></i> ODD - ${parseFloat(signal.odd).toFixed(2)}×`;
         odd.className = 'odd-box';
         circle.className = 'signal-circle red';
+        
+        // Play beep and show notification only once per active signal
         if (!beepPlayed) {
             beep.play();
             beepPlayed = true;
+            
+            // Add notification for active signal
+            const timeOptions = { hour: '2-digit', minute: '2-digit' };
+            const timeString = signalTime.toLocaleTimeString('en-US', timeOptions);
+            
             addNotification(
                 `Signal ${parseFloat(signal.odd).toFixed(2)}x Active`, 
-                `Signal is now active! Place your bet with odd ${parseFloat(signal.odd).toFixed(2)}x before it ends.`
+                `Signal is now active! Place your bet with odd ${parseFloat(signal.odd).toFixed(2)}x before it ends at ${timeString}.`
             );
         }
         return;
     }
 
+    // Signal has ended (now >= endTime)
     if (now >= endTime) {
         addToHistory(signal);
 
+        // Check if there's another signal coming up soon
         const nextSignal = signals[currentIndex + 1];
         let nextStartTime = null;
         if (nextSignal) {
@@ -1299,7 +1310,7 @@ function updateSignalDisplay() {
         }
 
         // Only show loading if there's a gap of at least 1 second between signals
-        if (!nextSignal || (nextStartTime - endTime >= 1000)) {
+        if (!nextSignal || (nextStartTime - now >= 1000)) {
             loadingPhase = true;
             showLoadingState();
             loadingTimeout = setTimeout(() => {
