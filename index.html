@@ -380,10 +380,14 @@
         font-size: clamp(0.9rem, 3.5vw, 1rem);
         border: 1px solid rgba(255, 255, 255, 0.2);
         flex-shrink: 0;
-        animation: fadeInUp 0.5s ease forwards;
         opacity: 0;
         transform: translateY(10px);
         transition: all 0.3s ease;
+    }
+    
+    .history-item.visible {
+        opacity: 1;
+        transform: translateY(0);
     }
     
     .history-item.highlight {
@@ -743,6 +747,9 @@ let notifications = [];
 let historyItems = [];
 let historyCleanupInterval;
 let notificationCleanupInterval;
+let signalFetchInterval;
+let notificationFetchInterval;
+let loadingTimeout;
 
 // Initialize the app
 function initApp() {
@@ -753,7 +760,15 @@ function initApp() {
     updateLiveClock();
     setInterval(updateLiveClock, 1000);
     setInterval(updateSignalDisplay, 1000);
-    setInterval(fetchSignals, 10000);
+    
+    // Start fetch intervals with cache busting
+    signalFetchInterval = setInterval(() => {
+        fetchSignals(true);
+    }, 5000); // Check every 5 seconds
+    
+    notificationFetchInterval = setInterval(() => {
+        fetchNotifications(true);
+    }, 5000); // Check every 5 seconds
     
     // Start cleanup intervals
     historyCleanupInterval = setInterval(cleanupHistory, 60000); // Check every minute
@@ -823,14 +838,20 @@ function updateNotificationBadge() {
 }
 
 // Fetch notifications from JSON file
-async function fetchNotifications() {
+async function fetchNotifications(forceRefresh = false) {
     try {
-        const res = await fetch('notifications.json?v=' + new Date().getTime());
+        const url = 'notifications.json' + (forceRefresh ? '?v=' + Date.now() : '');
+        const res = await fetch(url);
+        
+        if (!res.ok) {
+            throw new Error('Failed to fetch notifications');
+        }
+        
         const jsonData = await res.json();
         
         // Process notifications - add timestamps if not present
         const now = new Date();
-        notifications = jsonData.map(notification => {
+        const newNotifications = jsonData.map(notification => {
             if (!notification.timestamp) {
                 // If timestamp is not provided, use current time minus some minutes based on "time" field
                 let minutesAgo = 0;
@@ -852,11 +873,26 @@ async function fetchNotifications() {
             return notification;
         });
         
-        renderNotifications();
-        updateNotificationBadge();
+        // Check if we have new notifications
+        const hasNewNotifications = newNotifications.some(newNotif => 
+            !notifications.some(existingNotif => 
+                existingNotif.title === newNotif.title && 
+                existingNotif.content === newNotif.content &&
+                existingNotif.timestamp === newNotif.timestamp
+            )
+        );
+        
+        if (hasNewNotifications || forceRefresh) {
+            notifications = newNotifications;
+            renderNotifications();
+            updateNotificationBadge();
+        }
     } catch (err) {
         console.error("Failed to load notifications:", err);
-        document.getElementById('noNotifications').querySelector('.empty-text').textContent = "Failed to load notifications";
+        const emptyState = document.getElementById('noNotifications');
+        if (emptyState) {
+            emptyState.querySelector('.empty-text').textContent = "Failed to load notifications";
+        }
     }
 }
 
@@ -931,18 +967,46 @@ function renderNotifications() {
     });
 }
 
-// Load signals (using empty array initially)
+// Load signals with loading phase
 function loadSignals() {
     signals = [];
-    setTimeout(() => { loadingPhase = false; }, 3000);
-    updateSignalImmediately();
-    renderHistory();
+    loadingPhase = true;
+    showLoadingState();
+    
+    // Set minimum loading time of 8 seconds
+    loadingTimeout = setTimeout(() => {
+        loadingPhase = false;
+        fetchSignals(true);
+    }, 8000);
+    
+    // Initial fetch
+    fetchSignals(true);
+}
+
+// Show loading state in signal display
+function showLoadingState() {
+    const signalDisplay = document.getElementById('signalDisplay');
+    signalDisplay.innerHTML = `
+        <div class="loading-spinner"></div>
+        <div class="signal-status">PREDICTING</div>
+        <div class="countdown-timer">Analyzing patterns...</div>
+    `;
+    document.getElementById('oddValue').innerHTML = `<i class="fas fa-calculator"></i> Calculating optimal odds...`;
+    document.getElementById('signalCircle').className = 'signal-circle';
 }
 
 // Fetch signals from JSON file
-async function fetchSignals() {
+async function fetchSignals(forceRefresh = false) {
     try {
-        const res = await fetch('signals.json?v=' + new Date().getTime());
+        if (loadingPhase) return;
+        
+        const url = 'signals.json' + (forceRefresh ? '?v=' + Date.now() : '');
+        const res = await fetch(url);
+        
+        if (!res.ok) {
+            throw new Error('Failed to fetch signals');
+        }
+        
         const jsonData = await res.json();
         
         // Only update signals if we get valid data
@@ -958,9 +1022,8 @@ async function fetchSignals() {
             
             signals = jsonData;
             updateSignalImmediately();
-            renderInitialHistory();
             
-            // Add notification for new signals
+            // If we had new signals, add notification
             if (hasNewSignals) {
                 const upcomingSignals = signals.filter(signal => {
                     const signalTime = new Date(`${signal.date}T${signal.time}`);
@@ -979,9 +1042,17 @@ async function fetchSignals() {
                     );
                 }
             }
+        } else {
+            // If no signals, clear the array
+            signals = [];
         }
     } catch (err) {
         console.error("Failed to load signals:", err);
+    } finally {
+        // Clear the loading timeout if signals were fetched before timeout
+        if (!loadingPhase && loadingTimeout) {
+            clearTimeout(loadingTimeout);
+        }
     }
 }
 
@@ -1042,10 +1113,10 @@ function renderHistory() {
         itemElement.innerHTML = `<div>${parseFloat(item.odd).toFixed(2)}x</div><time>${item.time}</time>`;
         strip.appendChild(itemElement);
         
-        // Animate each item with a delay
+        // Make item visible with a delay to prevent jumping
         setTimeout(() => {
-            itemElement.style.animation = `fadeInUp 0.5s ${i * 0.05}s ease forwards`;
-        }, 10);
+            itemElement.classList.add('visible');
+        }, i * 50);
     });
     
     // Restore scroll position
@@ -1161,15 +1232,7 @@ function updateSignalDisplay() {
     const signalDisplay = document.getElementById('signalDisplay');
 
     if (loadingPhase) {
-        signalDisplay.innerHTML = `
-            <div class="loading-spinner"></div>
-            <div class="signal-status">PREDICTING</div>
-            <div class="countdown-timer">Analyzing patterns...</div>
-        `;
-        odd.innerHTML = `<i class="fas fa-calculator"></i> Calculating optimal odds...`;
-        odd.className = 'odd-box';
-        circle.className = 'signal-circle';
-        return;
+        return; // Keep showing loading state
     }
 
     if (signals.length === 0 || currentIndex >= signals.length) {
@@ -1224,6 +1287,14 @@ function updateSignalDisplay() {
         addToHistory(signal);
         currentIndex++;
         beepPlayed = false;
+        
+        // Show loading state for 8 seconds before checking for next signal
+        loadingPhase = true;
+        showLoadingState();
+        loadingTimeout = setTimeout(() => {
+            loadingPhase = false;
+            updateSignalImmediately();
+        }, 8000);
     }
 }
 
