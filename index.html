@@ -583,8 +583,8 @@
         margin-top: auto;
         padding: 15px;
         font-size: clamp(0.7rem, 3vw, 0.8rem);
-        color: var(--text-secondary);
-        background: rgba(10, 10, 20, 0.9);
+        color: var(--text-primary);
+        background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
         backdrop-filter: blur(8px);
         text-align: center;
         flex-shrink: 0;
@@ -980,7 +980,7 @@ function renderNotifications() {
         return timeB - timeA;
     });
     
-    sortedNotifications.forEach(n => {
+    sortedNotifications.forEach((n, i) => {
         // Format time display
         let timeDisplay = n.time;
         if (n.timestamp) {
@@ -1031,6 +1031,8 @@ function renderNotifications() {
             `;
         }
         
+        // Add animation delay based on index
+        item.style.animationDelay = `${i * 0.1}s`;
         container.appendChild(item);
     });
 }
@@ -1124,14 +1126,14 @@ async function fetchSignals(forceRefresh = false) {
     }
 }
 
-// Clean up old history items (older than 1 hour)
+// Clean up old history items (older than 30 minutes)
 function cleanupHistory() {
     const now = new Date();
-    const oneHourAgo = new Date(now.getTime() - 60 * 60 * 1000);
+    const thirtyMinutesAgo = new Date(now.getTime() - 30 * 60 * 1000);
     
     historyItems = historyItems.filter(item => {
         const itemTime = new Date(`${item.date}T${item.time}`);
-        return itemTime > oneHourAgo;
+        return itemTime > thirtyMinutesAgo;
     });
     
     renderHistory();
@@ -1162,47 +1164,49 @@ function renderHistory() {
     // Store current scroll position
     const wasScrolledToEnd = strip.scrollLeft + strip.clientWidth >= strip.scrollWidth - 10;
     
-    // Use requestAnimationFrame for smoother animations
-    const animateItems = () => {
-        sortedHistory.forEach((item, i) => {
-            const itemElement = document.createElement('div');
-            itemElement.className = 'history-item';
-            
-            // Mark if this is the most recent item
-            if (i === 0) {
-                itemElement.classList.add('highlight');
-            }
-            
-            // Mark if item is older than 30 minutes
-            const itemTime = new Date(`${item.date}T${item.time}`);
-            const now = new Date();
-            if ((now - itemTime) > 30 * 60 * 1000) {
-                itemElement.classList.add('expired');
-            }
-            
-            itemElement.innerHTML = `<div>${parseFloat(item.odd).toFixed(2)}x</div><time>${item.time}</time>`;
-            strip.appendChild(itemElement);
-            
-            // Animate with requestAnimationFrame for smoother transitions
-            requestAnimationFrame(() => {
-                setTimeout(() => {
-                    itemElement.classList.add('visible');
-                }, i * 50);
-            });
-        });
-    };
+    // Create a document fragment for better performance
+    const fragment = document.createDocumentFragment();
     
-    animateItems();
+    sortedHistory.forEach((item, i) => {
+        const itemElement = document.createElement('div');
+        itemElement.className = 'history-item';
+        
+        // Mark if this is the most recent item
+        if (i === 0) {
+            itemElement.classList.add('highlight');
+        }
+        
+        // Mark if item is older than 15 minutes
+        const itemTime = new Date(`${item.date}T${item.time}`);
+        const now = new Date();
+        if ((now - itemTime) > 15 * 60 * 1000) {
+            itemElement.classList.add('expired');
+        }
+        
+        itemElement.innerHTML = `<div>${parseFloat(item.odd).toFixed(2)}x</div><time>${item.time}</time>`;
+        fragment.appendChild(itemElement);
+    });
+    
+    // Append all items at once
+    strip.appendChild(fragment);
+    
+    // Animate items with staggered delay
+    const items = strip.querySelectorAll('.history-item');
+    items.forEach((item, index) => {
+        setTimeout(() => {
+            item.classList.add('visible');
+        }, index * 50);
+    });
     
     // Restore scroll position after items are rendered
-    requestAnimationFrame(() => {
-        if (wasScrolledToEnd) {
+    setTimeout(() => {
+        if (wasScrolledToEnd || strip.scrollLeft === 0) {
             strip.scrollTo({
                 left: strip.scrollWidth,
                 behavior: 'smooth'
             });
         }
-    });
+    }, 100);
 }
 
 function renderInitialHistory() {
@@ -1240,7 +1244,7 @@ function addToHistory(signal) {
         );
         
         if (!exists) {
-            historyItems.push({...signal});
+            historyItems.unshift({...signal}); // Add to beginning of array
             renderHistory();
             
             // Add notification for completed signal
@@ -1432,7 +1436,26 @@ document.addEventListener('contextmenu', function(e) {
 });
 
 // Initialize the app when the page loads
-window.addEventListener("load", initApp);
+window.addEventListener("load", function() {
+    // First render any existing history from localStorage
+    const savedHistory = localStorage.getItem('signalHistory');
+    if (savedHistory) {
+        try {
+            historyItems = JSON.parse(savedHistory);
+            renderHistory();
+        } catch (e) {
+            console.error("Failed to load history from storage", e);
+        }
+    }
+    
+    // Then initialize the app
+    initApp();
+    
+    // Save history to localStorage before page unload
+    window.addEventListener('beforeunload', function() {
+        localStorage.setItem('signalHistory', JSON.stringify(historyItems));
+    });
+});
 </script>
 
 </body>
