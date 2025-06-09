@@ -992,7 +992,7 @@ function showLoadingState() {
         <div class="signal-status">PREDICTING</div>
         <div class="countdown-timer">Analyzing patterns...</div>
     `;
-    document.getElementById('oddValue').innerHTML = `<i class="fas fa-calculator"></i> Calculating optimal odds...`;
+    document.getElementById('oddValue').textContent = `Calculating optimal odds...`;
     document.getElementById('signalCircle').className = 'signal-circle';
 }
 
@@ -1125,15 +1125,15 @@ function renderHistory() {
     
     animateItems();
     
-    // Restore scroll position
-    if (wasScrolledToEnd) {
-        setTimeout(() => {
+    // Restore scroll position after items are rendered
+    requestAnimationFrame(() => {
+        if (wasScrolledToEnd) {
             strip.scrollTo({
                 left: strip.scrollWidth,
                 behavior: 'smooth'
             });
-        }, 100);
-    }
+        }
+    });
 }
 
 function renderInitialHistory() {
@@ -1188,17 +1188,25 @@ function addNotification(title, content) {
     const timeOptions = { hour: '2-digit', minute: '2-digit' };
     const timeString = now.toLocaleTimeString('en-US', timeOptions);
     
-    notifications.unshift({
-        title: title,
-        content: content,
-        time: "Just now",
-        timestamp: now.toISOString(),
-        unread: true
-    });
+    // Check for duplicate notifications
+    const isDuplicate = notifications.some(n => 
+        n.title === title && n.content === content && 
+        new Date(n.timestamp).getTime() > now.getTime() - 60000 // Within last minute
+    );
     
-    updateNotificationBadge();
-    document.getElementById('notificationSound').play();
-    renderNotifications();
+    if (!isDuplicate) {
+        notifications.unshift({
+            title: title,
+            content: content,
+            time: "Just now",
+            timestamp: now.toISOString(),
+            unread: true
+        });
+        
+        updateNotificationBadge();
+        document.getElementById('notificationSound').play();
+        renderNotifications();
+    }
 }
 
 function updateLiveClock() {
@@ -1220,10 +1228,12 @@ function updateSignalImmediately() {
     const now = new Date();
     currentIndex = 0;
     
-    // Find the first signal that hasn't passed yet
+    // Find the first signal that is either upcoming or active
     for (let i = 0; i < signals.length; i++) {
         const signalTime = new Date(`${signals[i].date}T${signals[i].time}`);
-        if (now < signalTime) {
+        const endTime = new Date(signalTime.getTime() + 60000);
+        
+        if ((now < signalTime) || (now >= signalTime && now < endTime)) {
             currentIndex = i;
             break;
         }
@@ -1246,7 +1256,7 @@ function updateSignalDisplay() {
             <div class="signal-time green">COMPLETED</div>
             <div class="countdown-timer">Signal Round Finished</div>
         `;
-        odd.innerHTML = `<i class="fas fa-info-circle"></i> Signal Not Available`;
+        odd.textContent = `Signal Not Available`;
         odd.className = 'odd-box';
         circle.className = 'signal-circle green';
         return;
@@ -1263,7 +1273,7 @@ function updateSignalDisplay() {
             <div class="signal-time purple">${signal.time}</div>
             <div class="countdown-timer">Upcoming in: ${formatCountdown(secondsLeft)}</div>
         `;
-        odd.innerHTML = `<i class="fas fa-chart-line"></i> ODD - ${parseFloat(signal.odd).toFixed(2)}×`;
+        odd.textContent = `ODD - ${parseFloat(signal.odd).toFixed(2)}×`;
         odd.className = 'odd-box';
         circle.className = 'signal-circle purple';
         beepPlayed = false;
@@ -1277,7 +1287,7 @@ function updateSignalDisplay() {
             <div class="signal-time red">${signal.time}</div>
             <div class="countdown-timer">End in: ${formatCountdown(secondsLeft)}</div>
         `;
-        odd.innerHTML = `<i class="fas fa-chart-line"></i> ODD - ${parseFloat(signal.odd).toFixed(2)}×`;
+        odd.textContent = `ODD - ${parseFloat(signal.odd).toFixed(2)}×`;
         odd.className = 'odd-box';
         circle.className = 'signal-circle red';
         
