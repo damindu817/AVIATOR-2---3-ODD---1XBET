@@ -383,6 +383,7 @@
         opacity: 0;
         transform: translateY(10px);
         transition: all 0.3s ease;
+        will-change: transform, opacity;
     }
     
     .history-item.visible {
@@ -998,8 +999,6 @@ function showLoadingState() {
 // Fetch signals from JSON file
 async function fetchSignals(forceRefresh = false) {
     try {
-        if (loadingPhase) return;
-        
         const url = 'signals.json' + (forceRefresh ? '?v=' + Date.now() : '');
         const res = await fetch(url);
         
@@ -1069,7 +1068,7 @@ function cleanupHistory() {
     renderHistory();
 }
 
-// Render history to the UI
+// Render history to the UI with smooth animation
 function renderHistory() {
     const strip = document.getElementById('historyStrip');
     const msg = document.getElementById('historyMessage');
@@ -1094,30 +1093,37 @@ function renderHistory() {
     // Store current scroll position
     const wasScrolledToEnd = strip.scrollLeft + strip.clientWidth >= strip.scrollWidth - 10;
     
-    sortedHistory.forEach((item, i) => {
-        const itemElement = document.createElement('div');
-        itemElement.className = 'history-item';
-        
-        // Mark if this is the most recent item
-        if (i === 0) {
-            itemElement.classList.add('highlight');
-        }
-        
-        // Mark if item is older than 30 minutes
-        const itemTime = new Date(`${item.date}T${item.time}`);
-        const now = new Date();
-        if ((now - itemTime) > 30 * 60 * 1000) {
-            itemElement.classList.add('expired');
-        }
-        
-        itemElement.innerHTML = `<div>${parseFloat(item.odd).toFixed(2)}x</div><time>${item.time}</time>`;
-        strip.appendChild(itemElement);
-        
-        // Make item visible with a delay to prevent jumping
-        setTimeout(() => {
-            itemElement.classList.add('visible');
-        }, i * 50);
-    });
+    // Use requestAnimationFrame for smoother animations
+    const animateItems = () => {
+        sortedHistory.forEach((item, i) => {
+            const itemElement = document.createElement('div');
+            itemElement.className = 'history-item';
+            
+            // Mark if this is the most recent item
+            if (i === 0) {
+                itemElement.classList.add('highlight');
+            }
+            
+            // Mark if item is older than 30 minutes
+            const itemTime = new Date(`${item.date}T${item.time}`);
+            const now = new Date();
+            if ((now - itemTime) > 30 * 60 * 1000) {
+                itemElement.classList.add('expired');
+            }
+            
+            itemElement.innerHTML = `<div>${parseFloat(item.odd).toFixed(2)}x</div><time>${item.time}</time>`;
+            strip.appendChild(itemElement);
+            
+            // Animate with requestAnimationFrame for smoother transitions
+            requestAnimationFrame(() => {
+                setTimeout(() => {
+                    itemElement.classList.add('visible');
+                }, i * 50);
+            });
+        });
+    };
+    
+    animateItems();
     
     // Restore scroll position
     if (wasScrolledToEnd) {
@@ -1285,16 +1291,28 @@ function updateSignalDisplay() {
 
     if (now >= endTime) {
         addToHistory(signal);
-        currentIndex++;
-        beepPlayed = false;
-        
-        // Show loading state for 8 seconds before checking for next signal
-        loadingPhase = true;
-        showLoadingState();
-        loadingTimeout = setTimeout(() => {
-            loadingPhase = false;
+
+        const nextSignal = signals[currentIndex + 1];
+        let nextStartTime = null;
+        if (nextSignal) {
+            nextStartTime = new Date(`${nextSignal.date}T${nextSignal.time}`);
+        }
+
+        // Only show loading if there's a gap of at least 1 second between signals
+        if (!nextSignal || (nextStartTime - endTime >= 1000)) {
+            loadingPhase = true;
+            showLoadingState();
+            loadingTimeout = setTimeout(() => {
+                loadingPhase = false;
+                currentIndex++;
+                updateSignalImmediately();
+            }, 8000);
+        } else {
+            currentIndex++;
             updateSignalImmediately();
-        }, 8000);
+        }
+
+        beepPlayed = false;
     }
 }
 
