@@ -500,7 +500,7 @@
         text-align: center;
     }
     
-    /* Notifications Tab */
+    /* Notifications Tab - Enhanced */
     .notifications-container {
         padding: 15px;
         -webkit-overflow-scrolling: touch;
@@ -515,6 +515,8 @@
         box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
         animation: fadeIn 0.5s ease forwards;
         opacity: 0;
+        position: relative;
+        overflow: hidden;
     }
     
     .notification-item.unread {
@@ -522,10 +524,22 @@
         background: rgba(30, 30, 50, 0.9);
     }
     
+    .notification-item.unread::before {
+        content: '';
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        width: 8px;
+        height: 8px;
+        background-color: var(--danger);
+        border-radius: 50%;
+    }
+    
     .notification-header {
         display: flex;
         justify-content: space-between;
         margin-bottom: 8px;
+        padding-left: 15px;
     }
     
     .notification-title {
@@ -543,6 +557,25 @@
         font-size: 0.85rem;
         color: var(--text-secondary);
         line-height: 1.4;
+        padding-left: 15px;
+    }
+    
+    .notification-detail {
+        display: flex;
+        align-items: center;
+        margin-top: 8px;
+        padding-left: 15px;
+    }
+    
+    .notification-detail-icon {
+        width: 20px;
+        text-align: center;
+        margin-right: 8px;
+        color: var(--primary);
+    }
+    
+    .notification-detail-text {
+        font-size: 0.8rem;
     }
     
     /* Footer */
@@ -631,6 +664,19 @@
         
         .clock-container, .timeline-container, .social-container {
             width: 95%;
+        }
+        
+        .notification-item {
+            padding: 12px;
+        }
+        
+        .notification-header {
+            flex-direction: column;
+            gap: 4px;
+        }
+        
+        .notification-time {
+            align-self: flex-end;
         }
     }
     
@@ -957,13 +1003,34 @@ function renderNotifications() {
         
         const item = document.createElement('div');
         item.className = 'notification-item' + (n.unread ? ' unread' : '');
-        item.innerHTML = `
-            <div class="notification-header">
-                <div class="notification-title">${n.title}</div>
-                <div class="notification-time">${timeDisplay}</div>
-            </div>
-            <div class="notification-content">${n.content}</div>
-        `;
+        
+        // Check if this is a signal notification (has signalTime and odd properties)
+        if (n.signalTime && n.odd) {
+            item.innerHTML = `
+                <div class="notification-header">
+                    <div class="notification-title">${n.title}</div>
+                    <div class="notification-time">${timeDisplay}</div>
+                </div>
+                <div class="notification-content">${n.content}</div>
+                <div class="notification-detail">
+                    <div class="notification-detail-icon"><i class="fas fa-clock"></i></div>
+                    <div class="notification-detail-text">${n.signalTime}</div>
+                </div>
+                <div class="notification-detail">
+                    <div class="notification-detail-icon"><i class="fas fa-bullseye"></i></div>
+                    <div class="notification-detail-text">Odd: ${parseFloat(n.odd).toFixed(2)}×</div>
+                </div>
+            `;
+        } else {
+            item.innerHTML = `
+                <div class="notification-header">
+                    <div class="notification-title">${n.title}</div>
+                    <div class="notification-time">${timeDisplay}</div>
+                </div>
+                <div class="notification-content">${n.content}</div>
+            `;
+        }
+        
         container.appendChild(item);
     });
 }
@@ -1035,9 +1102,11 @@ async function fetchSignals(forceRefresh = false) {
                     const timeOptions = { hour: '2-digit', minute: '2-digit' };
                     const timeString = signalTime.toLocaleTimeString('en-US', timeOptions);
                     
-                    addNotification(
+                    addSignalNotification(
                         `New Signal Available (${parseFloat(nextSignal.odd).toFixed(2)}x)`,
-                        `Next signal at ${timeString} with odd ${parseFloat(nextSignal.odd).toFixed(2)}x. Get ready!`
+                        `Next signal at ${timeString} with odd ${parseFloat(nextSignal.odd).toFixed(2)}x. Get ready!`,
+                        timeString,
+                        nextSignal.odd
                     );
                 }
             }
@@ -1175,15 +1244,17 @@ function addToHistory(signal) {
             renderHistory();
             
             // Add notification for completed signal
-            addNotification(
+            addSignalNotification(
                 `Signal ${parseFloat(signal.odd).toFixed(2)}x Completed`, 
-                `The signal at ${signal.time} with odd ${parseFloat(signal.odd).toFixed(2)}x has been completed. Check your results.`
+                `The signal at ${signal.time} has been completed.`,
+                signal.time,
+                signal.odd
             );
         }
     }
 }
 
-function addNotification(title, content) {
+function addSignalNotification(title, content, signalTime, odd) {
     const now = new Date();
     const timeOptions = { hour: '2-digit', minute: '2-digit' };
     const timeString = now.toLocaleTimeString('en-US', timeOptions);
@@ -1200,7 +1271,9 @@ function addNotification(title, content) {
             content: content,
             time: "Just now",
             timestamp: now.toISOString(),
-            unread: true
+            unread: true,
+            signalTime: signalTime,
+            odd: odd
         });
         
         updateNotificationBadge();
@@ -1297,12 +1370,14 @@ function updateSignalDisplay() {
             beepPlayed = true;
             
             // Add notification for active signal
-            const timeOptions = { hour: '2-digit', minute: '2-digit' };
-            const timeString = signalTime.toLocaleTimeString('en-US', timeOptions);
+            const timeOptions = { hour: '2-digit', minute: '2-digit', second: '2-digit' };
+            const formattedTime = signalTime.toLocaleTimeString('en-US', timeOptions);
             
-            addNotification(
+            addSignalNotification(
                 `Signal ${parseFloat(signal.odd).toFixed(2)}x Active`, 
-                `Signal is now active! Place your bet with odd ${parseFloat(signal.odd).toFixed(2)}x before it ends at ${timeString}.`
+                `Signal is now active! Place your bet before it ends.`,
+                formattedTime,
+                signal.odd
             );
         }
         return;
