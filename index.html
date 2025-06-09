@@ -676,7 +676,7 @@
                 <div class="signal-content" id="signalDisplay">
                     <div class="loading-spinner"></div>
                     <div class="signal-status">PREDICTING</div>
-                    <div class="countdown-timer">Loading signal data...</div>
+                    <div class="countdown-timer">Analyzing patterns...</div>
                 </div>
             </div>
         </div>
@@ -947,9 +947,38 @@ async function fetchSignals() {
         
         // Only update signals if we get valid data
         if (Array.isArray(jsonData) && jsonData.length > 0) {
+            // Check if we have new upcoming signals
+            const now = new Date();
+            const hasNewSignals = jsonData.some(signal => {
+                const signalTime = new Date(`${signal.date}T${signal.time}`);
+                return signalTime > now && !signals.some(s => 
+                    s.date === signal.date && s.time === signal.time && s.odd === signal.odd
+                );
+            });
+            
             signals = jsonData;
             updateSignalImmediately();
             renderInitialHistory();
+            
+            // Add notification for new signals
+            if (hasNewSignals) {
+                const upcomingSignals = signals.filter(signal => {
+                    const signalTime = new Date(`${signal.date}T${signal.time}`);
+                    return signalTime > now;
+                });
+                
+                if (upcomingSignals.length > 0) {
+                    const nextSignal = upcomingSignals[0];
+                    const signalTime = new Date(`${nextSignal.date}T${nextSignal.time}`);
+                    const timeOptions = { hour: '2-digit', minute: '2-digit' };
+                    const timeString = signalTime.toLocaleTimeString('en-US', timeOptions);
+                    
+                    addNotification(
+                        `New Signal Available (${parseFloat(nextSignal.odd).toFixed(2)}x)`,
+                        `Next signal at ${timeString} with odd ${parseFloat(nextSignal.odd).toFixed(2)}x. Get ready!`
+                    );
+                }
+            }
         }
     } catch (err) {
         console.error("Failed to load signals:", err);
@@ -1034,10 +1063,10 @@ function renderInitialHistory() {
     const now = new Date();
     const msg = document.getElementById('historyMessage');
     
-    // Filter signals that have already passed
+    // Filter signals that have already passed (plus 1 minute to ensure they're completed)
     const passedSignals = signals.filter(signal => {
         const signalTime = new Date(`${signal.date}T${signal.time}`);
-        return signalTime < now;
+        return new Date(signalTime.getTime() + 60000) < now;
     });
     
     // Only add to historyItems if not already present
@@ -1057,8 +1086,8 @@ function addToHistory(signal) {
     const now = new Date();
     const signalTime = new Date(`${signal.date}T${signal.time}`);
     
-    // Only add to history if the signal time has passed
-    if (signalTime < now) {
+    // Only add to history if the signal time has passed (plus 1 minute to ensure completion)
+    if (new Date(signalTime.getTime() + 60000) < now) {
         // Check if this signal already exists in history
         const exists = historyItems.some(item => 
             item.date === signal.date && item.time === signal.time && item.odd === signal.odd
@@ -1068,9 +1097,11 @@ function addToHistory(signal) {
             historyItems.push({...signal});
             renderHistory();
             
-            // Add notification for new signal
-            addNotification(`Signal ${parseFloat(signal.odd).toFixed(2)}x completed`, 
-                          `The signal at ${signal.time} has completed. Check results.`);
+            // Add notification for completed signal
+            addNotification(
+                `Signal ${parseFloat(signal.odd).toFixed(2)}x Completed`, 
+                `The signal at ${signal.time} with odd ${parseFloat(signal.odd).toFixed(2)}x has been completed. Check your results.`
+            );
         }
     }
 }
@@ -1181,7 +1212,10 @@ function updateSignalDisplay() {
         if (!beepPlayed) {
             beep.play();
             beepPlayed = true;
-            addNotification(`Signal ${parseFloat(signal.odd).toFixed(2)}x Active`, `New signal is active now! Place your bet.`);
+            addNotification(
+                `Signal ${parseFloat(signal.odd).toFixed(2)}x Active`, 
+                `Signal is now active! Place your bet with odd ${parseFloat(signal.odd).toFixed(2)}x before it ends.`
+            );
         }
         return;
     }
