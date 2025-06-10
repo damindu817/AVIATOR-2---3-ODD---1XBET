@@ -267,6 +267,10 @@
     .signal-content {
         text-align: center;
         padding: 0 15px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
     }
     
     .signal-status {
@@ -305,17 +309,24 @@
         font-weight: 600;
         margin-top: 8px;
         color: var(--text-secondary);
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
     
     /* Loading dots animation */
     .loading-dots {
         display: inline-block;
         position: relative;
+        width: 20px;
+        height: 1em;
+        overflow: hidden;
     }
     
     .loading-dots::after {
         content: '...';
         position: absolute;
+        left: 0;
         animation: dotAnimation 1.5s infinite steps(3);
         opacity: 0;
     }
@@ -659,6 +670,119 @@
         height: 0;
         background: transparent;
     }
+
+    /* Popup Overlay */
+    .popup-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: rgba(0, 0, 0, 0.8);
+        z-index: 1000;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.3s ease;
+    }
+
+    .popup-overlay.active {
+        opacity: 1;
+        pointer-events: auto;
+    }
+
+    /* Popup Box */
+    .popup-box {
+        background: var(--card-bg);
+        border-radius: 16px;
+        padding: 20px;
+        width: 90%;
+        max-width: 400px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        transform: scale(0.9);
+        opacity: 0;
+        transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+        position: relative;
+        overflow: hidden;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .popup-overlay.active .popup-box {
+        transform: scale(1);
+        opacity: 1;
+    }
+
+    .popup-header {
+        display: flex;
+        align-items: center;
+        margin-bottom: 15px;
+    }
+
+    .popup-icon {
+        font-size: 1.8rem;
+        color: var(--primary);
+        margin-right: 12px;
+    }
+
+    .popup-title {
+        font-size: 1.2rem;
+        font-weight: 700;
+        color: var(--text-primary);
+    }
+
+    .popup-content {
+        font-size: 0.9rem;
+        line-height: 1.5;
+        color: var(--text-secondary);
+        margin-bottom: 20px;
+    }
+
+    .popup-guide {
+        background: rgba(30, 30, 50, 0.6);
+        border-radius: 10px;
+        padding: 15px;
+        margin-bottom: 20px;
+    }
+
+    .guide-item {
+        margin-bottom: 8px;
+        display: flex;
+        align-items: flex-start;
+    }
+
+    .guide-item:last-child {
+        margin-bottom: 0;
+    }
+
+    .guide-bullet {
+        color: var(--primary);
+        margin-right: 8px;
+        font-size: 0.8rem;
+        margin-top: 3px;
+    }
+
+    .popup-timer {
+        display: flex;
+        justify-content: center;
+        margin-top: 15px;
+    }
+
+    .timer-circle {
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        background: rgba(20, 20, 40, 0.8);
+        border: 3px solid var(--primary);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 1.2rem;
+        font-weight: 700;
+        color: var(--text-primary);
+        box-shadow: 0 0 15px rgba(106, 17, 203, 0.3);
+    }
     </style>
 </head>
 
@@ -704,7 +828,7 @@
         </div>
         
         <div class="odd-box" id="oddValue">
-            <i class="fas fa-calculator"></i> Calculating optimal odds...
+            <i class="fas fa-calculator"></i> Suggested multiplier: Calculating...
         </div>
         
         <div class="timeline-container">
@@ -749,6 +873,27 @@
     </div>
 </div>
 
+<!-- Popup Overlay -->
+<div class="popup-overlay" id="popupOverlay">
+    <div class="popup-box">
+        <div class="popup-header">
+            <div class="popup-icon">
+                <i class="fas fa-lightbulb"></i>
+            </div>
+            <div class="popup-title">GAME GUIDE</div>
+        </div>
+        <div class="popup-content">
+            Signal will be active in <span id="popupSignalTime"></span>. Follow these guidelines for best results:
+        </div>
+        <div class="popup-guide" id="popupGuide">
+            <!-- Guide items will be inserted here -->
+        </div>
+        <div class="popup-timer">
+            <div class="timer-circle" id="popupTimer">10</div>
+        </div>
+    </div>
+</div>
+
 <footer class="app-footer">
     POWERED BY XTREME PREDICTOR PRO © 2025
 </footer>
@@ -769,6 +914,8 @@ let signalFetchInterval;
 let notificationFetchInterval;
 let loadingTimeout;
 let isFirstLoad = true;
+let popupTimerInterval;
+let popupActive = false;
 
 // Initialize the app
 function initApp() {
@@ -1010,7 +1157,7 @@ function showInitialLoadingState() {
         <div class="signal-status">SYSTEM INITIALIZING</div>
         <div class="countdown-timer">Please wait<span class="loading-dots"></span></div>
     `;
-    document.getElementById('oddValue').textContent = `Calculating optimal odds...`;
+    document.getElementById('oddValue').textContent = `Suggested multiplier: Calculating...`;
     document.getElementById('signalCircle').className = 'signal-circle';
 }
 
@@ -1018,12 +1165,79 @@ function showInitialLoadingState() {
 function showLoadingState() {
     const signalDisplay = document.getElementById('signalDisplay');
     signalDisplay.innerHTML = `
-        <div class="loading-spinner"></div>
         <div class="signal-status">PREDICTING</div>
         <div class="countdown-timer">Analyzing patterns<span class="loading-dots"></span></div>
     `;
-    document.getElementById('oddValue').textContent = `Calculating optimal odds...`;
+    document.getElementById('oddValue').textContent = `Suggested multiplier: Calculating...`;
     document.getElementById('signalCircle').className = 'signal-circle';
+}
+
+// Show popup with game guide
+function showGameGuidePopup(signal) {
+    if (popupActive) return;
+    
+    popupActive = true;
+    const popupOverlay = document.getElementById('popupOverlay');
+    const popupGuide = document.getElementById('popupGuide');
+    const popupSignalTime = document.getElementById('popupSignalTime');
+    
+    // Format signal time
+    const signalTime = new Date(`${signal.date}T${signal.time}`);
+    const timeOptions = { hour: '2-digit', minute: '2-digit', second: '2-digit' };
+    popupSignalTime.textContent = signalTime.toLocaleTimeString('en-US', timeOptions);
+    
+    // Create guide items
+    popupGuide.innerHTML = `
+        <div class="guide-item">
+            <div class="guide-bullet">*</div>
+            <div>Aviator Game ක්‍රීඩාව සඳහා ක්‍රියාමාර්ග මාර්ගෝපදේශය:</div>
+        </div>
+        <div class="guide-item">
+            <div class="guide-bullet">*</div>
+            <div>Entry Time: ${signal.time} ට පසු ආරම්භ වන round එකේ සිට ක්‍රීඩා ආරම්භ කරන්න.</div>
+        </div>
+        <div class="guide-item">
+            <div class="guide-bullet">*</div>
+            <div>Target: ${signal.odd} odd අගය පසුකරන තුරු bet ක්‍රියාව පවත්වා ගන්න.</div>
+        </div>
+        <div class="guide-item">
+            <div class="guide-bullet">*</div>
+            <div>Attempt Limit: උපරිම round 03 ක් පමණක්.</div>
+        </div>
+        <div class="guide-item">
+            <div class="guide-bullet">*</div>
+            <div>Bet Mode: Auto Bet ක්‍රමය යොදා ගන්න.</div>
+        </div>
+        <div class="guide-item">
+            <div class="guide-bullet">*</div>
+            <div>Cash Out: ${signal.odd} odd අගය පසුකර යන වහාම cash out ක්‍රියාත්මක කරන්න.</div>
+        </div>
+    `;
+    
+    // Start countdown timer
+    let countdown = 10;
+    const timerElement = document.getElementById('popupTimer');
+    timerElement.textContent = countdown;
+    
+    popupTimerInterval = setInterval(() => {
+        countdown--;
+        timerElement.textContent = countdown;
+        
+        if (countdown <= 0) {
+            closePopup();
+        }
+    }, 1000);
+    
+    // Show popup with animation
+    popupOverlay.classList.add('active');
+}
+
+// Close the popup
+function closePopup() {
+    clearInterval(popupTimerInterval);
+    const popupOverlay = document.getElementById('popupOverlay');
+    popupOverlay.classList.remove('active');
+    popupActive = false;
 }
 
 // Fetch signals from JSON file
@@ -1077,11 +1291,19 @@ async function fetchSignals(forceRefresh = false) {
                 
                 addNotification(
                     `New Signal Available (${nextSignal.odd})`,
-                    `Next signal at ${timeString} with odd ${nextSignal.odd}. Get ready!`
+                    `Next signal at ${timeString} with multiplier ${nextSignal.odd}. Get ready!`
                 );
                 
                 // Play beep for new signal
                 document.getElementById('beepSound').play();
+                
+                // Show popup guide 10 seconds before signal
+                const timeUntilSignal = signalTime - now;
+                if (timeUntilSignal > 10000 && timeUntilSignal < 20000) {
+                    setTimeout(() => {
+                        showGameGuidePopup(nextSignal);
+                    }, timeUntilSignal - 10000);
+                }
             }
         } else {
             // If no signals, clear the array and show completed state
@@ -1220,7 +1442,7 @@ function addToHistory(signal) {
             // Add notification for completed signal
             addNotification(
                 `Signal ${signal.odd} Completed`, 
-                `The signal at ${signal.time} with odd ${signal.odd} has been completed. Check your results.`
+                `The signal at ${signal.time} with multiplier ${signal.odd} has been completed. Check your results.`
             );
         }
     }
@@ -1292,15 +1514,14 @@ function updateSignalDisplay() {
 
     if (loadingPhase) {
         if (isFirstLoad) {
-            // Initial loading state (no spinner)
+            // Initial loading state
             signalDisplay.innerHTML = `
                 <div class="signal-status">SYSTEM INITIALIZING</div>
                 <div class="countdown-timer">Please wait<span class="loading-dots"></span></div>
             `;
         } else {
-            // Between signals loading state (with spinner)
+            // Between signals loading state
             signalDisplay.innerHTML = `
-                <div class="loading-spinner"></div>
                 <div class="signal-status">PREDICTING</div>
                 <div class="countdown-timer">Analyzing patterns<span class="loading-dots"></span></div>
             `;
@@ -1313,7 +1534,7 @@ function updateSignalDisplay() {
             <div class="signal-time green">COMPLETED</div>
             <div class="countdown-timer">Signal Round Finished</div>
         `;
-        odd.textContent = `Signal Not Available`;
+        odd.textContent = `Suggested multiplier: Not available`;
         odd.className = 'odd-box';
         circle.className = 'signal-circle green';
         return;
@@ -1330,7 +1551,7 @@ function updateSignalDisplay() {
             <div class="signal-time purple">${signal.time}</div>
             <div class="countdown-timer">Upcoming in: ${formatCountdown(secondsLeft)}</div>
         `;
-        odd.textContent = `ODD - ${signal.odd}`;
+        odd.textContent = `Suggested multiplier: ${signal.odd}`;
         odd.className = 'odd-box';
         circle.className = 'signal-circle purple';
         beepPlayed = false;
@@ -1344,7 +1565,7 @@ function updateSignalDisplay() {
             <div class="signal-time red">${signal.time}</div>
             <div class="countdown-timer">End in: ${formatCountdown(secondsLeft)}</div>
         `;
-        odd.textContent = `ODD - ${signal.odd}`;
+        odd.textContent = `Suggested multiplier: ${signal.odd}`;
         odd.className = 'odd-box';
         circle.className = 'signal-circle red';
         
@@ -1359,7 +1580,7 @@ function updateSignalDisplay() {
             
             addNotification(
                 `Signal ${signal.odd} Active`, 
-                `Signal is now active! Place your bet with odd ${signal.odd} before it ends at ${timeString}.`
+                `Signal is now active! Place your bet with multiplier ${signal.odd} before it ends at ${timeString}.`
             );
         }
         return;
