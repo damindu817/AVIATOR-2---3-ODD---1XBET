@@ -336,6 +336,24 @@
         50% { opacity: 1; }
     }
     
+    /* New loading text styles */
+    .loading-text {
+        font-size: clamp(0.9rem, 4vw, 1rem);
+        color: var(--text-primary);
+        margin-top: 5px;
+        text-align: center;
+    }
+    
+    .loading-gradient {
+        font-size: clamp(0.9rem, 4vw, 1rem);
+        font-weight: 700;
+        background: linear-gradient(135deg, var(--primary), var(--secondary));
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+        margin-bottom: 5px;
+    }
+    
     /* Odd Box - Premium Design - Fixed Size */
     .odd-box {
         background: var(--card-bg);
@@ -837,8 +855,9 @@
         <div class="signal-container">
             <div class="signal-circle" id="signalCircle">
                 <div class="signal-content" id="signalDisplay">
-                    <div class="signal-status">SYSTEM INITIALIZING</div>
-                    <div class="countdown-timer">Please wait<span class="loading-dots"></span></div>
+                    <div class="loading-gradient">SYSTEM</div>
+                    <div class="loading-gradient">INITIALIZING</div>
+                    <div class="loading-text">Please wait<span class="loading-dots"></span></div>
                 </div>
             </div>
         </div>
@@ -1171,8 +1190,9 @@ function loadSignals() {
 function showInitialLoadingState() {
     const signalDisplay = document.getElementById('signalDisplay');
     signalDisplay.innerHTML = `
-        <div class="signal-status">SYSTEM INITIALIZING</div>
-        <div class="countdown-timer">Please wait<span class="loading-dots"></span></div>
+        <div class="loading-gradient">SYSTEM</div>
+        <div class="loading-gradient">INITIALIZING</div>
+        <div class="loading-text">Please wait<span class="loading-dots"></span></div>
     `;
     document.getElementById('oddValue').innerHTML = `<i class="fas fa-calculator"></i> Calculating optimal odds...`;
     document.getElementById('signalCircle').className = 'signal-circle';
@@ -1182,8 +1202,9 @@ function showInitialLoadingState() {
 function showLoadingState() {
     const signalDisplay = document.getElementById('signalDisplay');
     signalDisplay.innerHTML = `
-        <div class="signal-status">PREDICTING</div>
-        <div class="countdown-timer">Analyzing patterns<span class="loading-dots"></span></div>
+        <div class="loading-gradient">PREDICTING</div>
+        <div class="loading-gradient">NEXT SIGNAL</div>
+        <div class="loading-text">Analyzing game<span class="loading-dots"></span></div>
     `;
     document.getElementById('oddValue').innerHTML = `<i class="fas fa-calculator"></i> Calculating optimal odds...`;
     document.getElementById('signalCircle').className = 'signal-circle';
@@ -1551,14 +1572,16 @@ function updateSignalDisplay() {
         if (isFirstLoad) {
             // Initial loading state
             signalDisplay.innerHTML = `
-                <div class="signal-status">SYSTEM INITIALIZING</div>
-                <div class="countdown-timer">Please wait<span class="loading-dots"></span></div>
+                <div class="loading-gradient">SYSTEM</div>
+                <div class="loading-gradient">INITIALIZING</div>
+                <div class="loading-text">Please wait<span class="loading-dots"></span></div>
             `;
         } else {
             // Between signals loading state
             signalDisplay.innerHTML = `
-                <div class="signal-status">PREDICTING</div>
-                <div class="countdown-timer">Analyzing patterns<span class="loading-dots"></span></div>
+                <div class="loading-gradient">PREDICTING</div>
+                <div class="loading-gradient">NEXT SIGNAL</div>
+                <div class="loading-text">Analyzing game<span class="loading-dots"></span></div>
             `;
         }
         odd.innerHTML = `<i class="fas fa-calculator"></i> Calculating optimal odds...`;
