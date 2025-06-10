@@ -844,7 +844,7 @@
         </div>
         
         <div class="odd-box" id="oddValue">
-            <i class="fas fa-calculator"></i> Suggested multiplier: Calculating...
+            <i class="fas fa-calculator"></i> Calculating optimal odds...
         </div>
         
         <div class="timeline-container">
@@ -1174,7 +1174,7 @@ function showInitialLoadingState() {
         <div class="signal-status">SYSTEM INITIALIZING</div>
         <div class="countdown-timer">Please wait<span class="loading-dots"></span></div>
     `;
-    document.getElementById('oddValue').innerHTML = `<i class="fas fa-calculator"></i> Suggested multiplier: Calculating...`;
+    document.getElementById('oddValue').innerHTML = `<i class="fas fa-calculator"></i> Calculating optimal odds...`;
     document.getElementById('signalCircle').className = 'signal-circle';
 }
 
@@ -1185,7 +1185,7 @@ function showLoadingState() {
         <div class="signal-status">PREDICTING</div>
         <div class="countdown-timer">Analyzing patterns<span class="loading-dots"></span></div>
     `;
-    document.getElementById('oddValue').innerHTML = `<i class="fas fa-calculator"></i> Suggested multiplier: Calculating...`;
+    document.getElementById('oddValue').innerHTML = `<i class="fas fa-calculator"></i> Calculating optimal odds...`;
     document.getElementById('signalCircle').className = 'signal-circle';
 }
 
@@ -1561,7 +1561,7 @@ function updateSignalDisplay() {
                 <div class="countdown-timer">Analyzing patterns<span class="loading-dots"></span></div>
             `;
         }
-        odd.innerHTML = `<i class="fas fa-calculator"></i> Suggested multiplier : Calculating...`;
+        odd.innerHTML = `<i class="fas fa-calculator"></i> Calculating optimal odds...`;
         return;
     }
 
