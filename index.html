@@ -362,6 +362,10 @@
         overflow: hidden;
     }
     
+    .odd-box i {
+        margin-right: 8px; /* Added space between icon and text */
+    }
+    
     /* History Timeline - Enhanced */
     .timeline-container {
         background: var(--card-bg);
@@ -1211,7 +1215,7 @@ function showGameGuidePopup(signal) {
         </div>
         <div class="guide-item">
             <div class="guide-bullet">*</div>
-            <div class="guide-text">Target: ${signal.odd} odd අගය පසුකරන තුරු bet ක්‍රියාව පවත්වා ගන්න.</div>
+            <div class="guide-text">Target: ${signal.odd}× odd අගය පසුකරන තුරු bet ක්‍රියාව පවත්වා ගන්න.</div>
         </div>
         <div class="guide-item">
             <div class="guide-bullet">*</div>
@@ -1223,7 +1227,7 @@ function showGameGuidePopup(signal) {
         </div>
         <div class="guide-item">
             <div class="guide-bullet">*</div>
-            <div class="guide-text">Cash Out: ${signal.odd} odd අගය පසුකර යන වහාම cash out ක්‍රියාත්මක කරන්න.</div>
+            <div class="guide-text">Cash Out: ${signal.odd}× odd අගය පසුකර යන වහාම cash out ක්‍රියාත්මක කරන්න.</div>
         </div>
     `;
     
@@ -1329,8 +1333,8 @@ async function fetchSignals(forceRefresh = false) {
                 const timeString = signalTime.toLocaleTimeString('en-US', timeOptions);
                 
                 addNotification(
-                    `New Signal Available (${nextSignal.odd})`,
-                    `Next signal at ${timeString} with multiplier ${nextSignal.odd}. Get ready!`
+                    `New Signal Available (${nextSignal.odd}×)`,
+                    `Next signal at ${timeString} with multiplier ${nextSignal.odd}×. Get ready!`
                 );
                 
                 // Play beep for new signal
@@ -1407,7 +1411,7 @@ function renderHistory() {
                 itemElement.classList.add('expired');
             }
             
-            itemElement.innerHTML = `<div>${item.odd}</div><time>${item.time}</time>`;
+            itemElement.innerHTML = `<div>${item.odd}×</div><time>${item.time}</time>`;
             strip.appendChild(itemElement);
             
             // Animate with requestAnimationFrame for smoother transitions
@@ -1472,8 +1476,8 @@ function addToHistory(signal) {
             
             // Add notification for completed signal
             addNotification(
-                `Signal ${signal.odd} Completed`, 
-                `The signal at ${signal.time} with multiplier ${signal.odd} has been completed. Check your results.`
+                `Signal ${signal.odd}× Completed`, 
+                `The signal at ${signal.time} with multiplier ${signal.odd}× has been completed. Check your results.`
             );
         }
     }
@@ -1583,7 +1587,7 @@ function updateSignalDisplay() {
             <div class="signal-time purple">${signal.time}</div>
             <div class="countdown-timer">Upcoming in: ${formatCountdown(secondsLeft)}</div>
         `;
-        odd.innerHTML = `<i class="fas fa-calculator"></i> Suggested multiplier: ${signal.odd}`;
+        odd.innerHTML = `<i class="fas fa-calculator"></i> Suggested multiplier: ${signal.odd}×`;
         odd.className = 'odd-box';
         circle.className = 'signal-circle purple';
         beepPlayed = false;
@@ -1597,7 +1601,7 @@ function updateSignalDisplay() {
             <div class="signal-time red">${signal.time}</div>
             <div class="countdown-timer">End in: ${formatCountdown(secondsLeft)}</div>
         `;
-        odd.innerHTML = `<i class="fas fa-calculator"></i> Suggested multiplier: ${signal.odd}`;
+        odd.innerHTML = `<i class="fas fa-calculator"></i> Suggested multiplier: ${signal.odd}×`;
         odd.className = 'odd-box';
         circle.className = 'signal-circle red';
         
@@ -1611,8 +1615,8 @@ function updateSignalDisplay() {
             const timeString = signalTime.toLocaleTimeString('en-US', timeOptions);
             
             addNotification(
-                `Signal ${signal.odd} Active`, 
-                `Signal is now active! Place your bet with multiplier ${signal.odd} before it ends at ${timeString}.`
+                `Signal ${signal.odd}× Active`, 
+                `Signal is now active! Place your bet with multiplier ${signal.odd}× before it ends at ${timeString}.`
             );
         }
         return;
