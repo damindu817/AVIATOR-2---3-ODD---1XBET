@@ -1561,7 +1561,7 @@ function updateSignalDisplay() {
                 <div class="countdown-timer">Analyzing patterns<span class="loading-dots"></span></div>
             `;
         }
-        odd.innerHTML = `<i class="fas fa-calculator"></i> Suggested multiplier: Calculating...`;
+        odd.innerHTML = `<i class="fas fa-calculator"></i> Suggested multiplier : Calculating...`;
         return;
     }
 
@@ -1570,7 +1570,7 @@ function updateSignalDisplay() {
             <div class="signal-time green">COMPLETED</div>
             <div class="countdown-timer">Signal Round Finished</div>
         `;
-        odd.innerHTML = `<i class="fas fa-calculator"></i> Suggested multiplier: Not available`;
+        odd.innerHTML = `<i class="fas fa-calculator"></i> Suggested multiplier : Not available`;
         odd.className = 'odd-box';
         circle.className = 'signal-circle green';
         return;
@@ -1587,7 +1587,7 @@ function updateSignalDisplay() {
             <div class="signal-time purple">${signal.time}</div>
             <div class="countdown-timer">Upcoming in: ${formatCountdown(secondsLeft)}</div>
         `;
-        odd.innerHTML = `<i class="fas fa-calculator"></i> Suggested multiplier: ${signal.odd}×`;
+        odd.innerHTML = `<i class="fas fa-calculator"></i> Suggested multiplier : ${signal.odd}×`;
         odd.className = 'odd-box';
         circle.className = 'signal-circle purple';
         beepPlayed = false;
@@ -1601,7 +1601,7 @@ function updateSignalDisplay() {
             <div class="signal-time red">${signal.time}</div>
             <div class="countdown-timer">End in: ${formatCountdown(secondsLeft)}</div>
         `;
-        odd.innerHTML = `<i class="fas fa-calculator"></i> Suggested multiplier: ${signal.odd}×`;
+        odd.innerHTML = `<i class="fas fa-calculator"></i> Suggested multiplier : ${signal.odd}×`;
         odd.className = 'odd-box';
         circle.className = 'signal-circle red';
         
