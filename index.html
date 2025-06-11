@@ -975,6 +975,11 @@ function initApp() {
     // Start cleanup intervals (30 minutes for history)
     historyCleanupInterval = setInterval(cleanupHistory, 1800000); // Check every 30 minutes
     notificationCleanupInterval = setInterval(cleanupNotifications, 60000); // Check every minute
+    
+    // Play welcome sound
+    setTimeout(() => {
+        document.getElementById('notificationSound').play();
+    }, 1000);
 }
 
 // Setup tab navigation
@@ -1189,7 +1194,7 @@ function showInitialLoadingState() {
         <div class="loading-gradient">INITIALIZING</div>
         <div class="loading-text">Please wait<span class="loading-dots"></span></div>
     `;
-    document.getElementById('oddValue').innerHTML = `<i class="fas fa-info-circle"></i> Signal Not Available`;
+    document.getElementById('oddValue').innerHTML = `<i class="fas fa-calculator"></i> Calculating optimal odds...`;
     document.getElementById('signalCircle').className = 'signal-circle';
 }
 
@@ -1201,7 +1206,7 @@ function showLoadingState() {
         <div class="loading-gradient">NEXT SIGNAL</div>
         <div class="loading-text">Analyzing game<span class="loading-dots"></span></div>
     `;
-    document.getElementById('oddValue').innerHTML = `<i class="fas fa-info-circle"></i> Signal Not Available`;
+    document.getElementById('oddValue').innerHTML = `<i class="fas fa-calculator"></i> Calculating optimal odds...`;
     document.getElementById('signalCircle').className = 'signal-circle';
 }
 
@@ -1308,7 +1313,7 @@ async function fetchSignals(forceRefresh = false) {
         const jsonData = await res.json();
         
         // Only update signals if we get valid data
-        if (Array.isArray(jsonData)) {
+        if (Array.isArray(jsonData) && jsonData.length > 0) {
             // Check if we have new upcoming signals
             const now = new Date();
             const hasNewSignals = jsonData.some(signal => {
@@ -1579,7 +1584,7 @@ function updateSignalDisplay() {
                 <div class="loading-text">Analyzing game<span class="loading-dots"></span></div>
             `;
         }
-        odd.innerHTML = `<i class="fas fa-info-circle"></i> Signal Not Available`;
+        odd.innerHTML = `<i class="fas fa-calculator"></i> Calculating optimal odds...`;
         return;
     }
 
