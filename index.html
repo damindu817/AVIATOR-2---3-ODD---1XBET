@@ -1313,7 +1313,30 @@ async function fetchSignals(forceRefresh = false) {
         const jsonData = await res.json();
         
         // Only update signals if we get valid data
-        if (Array.isArray(jsonData) && jsonData.length > 0) {
+        if (Array.isArray(jsonData)) {
+            // Immediately check if the array is empty
+            if (jsonData.length === 0) {
+                // Clear any loading states immediately
+                loadingPhase = false;
+                isFirstLoad = false;
+                if (loadingTimeout) {
+                    clearTimeout(loadingTimeout);
+                }
+                
+                // Update UI to show completed state
+                signals = [];
+                currentIndex = 0;
+                updateSignalImmediately();
+                
+                // Add notification about completed signals
+                addNotification(
+                    'All Signals Completed',
+                    'There are no more signals available at this time. Please check back later for updates.'
+                );
+                
+                return;
+            }
+            
             // Check if we have new upcoming signals
             const now = new Date();
             const hasNewSignals = jsonData.some(signal => {
