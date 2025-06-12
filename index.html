@@ -940,7 +940,6 @@
 let signals = [];
 let currentIndex = 0;
 let loadingPhase = true;
-let beepPlayed = false;
 let notifications = [];
 let historyItems = [];
 let historyCleanupInterval;
@@ -952,8 +951,11 @@ let isFirstLoad = true;
 let popupTimerInterval;
 let popupActive = false;
 let nextSignalTimeout;
-let upcomingBeepPlayed = false;
-let activeBeepPlayed = false;
+let currentSignalId = null;
+let beepState = {
+    upcomingPlayed: false,
+    activePlayed: false
+};
 
 // Initialize the app
 function initApp() {
@@ -977,11 +979,6 @@ function initApp() {
     // Start cleanup intervals (30 minutes for history)
     historyCleanupInterval = setInterval(cleanupHistory, 1800000); // Check every 30 minutes
     notificationCleanupInterval = setInterval(cleanupNotifications, 60000); // Check every minute
-    
-    // Play welcome sound
-    setTimeout(() => {
-        document.getElementById('notificationSound').play();
-    }, 1000);
 }
 
 // Setup tab navigation
@@ -1624,6 +1621,7 @@ function updateSignalDisplay() {
     const signal = signals[currentIndex];
     const signalTime = new Date(`${signal.date}T${signal.time}`);
     const endTime = new Date(signalTime.getTime() + 60000);
+    const signalId = `${signal.date}_${signal.time}_${signal.odd}`;
 
     // Signal is upcoming
     if (now < signalTime) {
@@ -1636,11 +1634,16 @@ function updateSignalDisplay() {
         odd.className = 'odd-box';
         circle.className = 'signal-circle purple';
         
-        // Play beep once when signal is upcoming (only if not already played)
-        if (!upcomingBeepPlayed) {
+        // Play beep once when signal is upcoming (only if not already played for this signal)
+        if (signalId !== currentSignalId) {
+            currentSignalId = signalId;
+            beepState.upcomingPlayed = false;
+            beepState.activePlayed = false;
+        }
+        
+        if (!beepState.upcomingPlayed) {
             beep.play();
-            upcomingBeepPlayed = true;
-            activeBeepPlayed = false;
+            beepState.upcomingPlayed = true;
         }
         return;
     }
@@ -1656,12 +1659,17 @@ function updateSignalDisplay() {
         odd.className = 'odd-box';
         circle.className = 'signal-circle red';
         
-        // Play beep twice when signal is active (only if not already played)
-        if (!activeBeepPlayed) {
+        // Play beep twice when signal is active (only if not already played for this signal)
+        if (signalId !== currentSignalId) {
+            currentSignalId = signalId;
+            beepState.upcomingPlayed = false;
+            beepState.activePlayed = false;
+        }
+        
+        if (!beepState.activePlayed) {
             beep.play();
             setTimeout(() => beep.play(), 500);
-            activeBeepPlayed = true;
-            upcomingBeepPlayed = false;
+            beepState.activePlayed = true;
             
             // Add notification for active signal
             const timeOptions = { hour: '2-digit', minute: '2-digit' };
@@ -1711,8 +1719,9 @@ function updateSignalDisplay() {
             }
         }
 
-        upcomingBeepPlayed = false;
-        activeBeepPlayed = false;
+        currentSignalId = null;
+        beepState.upcomingPlayed = false;
+        beepState.activePlayed = false;
     }
 }
 
