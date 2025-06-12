@@ -9,19 +9,17 @@
     <style>
     /* Base Styles */
     :root {
-        --primary: #8A2BE2; /* Violet */
-        --secondary: #DA70D6; /* Orchid */
+        --primary: #6a11cb;
+        --secondary: #2575fc;
         --success: #00b09b;
-        --danger: #FF4500; /* OrangeRed */
-        --warning: #FF8C00; /* DarkOrange */
-        --dark: #1A1A2E; /* Dark blue */
-        --darker: #16213E; /* Darker blue */
+        --danger: #ff416c;
+        --warning: #ff8a00;
+        --dark: #0f0f1a;
+        --darker: #0a0a12;
         --light: #f8f9fa;
-        --card-bg: rgba(30, 30, 60, 0.9); /* Semi-transparent dark blue */
+        --card-bg: rgba(20, 20, 40, 0.8);
         --text-primary: #ffffff;
-        --text-secondary: #D3D3D3; /* Light gray */
-        --accent-1: #FF1493; /* DeepPink */
-        --accent-2: #9370DB; /* MediumPurple */
+        --text-secondary: #b8c2cc;
     }
     
     * {
@@ -77,7 +75,7 @@
     .app-header {
         position: relative;
         padding: 18px 0;
-        background: linear-gradient(135deg, var(--accent-1) 0%, var(--accent-2) 100%);
+        background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
         box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
         width: 100%;
         flex-shrink: 0;
@@ -137,7 +135,7 @@
     /* Tab Navigation */
     .tab-container {
         display: flex;
-        background: rgba(25, 25, 45, 0.9);
+        background: rgba(15, 15, 25, 0.9);
         backdrop-filter: blur(5px);
         border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         z-index: 5;
@@ -167,7 +165,7 @@
         transform: translateX(-50%);
         width: 50%;
         height: 3px;
-        background: linear-gradient(90deg, var(--accent-1), var(--accent-2));
+        background: linear-gradient(90deg, var(--primary), var(--secondary));
         border-radius: 3px 3px 0 0;
     }
     
@@ -193,8 +191,8 @@
         margin: 20px auto 15px;
         width: 90%;
         max-width: 320px;
-        border: 1px solid rgba(255, 255, 255, 0.15);
-        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
         backdrop-filter: blur(8px);
         flex-shrink: 0;
         animation: slideUp 0.6s cubic-bezier(0.22, 1, 0.36, 1) forwards;
@@ -253,12 +251,12 @@
     
     .signal-circle.purple {
         border-color: var(--primary);
-        box-shadow: 0 0 25px rgba(138, 43, 226, 0.5);
+        box-shadow: 0 0 25px rgba(106, 17, 203, 0.5);
     }
     
     .signal-circle.red {
         border-color: var(--danger);
-        box-shadow: 0 0 25px rgba(255, 69, 0, 0.5);
+        box-shadow: 0 0 25px rgba(255, 65, 108, 0.5);
     }
     
     .signal-circle.green {
@@ -276,10 +274,10 @@
     }
     
     .signal-status {
-        font-size: clamp(0.9rem, 4vw, 1rem);
+        font-size: clamp(1.1rem, 5vw, 1.3rem); /* Increased font size */
         font-weight: 700;
         margin-bottom: 8px;
-        background: linear-gradient(135deg, var(--accent-1), var(--accent-2));
+        background: linear-gradient(135deg, var(--primary), var(--secondary));
         -webkit-background-clip: text;
         background-clip: text;
         color: transparent;
@@ -293,12 +291,12 @@
     
     .signal-time.purple {
         color: var(--primary);
-        text-shadow: 0 0 15px rgba(138, 43, 226, 0.7);
+        text-shadow: 0 0 15px rgba(106, 17, 203, 0.7);
     }
     
     .signal-time.red {
         color: var(--danger);
-        text-shadow: 0 0 15px rgba(255, 69, 0, 0.7);
+        text-shadow: 0 0 15px rgba(255, 65, 108, 0.7);
     }
     
     .signal-time.green {
@@ -316,40 +314,24 @@
         justify-content: center;
     }
     
-    /* Loading dots animation */
-    .loading-dots {
-        display: inline-block;
-        position: relative;
-        width: 20px;
-        height: 1em;
-        overflow: hidden;
-    }
-    
-    .loading-dots::after {
-        content: '...';
-        position: absolute;
-        left: 0;
-        animation: dotAnimation 1.5s infinite steps(3);
-        opacity: 0;
-    }
-    
-    @keyframes dotAnimation {
-        0%, 100% { opacity: 0; }
-        50% { opacity: 1; }
-    }
-    
-    /* New loading text styles */
+    /* Loading dots animation with text jump */
     .loading-text {
         font-size: clamp(0.9rem, 4vw, 1rem);
         color: var(--text-primary);
         margin-top: 5px;
         text-align: center;
+        animation: textJump 1.5s infinite;
+    }
+    
+    @keyframes textJump {
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(-3px); }
     }
     
     .loading-gradient {
-        font-size: clamp(0.9rem, 4vw, 1rem);
+        font-size: clamp(1.1rem, 5vw, 1.3rem); /* Increased font size */
         font-weight: 700;
-        background: linear-gradient(135deg, var(--accent-1), var(--accent-2));
+        background: linear-gradient(135deg, var(--primary), var(--secondary));
         -webkit-background-clip: text;
         background-clip: text;
         color: transparent;
@@ -372,7 +354,7 @@
         color: var(--text-primary);
         backdrop-filter: blur(8px);
         text-align: center;
-        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
         animation: slideUp 0.6s 0.1s cubic-bezier(0.22, 1, 0.36, 1) forwards;
         opacity: 0;
         transform: translateY(20px);
@@ -395,7 +377,7 @@
         width: 90%;
         max-width: 420px;
         border: 1px solid rgba(255, 255, 255, 0.15);
-        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
         backdrop-filter: blur(8px);
         animation: slideUp 0.6s 0.2s cubic-bezier(0.22, 1, 0.36, 1) forwards;
         opacity: 0;
@@ -429,7 +411,7 @@
     }
     
     .history-item {
-        background: rgba(40, 40, 70, 0.9);
+        background: rgba(30, 30, 50, 0.9);
         border-radius: 10px;
         padding: 10px 14px;
         min-width: 80px;
@@ -451,16 +433,16 @@
     }
     
     .history-item.highlight {
-        background: linear-gradient(135deg, var(--accent-1) 0%, var(--accent-2) 100%);
+        background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
         color: var(--text-primary);
         border: 1px solid rgba(255, 255, 255, 0.3);
         transform: scale(1.05);
-        box-shadow: 0 4px 12px rgba(218, 112, 214, 0.3);
+        box-shadow: 0 4px 12px rgba(106, 17, 203, 0.3);
     }
     
     .history-item.expired {
         opacity: 0.6;
-        background: rgba(60, 60, 90, 0.6);
+        background: rgba(50, 50, 70, 0.6);
     }
     
     .history-item time {
@@ -494,7 +476,7 @@
         font-size: clamp(1rem, 3.5vw, 1.1rem);
         border: none;
         transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
-        box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+        box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
         min-width: 160px;
         flex-shrink: 0;
         position: relative;
@@ -527,12 +509,12 @@
     
     .btn:hover {
         transform: translateY(-3px);
-        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
     }
     
     .btn:active {
         transform: translateY(0);
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
     }
     
     /* Social Buttons Container */
@@ -544,7 +526,7 @@
         width: 90%;
         max-width: 420px;
         border: 1px solid rgba(255, 255, 255, 0.15);
-        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
         backdrop-filter: blur(8px);
         animation: slideUp 0.6s 0.3s cubic-bezier(0.22, 1, 0.36, 1) forwards;
         opacity: 0;
@@ -570,15 +552,15 @@
         border-radius: 12px;
         padding: 15px;
         margin-bottom: 12px;
-        border-left: 4px solid var(--accent-1);
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        border-left: 4px solid var(--primary);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
         animation: fadeIn 0.5s ease forwards;
         opacity: 0;
     }
     
     .notification-item.unread {
         border-left-color: var(--danger);
-        background: rgba(40, 40, 70, 0.9);
+        background: rgba(30, 30, 50, 0.9);
     }
     
     .notification-header {
@@ -610,7 +592,7 @@
         padding: 15px;
         font-size: clamp(0.7rem, 3vw, 0.8rem);
         color: var(--text-secondary);
-        background: rgba(20, 20, 40, 0.9);
+        background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%); /* Added gradient */
         backdrop-filter: blur(8px);
         text-align: center;
         flex-shrink: 0;
@@ -646,7 +628,7 @@
         height: 50px;
         border: 4px solid rgba(255, 255, 255, 0.1);
         border-radius: 50%;
-        border-top-color: var(--accent-1);
+        border-top-color: var(--primary);
         animation: spin 1s ease-in-out infinite;
         margin: 15px auto;
     }
@@ -753,7 +735,7 @@
 
     .popup-icon {
         font-size: 1.8rem;
-        color: var(--accent-1);
+        color: var(--primary);
         margin-right: 12px;
     }
 
@@ -771,7 +753,7 @@
     }
 
     .popup-guide {
-        background: rgba(40, 40, 70, 0.6);
+        background: rgba(30, 30, 50, 0.6);
         border-radius: 10px;
         padding: 15px;
         margin-bottom: 20px;
@@ -788,7 +770,7 @@
     }
 
     .guide-bullet {
-        color: var(--accent-1);
+        color: var(--primary);
         margin-right: 8px;
         font-size: 0.8rem;
         margin-top: 3px;
@@ -809,15 +791,15 @@
         width: 60px;
         height: 60px;
         border-radius: 50%;
-        background: rgba(30, 30, 60, 0.8);
-        border: 3px solid var(--accent-1);
+        background: rgba(20, 20, 40, 0.8);
+        border: 3px solid var(--primary);
         display: flex;
         justify-content: center;
         align-items: center;
         font-size: 1.2rem;
         font-weight: 700;
         color: var(--text-primary);
-        box-shadow: 0 0 15px rgba(218, 112, 214, 0.3);
+        box-shadow: 0 0 15px rgba(106, 17, 203, 0.3);
     }
     </style>
 </head>
