@@ -952,6 +952,8 @@ let isFirstLoad = true;
 let popupTimerInterval;
 let popupActive = false;
 let nextSignalTimeout;
+let upcomingBeepPlayed = false;
+let activeBeepPlayed = false;
 
 // Initialize the app
 function initApp() {
@@ -1380,9 +1382,6 @@ async function fetchSignals(forceRefresh = false) {
                     `New Signal Available (${nextSignal.odd}×)`,
                     `Next signal at ${timeString} with multiplier ${nextSignal.odd}×. Get ready!`
                 );
-                
-                // Play beep for new signal
-                document.getElementById('beepSound').play();
             }
         } else {
             // If no signals, clear the array and show completed state
@@ -1636,7 +1635,13 @@ function updateSignalDisplay() {
         odd.innerHTML = `<i class="fas fa-calculator"></i> Suggested multiplier : ${signal.odd}×`;
         odd.className = 'odd-box';
         circle.className = 'signal-circle purple';
-        beepPlayed = false;
+        
+        // Play beep once when signal is upcoming (only if not already played)
+        if (!upcomingBeepPlayed) {
+            beep.play();
+            upcomingBeepPlayed = true;
+            activeBeepPlayed = false;
+        }
         return;
     }
 
@@ -1651,10 +1656,12 @@ function updateSignalDisplay() {
         odd.className = 'odd-box';
         circle.className = 'signal-circle red';
         
-        // Play beep and show notification only once per active signal
-        if (!beepPlayed) {
+        // Play beep twice when signal is active (only if not already played)
+        if (!activeBeepPlayed) {
             beep.play();
-            beepPlayed = true;
+            setTimeout(() => beep.play(), 500);
+            activeBeepPlayed = true;
+            upcomingBeepPlayed = false;
             
             // Add notification for active signal
             const timeOptions = { hour: '2-digit', minute: '2-digit' };
@@ -1704,7 +1711,8 @@ function updateSignalDisplay() {
             }
         }
 
-        beepPlayed = false;
+        upcomingBeepPlayed = false;
+        activeBeepPlayed = false;
     }
 }
 
