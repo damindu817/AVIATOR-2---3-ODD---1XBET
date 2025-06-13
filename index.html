@@ -782,6 +782,35 @@
         color: var(--text-primary);
         box-shadow: 0 0 15px rgba(106, 17, 203, 0.3);
     }
+
+    /* Update indicator */
+    .update-indicator {
+        position: fixed;
+        bottom: 70px;
+        right: 15px;
+        background: var(--success);
+        color: white;
+        padding: 8px 12px;
+        border-radius: 20px;
+        font-size: 0.8rem;
+        font-weight: 600;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        z-index: 100;
+        display: flex;
+        align-items: center;
+        opacity: 0;
+        transform: translateY(20px);
+        transition: all 0.3s ease;
+    }
+
+    .update-indicator.show {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    .update-indicator i {
+        margin-right: 5px;
+    }
     </style>
 </head>
 
@@ -900,6 +929,11 @@
     </div>
 </div>
 
+<!-- Update indicator -->
+<div class="update-indicator" id="updateIndicator">
+    <i class="fas fa-sync-alt"></i> <span id="updateMessage">New data loaded</span>
+</div>
+
 <footer class="app-footer">
     POWERED BY XTREME PREDICTOR PRO © 2025
 </footer>
@@ -922,6 +956,7 @@ let statsCleanupInterval;
 let notificationCleanupInterval;
 let signalFetchInterval;
 let notificationFetchInterval;
+let statsFetchInterval;
 let loadingTimeout;
 let isFirstLoad = true;
 let popupTimerInterval;
@@ -932,6 +967,8 @@ let beepState = {
     upcomingPlayed: false,
     activePlayed: false
 };
+let lastStatsHash = '';
+let lastSignalsHash = '';
 
 // Initialize the app
 function initApp() {
@@ -955,12 +992,13 @@ function initApp() {
         fetchNotifications(true);
     }, 5000); // Check every 5 seconds
     
+    statsFetchInterval = setInterval(() => {
+        fetchStats(true);
+    }, 5000); // Check stats every 5 seconds
+    
     // Start cleanup intervals (daily for stats)
     statsCleanupInterval = setInterval(cleanupStats, 3600000); // Check every hour
     notificationCleanupInterval = setInterval(cleanupNotifications, 60000); // Check every minute
-    
-    // Fetch stats from JSON file
-    fetchStats();
 }
 
 // Setup tab navigation
@@ -1020,6 +1058,24 @@ function updateNotificationBadge() {
     }
 }
 
+// Generate a simple hash for data comparison
+function generateHash(obj) {
+    return JSON.stringify(obj);
+}
+
+// Show update indicator
+function showUpdateIndicator(message) {
+    const indicator = document.getElementById('updateIndicator');
+    const messageElement = document.getElementById('updateMessage');
+    
+    messageElement.textContent = message;
+    indicator.classList.add('show');
+    
+    setTimeout(() => {
+        indicator.classList.remove('show');
+    }, 3000);
+}
+
 // Load stats from localStorage
 function loadStats() {
     const savedStats = localStorage.getItem('aviatorStats');
@@ -1045,24 +1101,35 @@ function loadStats() {
 }
 
 // Fetch stats from JSON file
-async function fetchStats() {
+async function fetchStats(forceRefresh = false) {
     try {
-        const res = await fetch('stats.json?v=' + Date.now());
+        const url = 'stats.json' + (forceRefresh ? '?v=' + Date.now() : '');
+        const res = await fetch(url);
+        
         if (!res.ok) {
             throw new Error('Failed to fetch stats');
         }
         
         const jsonData = await res.json();
+        const currentHash = generateHash(jsonData);
         
         // Check if we have valid stats data
         if (jsonData && typeof jsonData.wins !== 'undefined' && typeof jsonData.losses !== 'undefined' && typeof jsonData.passing !== 'undefined') {
-            // Only update if the stats are from today
+            // Only update if the stats are from today and different from current
             const today = new Date().toDateString();
-            if (jsonData.date === today) {
-                stats.wins = jsonData.wins;
-                stats.losses = jsonData.losses;
-                stats.passing = jsonData.passing;
-                saveStats();
+            if (jsonData.date === today && currentHash !== lastStatsHash) {
+                lastStatsHash = currentHash;
+                
+                // Only update if values are different
+                if (stats.wins !== jsonData.wins || stats.losses !== jsonData.losses || stats.passing !== jsonData.passing) {
+                    stats.wins = jsonData.wins;
+                    stats.losses = jsonData.losses;
+                    stats.passing = jsonData.passing;
+                    saveStats();
+                    
+                    // Show update indicator
+                    showUpdateIndicator('Stats updated');
+                }
             }
         }
     } catch (err) {
@@ -1174,6 +1241,11 @@ async function fetchNotifications(forceRefresh = false) {
             
             // Check for stats-related notifications
             processStatsNotifications();
+            
+            // Show update indicator if new notifications
+            if (hasNewNotifications) {
+                showUpdateIndicator('New notifications');
+            }
         }
     } catch (err) {
         console.error("Failed to load notifications:", err);
@@ -1415,6 +1487,7 @@ async function fetchSignals(forceRefresh = false) {
         }
         
         const jsonData = await res.json();
+        const currentHash = generateHash(jsonData);
         
         // Only update signals if we get valid data
         if (Array.isArray(jsonData)) {
@@ -1450,40 +1523,47 @@ async function fetchSignals(forceRefresh = false) {
                 );
             });
             
-            signals = jsonData;
-            
-            // Immediately check if there are no upcoming signals
-            const upcomingSignals = signals.filter(signal => {
-                const signalTime = new Date(`${signal.date}T${signal.time}`);
-                return signalTime > now;
-            });
-            
-            if (upcomingSignals.length === 0) {
-                loadingPhase = false;
-                isFirstLoad = false;
-                if (loadingTimeout) {
-                    clearTimeout(loadingTimeout);
+            // Only update if signals have changed
+            if (currentHash !== lastSignalsHash) {
+                lastSignalsHash = currentHash;
+                signals = jsonData;
+                
+                // Show update indicator
+                showUpdateIndicator('Signals updated');
+                
+                // Immediately check if there are no upcoming signals
+                const upcomingSignals = signals.filter(signal => {
+                    const signalTime = new Date(`${signal.date}T${signal.time}`);
+                    return signalTime > now;
+                });
+                
+                if (upcomingSignals.length === 0) {
+                    loadingPhase = false;
+                    isFirstLoad = false;
+                    if (loadingTimeout) {
+                        clearTimeout(loadingTimeout);
+                    }
+                    updateSignalImmediately();
+                } else {
+                    updateSignalImmediately();
+                    
+                    // Schedule popup for the next signal
+                    const nextSignal = upcomingSignals[0];
+                    scheduleNextSignalPopup(nextSignal);
                 }
-                updateSignalImmediately();
-            } else {
-                updateSignalImmediately();
                 
-                // Schedule popup for the next signal
-                const nextSignal = upcomingSignals[0];
-                scheduleNextSignalPopup(nextSignal);
-            }
-            
-            // If we had new signals, add notification
-            if (hasNewSignals && upcomingSignals.length > 0) {
-                const nextSignal = upcomingSignals[0];
-                const signalTime = new Date(`${nextSignal.date}T${nextSignal.time}`);
-                const timeOptions = { hour: '2-digit', minute: '2-digit' };
-                const timeString = signalTime.toLocaleTimeString('en-US', timeOptions);
-                
-                addNotification(
-                    `New Signal Available (${nextSignal.odd}×)`,
-                    `Next signal at ${timeString} with multiplier ${nextSignal.odd}×. Get ready!`
-                );
+                // If we had new signals, add notification
+                if (hasNewSignals && upcomingSignals.length > 0) {
+                    const nextSignal = upcomingSignals[0];
+                    const signalTime = new Date(`${nextSignal.date}T${nextSignal.time}`);
+                    const timeOptions = { hour: '2-digit', minute: '2-digit' };
+                    const timeString = signalTime.toLocaleTimeString('en-US', timeOptions);
+                    
+                    addNotification(
+                        `New Signal Available (${nextSignal.odd}×)`,
+                        `Next signal at ${timeString} with multiplier ${nextSignal.odd}×. Get ready!`
+                    );
+                }
             }
         } else {
             // If no signals, clear the array and show completed state
