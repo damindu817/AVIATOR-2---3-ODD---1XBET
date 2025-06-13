@@ -7,3 +7,52 @@
     "unread": true
   }
 ]
+  {
+    "title": "Signal 2.5× Win",
+    "content": "Congratulations! The 2.5× signal at 10:15 was successful with a win.",
+    "time": "5 min ago",
+    "unread": true
+  },
+  {
+    "title": "Signal 3.0× Passed",
+    "content": "The 3.0× signal at 11:30 passed the target but wasn't cashed out in time.",
+    "time": "45 min ago",
+    "unread": false
+  },
+  {
+    "title": "Signal 1.8× Loss",
+    "content": "The 1.8× signal at 09:20 didn't reach the target - counted as a loss.",
+    "time": "2 hours ago",
+    "unread": false
+  },
+  {
+    "title": "Signal 2.2× Win",
+    "content": "Great win on the 2.2× signal at 14:00!",
+    "time": "30 min ago",
+    "unread": true
+  },
+  {
+    "title": "Daily Summary",
+    "content": "Today's performance: 2 wins, 1 loss, 1 passed signal. Keep it up!",
+    "time": "Just now",
+    "unread": true
+  },
+  {
+    "title": "Signal 2.8× Passed",
+    "content": "The 2.8× signal at 16:45 passed the target but wasn't cashed out.",
+    "time": "1 hour ago",
+    "unread": false
+  },
+  {
+    "title": "Signal 3.5× Win",
+    "content": "Big win on the 3.5× signal at 18:20! Well done!",
+    "time": "15 min ago",
+    "unread": true
+  },
+  {
+    "title": "Signal 2.0× Loss",
+    "content": "The 2.0× signal at 13:10 didn't reach the target - counted as a loss.",
+    "time": "3 hours ago",
+    "unread": false
+  }
+]
