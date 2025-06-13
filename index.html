@@ -915,7 +915,8 @@ let notifications = [];
 let stats = {
     wins: 0,
     losses: 0,
-    passing: 0
+    passing: 0,
+    date: new Date().toDateString()
 };
 let statsCleanupInterval;
 let notificationCleanupInterval;
@@ -942,7 +943,7 @@ function initApp() {
     setInterval(updateLiveClock, 1000);
     setInterval(updateSignalDisplay, 1000);
     
-    // Load stats from localStorage
+    // Load stats from localStorage and JSON
     loadStats();
     
     // Start fetch intervals with cache busting
@@ -957,6 +958,9 @@ function initApp() {
     // Start cleanup intervals (daily for stats)
     statsCleanupInterval = setInterval(cleanupStats, 3600000); // Check every hour
     notificationCleanupInterval = setInterval(cleanupNotifications, 60000); // Check every minute
+    
+    // Fetch stats from JSON file
+    fetchStats();
 }
 
 // Setup tab navigation
@@ -1020,14 +1024,16 @@ function updateNotificationBadge() {
 function loadStats() {
     const savedStats = localStorage.getItem('aviatorStats');
     if (savedStats) {
-        stats = JSON.parse(savedStats);
+        const parsedStats = JSON.parse(savedStats);
         
         // Check if stats are from today
         const today = new Date().toDateString();
-        if (stats.date !== today) {
+        if (parsedStats.date !== today) {
             // Reset stats if it's a new day
             stats = { wins: 0, losses: 0, passing: 0, date: today };
             saveStats();
+        } else {
+            stats = parsedStats;
         }
     } else {
         // Initialize stats for the first time
@@ -1036,6 +1042,32 @@ function loadStats() {
     }
     
     updateStatsDisplay();
+}
+
+// Fetch stats from JSON file
+async function fetchStats() {
+    try {
+        const res = await fetch('stats.json?v=' + Date.now());
+        if (!res.ok) {
+            throw new Error('Failed to fetch stats');
+        }
+        
+        const jsonData = await res.json();
+        
+        // Check if we have valid stats data
+        if (jsonData && typeof jsonData.wins !== 'undefined' && typeof jsonData.losses !== 'undefined' && typeof jsonData.passing !== 'undefined') {
+            // Only update if the stats are from today
+            const today = new Date().toDateString();
+            if (jsonData.date === today) {
+                stats.wins = jsonData.wins;
+                stats.losses = jsonData.losses;
+                stats.passing = jsonData.passing;
+                saveStats();
+            }
+        }
+    } catch (err) {
+        console.error("Failed to load stats:", err);
+    }
 }
 
 // Save stats to localStorage
