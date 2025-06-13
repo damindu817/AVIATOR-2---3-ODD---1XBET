@@ -368,8 +368,8 @@
         margin-right: 8px; /* Added space between icon and text */
     }
     
-    /* History Timeline - Enhanced */
-    .timeline-container {
+    /* Stats Container - New Section */
+    .stats-container {
         background: var(--card-bg);
         border-radius: 14px;
         padding: 18px;
@@ -382,10 +382,9 @@
         animation: slideUp 0.6s 0.2s cubic-bezier(0.22, 1, 0.36, 1) forwards;
         opacity: 0;
         transform: translateY(20px);
-        min-height: 120px; /* Fixed height for empty and filled states */
     }
     
-    .history-title {
+    .stats-title {
         font-size: clamp(0.9rem, 3.5vw, 1rem);
         font-weight: 600;
         margin-bottom: 12px;
@@ -395,62 +394,44 @@
         justify-content: space-between;
     }
     
-    .history-strip {
-        display: flex;
-        overflow-x: auto;
+    .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
         gap: 10px;
-        padding: 8px 5px;
-        scrollbar-width: none;
-        -webkit-overflow-scrolling: touch;
-        scroll-behavior: smooth;
-        min-height: 60px; /* Fixed height to prevent jumping */
+        margin-top: 10px;
     }
     
-    .history-strip::-webkit-scrollbar {
-        display: none;
-    }
-    
-    .history-item {
+    .stat-item {
         background: rgba(30, 30, 50, 0.9);
         border-radius: 10px;
-        padding: 10px 14px;
-        min-width: 80px;
+        padding: 12px;
         text-align: center;
         color: var(--text-primary);
         font-weight: 700;
         font-size: clamp(0.9rem, 3.5vw, 1rem);
         border: 1px solid rgba(255, 255, 255, 0.2);
-        flex-shrink: 0;
-        opacity: 0;
-        transform: translateY(10px);
         transition: all 0.3s ease;
-        will-change: transform, opacity;
     }
     
-    .history-item.visible {
-        opacity: 1;
-        transform: translateY(0);
-    }
-    
-    .history-item.highlight {
-        background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
-        color: var(--text-primary);
-        border: 1px solid rgba(255, 255, 255, 0.3);
-        transform: scale(1.05);
-        box-shadow: 0 4px 12px rgba(106, 17, 203, 0.3);
-    }
-    
-    .history-item.expired {
-        opacity: 0.6;
-        background: rgba(50, 50, 70, 0.6);
-    }
-    
-    .history-item time {
+    .stat-item .stat-value {
+        font-size: clamp(1.2rem, 5vw, 1.5rem);
+        margin-top: 5px;
         display: block;
-        font-size: clamp(0.7rem, 2.5vw, 0.8rem);
-        margin-top: 4px;
-        color: var(--text-secondary);
-        font-weight: 500;
+    }
+    
+    .stat-item.wins {
+        color: var(--success);
+        border-color: var(--success);
+    }
+    
+    .stat-item.losses {
+        color: var(--danger);
+        border-color: var(--danger);
+    }
+    
+    .stat-item.passing {
+        color: var(--warning);
+        border-color: var(--warning);
     }
     
     /* Buttons - Premium Design */
@@ -670,7 +651,7 @@
             min-width: 140px;
         }
         
-        .clock-container, .timeline-container, .social-container {
+        .clock-container, .stats-container, .social-container {
             width: 95%;
         }
     }
@@ -850,19 +831,25 @@
             <i class="fas fa-info-circle"></i> Signal Not Available
         </div>
         
-        <div class="timeline-container">
-            <div class="history-title">
-                <span>SIGNAL HISTORY</span>
-                <span><i class="fas fa-history"></i></span>
+        <!-- New Stats Section -->
+        <div class="stats-container">
+            <div class="stats-title">
+                <span>TODAY'S PERFORMANCE</span>
+                <span><i class="fas fa-chart-bar"></i></span>
             </div>
-            <div id="historyMessage" class="empty-state">
-                <div class="empty-icon">
-                    <i class="fas fa-chart-line"></i>
+            <div class="stats-grid">
+                <div class="stat-item wins">
+                    <div>WINS TODAY</div>
+                    <div class="stat-value" id="winsCount">0</div>
                 </div>
-                <div class="empty-text">No signal history available</div>
-            </div>
-            <div class="history-strip" id="historyStrip">
-                <!-- Signal history items will appear here -->
+                <div class="stat-item losses">
+                    <div>LOSSES TODAY</div>
+                    <div class="stat-value" id="lossesCount">0</div>
+                </div>
+                <div class="stat-item passing">
+                    <div>TIMES PASSED</div>
+                    <div class="stat-value" id="passingCount">0</div>
+                </div>
             </div>
         </div>
         
@@ -925,8 +912,12 @@ let signals = [];
 let currentIndex = 0;
 let loadingPhase = true;
 let notifications = [];
-let historyItems = [];
-let historyCleanupInterval;
+let stats = {
+    wins: 0,
+    losses: 0,
+    passing: 0
+};
+let statsCleanupInterval;
 let notificationCleanupInterval;
 let signalFetchInterval;
 let notificationFetchInterval;
@@ -951,6 +942,9 @@ function initApp() {
     setInterval(updateLiveClock, 1000);
     setInterval(updateSignalDisplay, 1000);
     
+    // Load stats from localStorage
+    loadStats();
+    
     // Start fetch intervals with cache busting
     signalFetchInterval = setInterval(() => {
         fetchSignals(true);
@@ -960,8 +954,8 @@ function initApp() {
         fetchNotifications(true);
     }, 5000); // Check every 5 seconds
     
-    // Start cleanup intervals (30 minutes for history)
-    historyCleanupInterval = setInterval(cleanupHistory, 1800000); // Check every 30 minutes
+    // Start cleanup intervals (daily for stats)
+    statsCleanupInterval = setInterval(cleanupStats, 3600000); // Check every hour
     notificationCleanupInterval = setInterval(cleanupNotifications, 60000); // Check every minute
 }
 
@@ -1022,6 +1016,80 @@ function updateNotificationBadge() {
     }
 }
 
+// Load stats from localStorage
+function loadStats() {
+    const savedStats = localStorage.getItem('aviatorStats');
+    if (savedStats) {
+        stats = JSON.parse(savedStats);
+        
+        // Check if stats are from today
+        const today = new Date().toDateString();
+        if (stats.date !== today) {
+            // Reset stats if it's a new day
+            stats = { wins: 0, losses: 0, passing: 0, date: today };
+            saveStats();
+        }
+    } else {
+        // Initialize stats for the first time
+        stats = { wins: 0, losses: 0, passing: 0, date: new Date().toDateString() };
+        saveStats();
+    }
+    
+    updateStatsDisplay();
+}
+
+// Save stats to localStorage
+function saveStats() {
+    stats.date = new Date().toDateString(); // Update date whenever saving
+    localStorage.setItem('aviatorStats', JSON.stringify(stats));
+    updateStatsDisplay();
+}
+
+// Update stats display
+function updateStatsDisplay() {
+    document.getElementById('winsCount').textContent = stats.wins;
+    document.getElementById('lossesCount').textContent = stats.losses;
+    document.getElementById('passingCount').textContent = stats.passing;
+}
+
+// Clean up stats at midnight
+function cleanupStats() {
+    const now = new Date();
+    const hours = now.getHours();
+    const minutes = now.getMinutes();
+    
+    // Check if it's midnight (00:00)
+    if (hours === 0 && minutes === 0) {
+        // Reset stats for the new day
+        stats = { wins: 0, losses: 0, passing: 0, date: now.toDateString() };
+        saveStats();
+        
+        // Add notification about stats reset
+        addNotification(
+            'Daily Stats Reset', 
+            'Statistics have been reset for the new day. Good luck with today\'s signals!'
+        );
+    }
+}
+
+// Increment wins counter
+function incrementWins() {
+    stats.wins++;
+    saveStats();
+}
+
+// Increment losses counter
+function incrementLosses() {
+    stats.losses++;
+    saveStats();
+}
+
+// Increment passing counter
+function incrementPassing() {
+    stats.passing++;
+    saveStats();
+}
+
 // Fetch notifications from JSON file
 async function fetchNotifications(forceRefresh = false) {
     try {
@@ -1071,6 +1139,9 @@ async function fetchNotifications(forceRefresh = false) {
             notifications = newNotifications;
             renderNotifications();
             updateNotificationBadge();
+            
+            // Check for stats-related notifications
+            processStatsNotifications();
         }
     } catch (err) {
         console.error("Failed to load notifications:", err);
@@ -1079,6 +1150,24 @@ async function fetchNotifications(forceRefresh = false) {
             emptyState.querySelector('.empty-text').textContent = "Failed to load notifications";
         }
     }
+}
+
+// Process notifications for stats updates
+function processStatsNotifications() {
+    notifications.forEach(notification => {
+        // Check for win notification
+        if (notification.title.includes('Win') || notification.content.includes('win')) {
+            incrementWins();
+        }
+        // Check for loss notification
+        else if (notification.title.includes('Loss') || notification.content.includes('loss')) {
+            incrementLosses();
+        }
+        // Check for passed signal notification
+        else if (notification.title.includes('Passed') || notification.content.includes('passed')) {
+            incrementPassing();
+        }
+    });
 }
 
 // Clean up old notifications (older than 24 hours)
@@ -1379,134 +1468,7 @@ async function fetchSignals(forceRefresh = false) {
     }
 }
 
-// Clean up old history items (older than 30 minutes)
-function cleanupHistory() {
-    const now = new Date();
-    const thirtyMinutesAgo = new Date(now.getTime() - 30 * 60 * 1000);
-    
-    historyItems = historyItems.filter(item => {
-        const itemTime = new Date(`${item.date}T${item.time}`);
-        return itemTime > thirtyMinutesAgo;
-    });
-    
-    renderHistory();
-}
-
-// Render history to the UI with smooth animation
-function renderHistory() {
-    const strip = document.getElementById('historyStrip');
-    const msg = document.getElementById('historyMessage');
-    
-    // Clear existing history
-    strip.innerHTML = '';
-    
-    if (historyItems.length === 0) {
-        msg.style.display = 'flex';
-        return;
-    }
-    
-    msg.style.display = 'none';
-    
-    // Sort history items by time (newest first)
-    const sortedHistory = [...historyItems].sort((a, b) => {
-        const timeA = new Date(`${a.date}T${a.time}`);
-        const timeB = new Date(`${b.date}T${b.time}`);
-        return timeB - timeA;
-    });
-    
-    // Store current scroll position
-    const wasScrolledToEnd = strip.scrollLeft + strip.clientWidth >= strip.scrollWidth - 10;
-    
-    // Use requestAnimationFrame for smoother animations
-    const animateItems = () => {
-        sortedHistory.forEach((item, i) => {
-            const itemElement = document.createElement('div');
-            itemElement.className = 'history-item';
-            
-            // Mark if this is the most recent item
-            if (i === 0) {
-                itemElement.classList.add('highlight');
-            }
-            
-            // Mark if item is older than 30 minutes
-            const itemTime = new Date(`${item.date}T${item.time}`);
-            const now = new Date();
-            if ((now - itemTime) > 30 * 60 * 1000) {
-                itemElement.classList.add('expired');
-            }
-            
-            itemElement.innerHTML = `<div>${item.odd}×</div><time>${item.time}</time>`;
-            strip.appendChild(itemElement);
-            
-            // Animate with requestAnimationFrame for smoother transitions
-            requestAnimationFrame(() => {
-                setTimeout(() => {
-                    itemElement.classList.add('visible');
-                }, i * 50);
-            });
-        });
-    };
-    
-    animateItems();
-    
-    // Restore scroll position after items are rendered
-    requestAnimationFrame(() => {
-        if (wasScrolledToEnd) {
-            strip.scrollTo({
-                left: strip.scrollWidth,
-                behavior: 'smooth'
-            });
-        }
-    });
-}
-
-function renderInitialHistory() {
-    const now = new Date();
-    const msg = document.getElementById('historyMessage');
-    
-    // Filter signals that have already passed (plus 1 minute to ensure they're completed)
-    const passedSignals = signals.filter(signal => {
-        const signalTime = new Date(`${signal.date}T${signal.time}`);
-        return new Date(signalTime.getTime() + 60000) < now;
-    });
-    
-    // Only add to historyItems if not already present
-    passedSignals.forEach(signal => {
-        const exists = historyItems.some(item => 
-            item.date === signal.date && item.time === signal.time && item.odd === signal.odd
-        );
-        if (!exists) {
-            historyItems.push({...signal});
-        }
-    });
-    
-    renderHistory();
-}
-
-function addToHistory(signal) {
-    const now = new Date();
-    const signalTime = new Date(`${signal.date}T${signal.time}`);
-    
-    // Only add to history if the signal time has passed (plus 1 minute to ensure completion)
-    if (new Date(signalTime.getTime() + 60000) < now) {
-        // Check if this signal already exists in history
-        const exists = historyItems.some(item => 
-            item.date === signal.date && item.time === signal.time && item.odd === signal.odd
-        );
-        
-        if (!exists) {
-            historyItems.push({...signal});
-            renderHistory();
-            
-            // Add notification for completed signal
-            addNotification(
-                `Signal ${signal.odd}× Completed`, 
-                `The signal at ${signal.time} with multiplier ${signal.odd}× has been completed. Check your results.`
-            );
-        }
-    }
-}
-
+// Add notification to the system
 function addNotification(title, content) {
     const now = new Date();
     const timeOptions = { hour: '2-digit', minute: '2-digit' };
@@ -1530,6 +1492,15 @@ function addNotification(title, content) {
         updateNotificationBadge();
         document.getElementById('notificationSound').play();
         renderNotifications();
+        
+        // Check if this notification affects stats
+        if (title.includes('Win') || content.includes('win')) {
+            incrementWins();
+        } else if (title.includes('Loss') || content.includes('loss')) {
+            incrementLosses();
+        } else if (title.includes('Passed') || content.includes('passed')) {
+            incrementPassing();
+        }
     }
 }
 
@@ -1669,8 +1640,6 @@ function updateSignalDisplay() {
 
     // Signal has ended (now >= endTime)
     if (now >= endTime) {
-        addToHistory(signal);
-
         // Check if there's another signal coming up soon
         const nextSignal = signals[currentIndex + 1];
         let nextStartTime = null;
@@ -1712,8 +1681,7 @@ function updateSignalDisplay() {
 // Disable zooming but allow scrolling
 document.addEventListener('touchmove', function(e) {
     // Only prevent default for non-scrollable elements
-    if (!e.target.classList.contains('history-strip') && 
-        !e.target.classList.contains('tab-content') &&
+    if (!e.target.classList.contains('tab-content') &&
         !e.target.classList.contains('notifications-container')) {
         e.preventDefault();
     }
