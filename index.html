@@ -6,20 +6,30 @@
     <title>XTREME AVIATOR PRO | 20× FREE SIGNALS</title>
     <link rel="icon" href="https://upload.wikimedia.org/wikipedia/commons/3/3c/Aviator_helmet_icon.png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
-    /* Base Styles */
+    /* Base Styles - Modernized */
     :root {
-        --primary: #6a11cb;
+        --primary: #8a2be2; /* Vibrant purple */
+        --primary-light: #9d4edd;
         --secondary: #2575fc;
-        --success: #00b09b;
-        --danger: #ff416c;
-        --warning: #ff8a00;
-        --dark: #0f0f1a;
-        --darker: #0a0a12;
+        --secondary-light: #4d8df8;
+        --success: #00d1a0; /* Brighter green */
+        --success-light: #2ce8b8;
+        --danger: #ff2d75; /* Hot pink */
+        --danger-light: #ff5c94;
+        --warning: #ff9e00; /* Orange */
+        --warning-light: #ffb740;
+        --info: #00b4d8; /* Cyan */
+        --dark: #0f0c24; /* Darker background */
+        --darker: #0a081c;
         --light: #f8f9fa;
-        --card-bg: rgba(20, 20, 40, 0.8);
+        --card-bg: rgba(30, 25, 60, 0.85); /* More vibrant card bg */
         --text-primary: #ffffff;
-        --text-secondary: #b8c2cc;
+        --text-secondary: #c7d1dd;
+        --glass-effect: rgba(255, 255, 255, 0.05);
+        --glass-border: rgba(255, 255, 255, 0.1);
+        --neon-shadow: 0 0 15px currentColor;
     }
     
     * {
@@ -39,7 +49,8 @@
         overflow-x: hidden;
         touch-action: pan-y;
         -webkit-overflow-scrolling: touch;
-        font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+        font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+        background-attachment: fixed;
     }
     
     body {
@@ -54,6 +65,22 @@
         animation: fadeIn 0.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;
         position: relative;
         overflow-y: auto;
+    }
+    
+    /* Cosmic background effect */
+    body::before {
+        content: '';
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: 
+            radial-gradient(circle at 20% 30%, rgba(138, 43, 226, 0.15) 0%, transparent 20%),
+            radial-gradient(circle at 80% 70%, rgba(37, 117, 252, 0.15) 0%, transparent 20%),
+            radial-gradient(circle at 40% 80%, rgba(255, 45, 117, 0.15) 0%, transparent 20%);
+        z-index: -1;
+        pointer-events: none;
     }
     
     @keyframes fadeIn {
@@ -71,7 +98,7 @@
         -webkit-overflow-scrolling: touch;
     }
     
-    /* Header with Gradient */
+    /* Header with Gradient - Modern Glass Effect */
     .app-header {
         position: relative;
         padding: 18px 0;
@@ -80,6 +107,9 @@
         width: 100%;
         flex-shrink: 0;
         z-index: 10;
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
+        border-bottom: 1px solid var(--glass-border);
     }
     
     .header-content {
@@ -94,14 +124,30 @@
         font-weight: 700;
         color: var(--text-primary);
         text-transform: uppercase;
-        letter-spacing: 1px;
+        letter-spacing: 1.5px;
         margin: 0;
-        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        position: relative;
+        display: inline-flex;
+        align-items: center;
+    }
+    
+    .header-title::before {
+        content: '';
+        display: inline-block;
+        width: 12px;
+        height: 12px;
+        background: var(--success);
+        border-radius: 50%;
+        margin-right: 10px;
+        box-shadow: 0 0 10px var(--success);
+        animation: pulseGlow 2s infinite alternate;
     }
     
     .header-actions {
         display: flex;
         gap: 15px;
+        align-items: center;
     }
     
     .notification-bell {
@@ -109,52 +155,65 @@
         color: var(--text-primary);
         font-size: 1.2rem;
         cursor: pointer;
-        transition: transform 0.3s ease;
+        transition: all 0.3s ease;
+        background: rgba(255, 255, 255, 0.1);
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
     
     .notification-bell:hover {
         transform: scale(1.1);
+        background: rgba(255, 255, 255, 0.2);
     }
     
     .notification-badge {
         position: absolute;
-        top: -5px;
-        right: -5px;
+        top: -2px;
+        right: -2px;
         background-color: var(--danger);
         color: white;
         border-radius: 50%;
-        width: 18px;
-        height: 18px;
+        width: 20px;
+        height: 20px;
         display: flex;
         align-items: center;
         justify-content: center;
-        font-size: 0.6rem;
+        font-size: 0.7rem;
         font-weight: bold;
+        border: 2px solid var(--dark);
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
     }
     
-    /* Tab Navigation */
+    /* Tab Navigation - Modern Glass Tabs */
     .tab-container {
         display: flex;
-        background: rgba(15, 15, 25, 0.9);
-        backdrop-filter: blur(5px);
-        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        background: rgba(15, 12, 36, 0.7);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        border-bottom: 1px solid var(--glass-border);
         z-index: 5;
     }
     
     .tab {
         flex: 1;
         text-align: center;
-        padding: 14px 0;
+        padding: 16px 0;
         font-size: 0.85rem;
         font-weight: 600;
         color: var(--text-secondary);
         cursor: pointer;
         transition: all 0.3s ease;
         position: relative;
+        letter-spacing: 0.5px;
     }
     
     .tab.active {
         color: var(--text-primary);
+        font-weight: 700;
     }
     
     .tab.active::after {
@@ -167,6 +226,7 @@
         height: 3px;
         background: linear-gradient(90deg, var(--primary), var(--secondary));
         border-radius: 3px 3px 0 0;
+        box-shadow: 0 0 10px rgba(138, 43, 226, 0.5);
     }
     
     /* Tab Content */
@@ -183,17 +243,18 @@
         flex-direction: column;
     }
     
-    /* Clock Section */
+    /* Clock Section - Glass Card */
     .clock-container {
         background: var(--card-bg);
-        border-radius: 14px;
-        padding: 14px;
+        border-radius: 16px;
+        padding: 16px;
         margin: 20px auto 15px;
         width: 90%;
-        max-width: 320px;
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
-        backdrop-filter: blur(8px);
+        max-width: 340px;
+        border: 1px solid var(--glass-border);
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
         flex-shrink: 0;
         animation: slideUp 0.6s cubic-bezier(0.22, 1, 0.36, 1) forwards;
         opacity: 0;
@@ -201,8 +262,8 @@
     }
     
     .clock-time, .clock-date {
-        margin: 6px 0;
-        font-size: clamp(0.9rem, 3.5vw, 1rem);
+        margin: 8px 0;
+        font-size: clamp(0.95rem, 3.5vw, 1.05rem);
         font-weight: 500;
         display: flex;
         justify-content: space-between;
@@ -210,24 +271,26 @@
     
     .clock-label {
         color: var(--text-secondary);
+        display: flex;
+        align-items: center;
     }
     
-    /* Signal Circle - Premium Design */
+    .clock-label i {
+        margin-right: 8px;
+        font-size: 0.9em;
+        opacity: 0.8;
+    }
+    
+    /* Signal Circle - Premium Holographic Design */
     .signal-container {
         position: relative;
-        margin: 20px auto;
-        width: min(220px, 55vw);
-        height: min(220px, 55vw);
+        margin: 25px auto;
+        width: min(240px, 60vw);
+        height: min(240px, 60vw);
         display: flex;
         justify-content: center;
         align-items: center;
         flex-shrink: 0;
-        animation: pulse 2s infinite alternate;
-    }
-    
-    @keyframes pulse {
-        0% { transform: scale(1); }
-        100% { transform: scale(1.03); }
     }
     
     .signal-circle {
@@ -240,72 +303,116 @@
         justify-content: center;
         align-items: center;
         z-index: 2;
-        background: radial-gradient(circle at center, #111 0%, #000 100%);
-        box-shadow: 0 0 30px rgba(0, 0, 0, 0.6);
+        background: radial-gradient(circle at center, rgba(20, 15, 45, 0.9) 0%, rgba(10, 5, 30, 0.95) 100%);
+        box-shadow: 0 0 40px rgba(0, 0, 0, 0.7);
         border: 4px solid;
         transition: all 0.5s cubic-bezier(0.22, 1, 0.36, 1);
         animation: fadeInUp 0.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;
         opacity: 0;
         transform: translateY(20px);
+        overflow: hidden;
+    }
+    
+    .signal-circle::before {
+        content: '';
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        background: linear-gradient(
+            to bottom right,
+            rgba(255, 255, 255, 0) 0%,
+            rgba(255, 255, 255, 0) 40%,
+            rgba(255, 255, 255, 0.1) 45%,
+            rgba(255, 255, 255, 0) 50%,
+            rgba(255, 255, 255, 0) 100%
+        );
+        transform: rotate(30deg);
+        animation: shine 5s infinite;
     }
     
     .signal-circle.purple {
         border-color: var(--primary);
-        box-shadow: 0 0 25px rgba(106, 17, 203, 0.5);
+        box-shadow: 0 0 30px rgba(138, 43, 226, 0.6), inset 0 0 15px rgba(138, 43, 226, 0.3);
     }
     
     .signal-circle.red {
         border-color: var(--danger);
-        box-shadow: 0 0 25px rgba(255, 65, 108, 0.5);
+        box-shadow: 0 0 30px rgba(255, 45, 117, 0.6), inset 0 0 15px rgba(255, 45, 117, 0.3);
     }
     
     .signal-circle.green {
         border-color: var(--success);
-        box-shadow: 0 0 20px rgba(0, 176, 155, 0.4);
+        box-shadow: 0 0 25px rgba(0, 209, 160, 0.5), inset 0 0 15px rgba(0, 209, 160, 0.3);
+    }
+    
+    .signal-circle.blue {
+        border-color: var(--secondary);
+        box-shadow: 0 0 25px rgba(37, 117, 252, 0.5), inset 0 0 15px rgba(37, 117, 252, 0.3);
+    }
+    
+    .signal-circle.orange {
+        border-color: var(--warning);
+        box-shadow: 0 0 25px rgba(255, 158, 0, 0.5), inset 0 0 15px rgba(255, 158, 0, 0.3);
     }
     
     .signal-content {
         text-align: center;
-        padding: 0 15px;
+        padding: 0 20px;
         display: flex;
         flex-direction: column;
         align-items: center;
         justify-content: center;
+        position: relative;
+        z-index: 3;
     }
     
     .signal-status {
-        font-size: clamp(1.1rem, 5vw, 1.3rem); /* Increased font size */
+        font-size: clamp(1.2rem, 5vw, 1.4rem);
         font-weight: 700;
         margin-bottom: 8px;
         background: linear-gradient(135deg, var(--primary), var(--secondary));
         -webkit-background-clip: text;
         background-clip: text;
         color: transparent;
+        text-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
     }
     
     .signal-time {
-        font-size: clamp(1.3rem, 6vw, 1.6rem);
+        font-size: clamp(1.4rem, 6vw, 1.8rem);
         font-weight: 800;
-        margin: 5px 0;
+        margin: 8px 0;
+        letter-spacing: 1px;
     }
     
     .signal-time.purple {
         color: var(--primary);
-        text-shadow: 0 0 15px rgba(106, 17, 203, 0.7);
+        text-shadow: 0 0 20px rgba(138, 43, 226, 0.8);
     }
     
     .signal-time.red {
         color: var(--danger);
-        text-shadow: 0 0 15px rgba(255, 65, 108, 0.7);
+        text-shadow: 0 0 20px rgba(255, 45, 117, 0.8);
     }
     
     .signal-time.green {
         color: var(--success);
-        text-shadow: 0 0 12px rgba(0, 176, 155, 0.6);
+        text-shadow: 0 0 15px rgba(0, 209, 160, 0.7);
+    }
+    
+    .signal-time.blue {
+        color: var(--secondary);
+        text-shadow: 0 0 15px rgba(37, 117, 252, 0.7);
+    }
+    
+    .signal-time.orange {
+        color: var(--warning);
+        text-shadow: 0 0 15px rgba(255, 158, 0, 0.7);
     }
     
     .countdown-timer {
-        font-size: clamp(0.9rem, 4vw, 1rem);
+        font-size: clamp(0.95rem, 4vw, 1.05rem);
         font-weight: 600;
         margin-top: 8px;
         color: var(--text-secondary);
@@ -314,47 +421,61 @@
         justify-content: center;
     }
     
-    /* Loading dots animation with text jump */
-    .loading-text {
-        font-size: clamp(0.9rem, 4vw, 1rem);
-        color: var(--text-primary);
-        margin-top: 5px;
-        text-align: center;
-        animation: textJump 1.5s infinite;
+    /* Loading Animation - Modern Holographic */
+    .loading-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        position: relative;
     }
     
-    @keyframes textJump {
-        0%, 100% { transform: translateY(0); }
-        50% { transform: translateY(-3px); }
+    .loading-text {
+        font-size: clamp(0.95rem, 4vw, 1.05rem);
+        color: var(--text-primary);
+        margin-top: 10px;
+        text-align: center;
+        position: relative;
     }
     
     .loading-gradient {
-        font-size: clamp(1.1rem, 5vw, 1.3rem); /* Increased font size */
+        font-size: clamp(1.2rem, 5vw, 1.4rem);
         font-weight: 700;
         background: linear-gradient(135deg, var(--primary), var(--secondary));
         -webkit-background-clip: text;
         background-clip: text;
         color: transparent;
         margin-bottom: 5px;
+        text-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
     }
     
-    /* Odd Box - Premium Design - Fixed Size */
+    .loading-dots::after {
+        content: '...';
+        display: inline-block;
+        width: 0;
+        overflow: hidden;
+        vertical-align: bottom;
+        animation: dotPulse 1.5s infinite steps(4);
+    }
+    
+    /* Odd Box - Premium Glass Design */
     .odd-box {
         background: var(--card-bg);
-        border-radius: 14px;
-        padding: 16px;
-        margin: 15px auto;
+        border-radius: 16px;
+        padding: 18px;
+        margin: 20px auto;
         width: 90%;
-        max-width: 280px;
-        height: 60px; /* Fixed height */
-        min-height: 60px; /* Ensure it doesn't collapse */
-        border: 1px solid rgba(255, 255, 255, 0.15);
-        font-size: clamp(1.1rem, 4.5vw, 1.3rem);
+        max-width: 300px;
+        height: 70px;
+        min-height: 70px;
+        border: 1px solid var(--glass-border);
+        font-size: clamp(1.15rem, 4.5vw, 1.35rem);
         font-weight: 700;
         color: var(--text-primary);
-        backdrop-filter: blur(8px);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
         text-align: center;
-        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
         animation: slideUp 0.6s 0.1s cubic-bezier(0.22, 1, 0.36, 1) forwards;
         opacity: 0;
         transform: translateY(20px);
@@ -362,85 +483,132 @@
         align-items: center;
         justify-content: center;
         overflow: hidden;
+        position: relative;
+    }
+    
+    .odd-box::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(
+            135deg,
+            rgba(255, 255, 255, 0.05) 0%,
+            rgba(255, 255, 255, 0) 50%,
+            rgba(255, 255, 255, 0.05) 100%
+        );
+        z-index: 1;
     }
     
     .odd-box i {
-        margin-right: 8px; /* Added space between icon and text */
+        margin-right: 10px;
+        font-size: 1.1em;
     }
     
-    /* Stats Container - New Section */
+    /* Stats Container - Modern Grid */
     .stats-container {
         background: var(--card-bg);
-        border-radius: 14px;
-        padding: 18px;
-        margin: 20px auto;
+        border-radius: 16px;
+        padding: 20px;
+        margin: 25px auto;
         width: 90%;
-        max-width: 420px;
-        border: 1px solid rgba(255, 255, 255, 0.15);
-        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
-        backdrop-filter: blur(8px);
+        max-width: 440px;
+        border: 1px solid var(--glass-border);
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
         animation: slideUp 0.6s 0.2s cubic-bezier(0.22, 1, 0.36, 1) forwards;
         opacity: 0;
         transform: translateY(20px);
     }
     
     .stats-title {
-        font-size: clamp(0.9rem, 3.5vw, 1rem);
+        font-size: clamp(0.95rem, 3.5vw, 1.05rem);
         font-weight: 600;
-        margin-bottom: 12px;
+        margin-bottom: 15px;
         color: var(--text-secondary);
         display: flex;
         align-items: center;
         justify-content: space-between;
+        padding-bottom: 8px;
+        border-bottom: 1px solid var(--glass-border);
+    }
+    
+    .stats-title i {
+        font-size: 1.1em;
+        color: var(--primary);
     }
     
     .stats-grid {
         display: grid;
         grid-template-columns: repeat(3, 1fr);
-        gap: 10px;
-        margin-top: 10px;
+        gap: 12px;
+        margin-top: 12px;
     }
     
     .stat-item {
-        background: rgba(30, 30, 50, 0.9);
-        border-radius: 10px;
-        padding: 12px;
+        background: rgba(40, 35, 75, 0.9);
+        border-radius: 12px;
+        padding: 14px;
         text-align: center;
         color: var(--text-primary);
         font-weight: 700;
-        font-size: clamp(0.9rem, 3.5vw, 1rem);
-        border: 1px solid rgba(255, 255, 255, 0.2);
+        font-size: clamp(0.95rem, 3.5vw, 1.05rem);
+        border: 1px solid;
         transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .stat-item::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(
+            135deg,
+            rgba(255, 255, 255, 0.05) 0%,
+            rgba(255, 255, 255, 0) 50%,
+            rgba(255, 255, 255, 0.05) 100%
+        );
+        z-index: 1;
     }
     
     .stat-item .stat-value {
-        font-size: clamp(1.2rem, 5vw, 1.5rem);
-        margin-top: 5px;
+        font-size: clamp(1.3rem, 5vw, 1.6rem);
+        margin-top: 8px;
         display: block;
     }
     
     .stat-item.wins {
         color: var(--success);
         border-color: var(--success);
+        box-shadow: 0 5px 15px rgba(0, 209, 160, 0.2);
     }
     
     .stat-item.losses {
         color: var(--danger);
         border-color: var(--danger);
+        box-shadow: 0 5px 15px rgba(255, 45, 117, 0.2);
     }
     
     .stat-item.passing {
         color: var(--warning);
         border-color: var(--warning);
+        box-shadow: 0 5px 15px rgba(255, 158, 0, 0.2);
     }
     
-    /* Buttons - Premium Design */
+    /* Buttons - Premium 3D Effect */
     .button-container {
         display: flex;
         justify-content: center;
-        gap: 15px;
-        margin: 25px 0;
-        padding: 0 15px;
+        gap: 18px;
+        margin: 30px 0;
+        padding: 0 20px;
         flex-shrink: 0;
         flex-wrap: wrap;
     }
@@ -450,21 +618,24 @@
         align-items: center;
         justify-content: center;
         color: var(--text-primary);
-        padding: 16px 28px;
-        border-radius: 12px;
+        padding: 18px 30px;
+        border-radius: 14px;
         text-decoration: none;
         font-weight: 700;
-        font-size: clamp(1rem, 3.5vw, 1.1rem);
+        font-size: clamp(1.05rem, 3.5vw, 1.15rem);
         border: none;
         transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
-        box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
-        min-width: 160px;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+        min-width: 170px;
         flex-shrink: 0;
         position: relative;
         overflow: hidden;
+        letter-spacing: 0.5px;
+        text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+        z-index: 1;
     }
     
-    .btn::after {
+    .btn::before {
         content: '';
         position: absolute;
         top: 0;
@@ -474,110 +645,171 @@
         background: linear-gradient(rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0));
         opacity: 0;
         transition: opacity 0.3s ease;
+        z-index: -1;
     }
     
-    .btn:hover::after {
+    .btn::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+        transition: all 0.6s ease;
+        z-index: -1;
+    }
+    
+    .btn:hover::before {
         opacity: 1;
     }
     
-    .btn.whatsapp {
-        background: linear-gradient(135deg, #25D366 0%, #128C7E 100%);
-    }
-    
-    .btn.telegram {
-        background: linear-gradient(135deg, #0088cc 0%, #005b8c 100%);
+    .btn:hover::after {
+        left: 100%;
     }
     
     .btn:hover {
-        transform: translateY(-3px);
-        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+        transform: translateY(-4px);
+        box-shadow: 0 12px 25px rgba(0, 0, 0, 0.4);
     }
     
     .btn:active {
         transform: translateY(0);
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    }
+    
+    .btn.whatsapp {
+        background: linear-gradient(135deg, var(--success) 0%, #128C7E 100%);
+    }
+    
+    .btn.telegram {
+        background: linear-gradient(135deg, var(--secondary) 0%, #005b8c 100%);
+    }
+    
+    .btn i {
+        margin-right: 10px;
+        font-size: 1.2em;
     }
     
     /* Social Buttons Container */
     .social-container {
         background: var(--card-bg);
-        border-radius: 14px;
-        padding: 15px;
-        margin: 15px auto;
+        border-radius: 16px;
+        padding: 18px;
+        margin: 20px auto;
         width: 90%;
-        max-width: 420px;
-        border: 1px solid rgba(255, 255, 255, 0.15);
-        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
-        backdrop-filter: blur(8px);
+        max-width: 440px;
+        border: 1px solid var(--glass-border);
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
         animation: slideUp 0.6s 0.3s cubic-bezier(0.22, 1, 0.36, 1) forwards;
         opacity: 0;
         transform: translateY(20px);
     }
     
     .social-title {
-        font-size: clamp(0.9rem, 3.5vw, 1rem);
+        font-size: clamp(0.95rem, 3.5vw, 1.05rem);
         font-weight: 600;
-        margin-bottom: 15px;
+        margin-bottom: 18px;
         color: var(--text-secondary);
         text-align: center;
+        letter-spacing: 0.5px;
     }
     
-    /* Notifications Tab */
+    /* Notifications Tab - Modern Design */
     .notifications-container {
-        padding: 15px;
+        padding: 18px;
         -webkit-overflow-scrolling: touch;
     }
     
     .notification-item {
         background: var(--card-bg);
-        border-radius: 12px;
-        padding: 15px;
-        margin-bottom: 12px;
-        border-left: 4px solid var(--primary);
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        border-radius: 14px;
+        padding: 18px;
+        margin-bottom: 15px;
+        border-left: 5px solid var(--primary);
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
         animation: fadeIn 0.5s ease forwards;
         opacity: 0;
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .notification-item::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(
+            135deg,
+            rgba(255, 255, 255, 0.05) 0%,
+            rgba(255, 255, 255, 0) 50%,
+            rgba(255, 255, 255, 0.05) 100%
+        );
+        z-index: 1;
     }
     
     .notification-item.unread {
         border-left-color: var(--danger);
-        background: rgba(30, 30, 50, 0.9);
+        background: rgba(40, 35, 75, 0.9);
     }
     
     .notification-header {
         display: flex;
         justify-content: space-between;
-        margin-bottom: 8px;
+        margin-bottom: 10px;
+        position: relative;
+        z-index: 2;
     }
     
     .notification-title {
         font-weight: 700;
-        font-size: 0.95rem;
+        font-size: 1rem;
         color: var(--text-primary);
+        display: flex;
+        align-items: center;
+    }
+    
+    .notification-title i {
+        margin-right: 8px;
+        font-size: 0.9em;
     }
     
     .notification-time {
-        font-size: 0.75rem;
+        font-size: 0.8rem;
         color: var(--text-secondary);
+        display: flex;
+        align-items: center;
     }
     
     .notification-content {
-        font-size: 0.85rem;
+        font-size: 0.9rem;
         color: var(--text-secondary);
-        line-height: 1.4;
+        line-height: 1.5;
+        position: relative;
+        z-index: 2;
     }
     
-    /* Footer */
+    /* Footer - Modern Gradient */
     .app-footer {
         margin-top: auto;
-        padding: 15px;
-        font-size: clamp(0.7rem, 3vw, 0.8rem);
-        color: var(--text-secondary);
-        background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%); /* Added gradient */
-        backdrop-filter: blur(8px);
+        padding: 18px;
+        font-size: clamp(0.75rem, 3vw, 0.85rem);
+        color: var(--text-primary);
+        background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
         text-align: center;
         flex-shrink: 0;
         width: 100%;
+        letter-spacing: 0.5px;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
     }
     
     /* Animations */
@@ -603,15 +835,45 @@
         }
     }
     
-    /* Loading Animation */
+    @keyframes pulseGlow {
+        0% { box-shadow: 0 0 10px var(--success); }
+        100% { box-shadow: 0 0 20px var(--success); }
+    }
+    
+    @keyframes shine {
+        0% { transform: translateX(-100%) translateY(-100%) rotate(30deg); }
+        80% { transform: translateX(-100%) translateY(-100%) rotate(30deg); }
+        100% { transform: translateX(100%) translateY(100%) rotate(30deg); }
+    }
+    
+    @keyframes dotPulse {
+        0% { width: 0; }
+        100% { width: 3ch; }
+    }
+    
+    /* Loading Spinner - Modern Holographic */
     .loading-spinner {
-        width: 50px;
-        height: 50px;
+        width: 60px;
+        height: 60px;
         border: 4px solid rgba(255, 255, 255, 0.1);
         border-radius: 50%;
         border-top-color: var(--primary);
         animation: spin 1s ease-in-out infinite;
-        margin: 15px auto;
+        margin: 20px auto;
+        position: relative;
+    }
+    
+    .loading-spinner::before {
+        content: '';
+        position: absolute;
+        top: -4px;
+        left: -4px;
+        right: -4px;
+        bottom: -4px;
+        border: 4px solid rgba(255, 255, 255, 0.1);
+        border-radius: 50%;
+        border-top-color: var(--secondary);
+        animation: spin 1.5s ease-in-out infinite;
     }
     
     @keyframes spin {
@@ -621,23 +883,208 @@
     /* Empty State */
     .empty-state {
         text-align: center;
-        padding: 20px;
+        padding: 25px;
         color: var(--text-secondary);
-        height: 60px;
+        height: 80px;
         display: flex;
         flex-direction: column;
         justify-content: center;
         align-items: center;
+        background: var(--card-bg);
+        border-radius: 14px;
+        border: 1px solid var(--glass-border);
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
     }
     
     .empty-icon {
-        font-size: 1.5rem;
-        margin-bottom: 8px;
+        font-size: 1.8rem;
+        margin-bottom: 12px;
         color: rgba(255, 255, 255, 0.2);
     }
     
     .empty-text {
+        font-size: 0.95rem;
+        letter-spacing: 0.5px;
+    }
+    
+    /* Popup Overlay - Modern Glass Effect */
+    .popup-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: rgba(0, 0, 0, 0.85);
+        z-index: 1000;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.3s ease;
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+    }
+    
+    .popup-overlay.active {
+        opacity: 1;
+        pointer-events: auto;
+    }
+    
+    /* Popup Box - Modern Glass Design */
+    .popup-box {
+        background: var(--card-bg);
+        border-radius: 18px;
+        padding: 25px;
+        width: 90%;
+        max-width: 420px;
+        max-height: 90vh;
+        overflow-y: auto;
+        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6);
+        transform: scale(0.9);
+        opacity: 0;
+        transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+        position: relative;
+        border: 1px solid var(--glass-border);
+        backdrop-filter: blur(15px);
+        -webkit-backdrop-filter: blur(15px);
+    }
+    
+    .popup-overlay.active .popup-box {
+        transform: scale(1);
+        opacity: 1;
+    }
+    
+    .popup-header {
+        display: flex;
+        align-items: center;
+        margin-bottom: 20px;
+    }
+    
+    .popup-icon {
+        font-size: 2rem;
+        color: var(--primary);
+        margin-right: 15px;
+        text-shadow: 0 0 15px var(--primary);
+    }
+    
+    .popup-title {
+        font-size: 1.3rem;
+        font-weight: 700;
+        color: var(--text-primary);
+        letter-spacing: 0.5px;
+    }
+    
+    .popup-content {
+        font-size: 0.95rem;
+        line-height: 1.6;
+        color: var(--text-secondary);
+        margin-bottom: 25px;
+    }
+    
+    .popup-guide {
+        background: rgba(40, 35, 75, 0.7);
+        border-radius: 12px;
+        padding: 18px;
+        margin-bottom: 25px;
+        border: 1px solid var(--glass-border);
+    }
+    
+    .guide-item {
+        margin-bottom: 10px;
+        display: flex;
+        align-items: flex-start;
+    }
+    
+    .guide-item:last-child {
+        margin-bottom: 0;
+    }
+    
+    .guide-bullet {
+        color: var(--primary);
+        margin-right: 10px;
         font-size: 0.9rem;
+        margin-top: 4px;
+        flex-shrink: 0;
+    }
+    
+    .guide-text {
+        flex: 1;
+        font-size: 0.9rem;
+        line-height: 1.5;
+    }
+    
+    .popup-timer {
+        display: flex;
+        justify-content: center;
+        margin-top: 20px;
+    }
+    
+    .timer-circle {
+        width: 70px;
+        height: 70px;
+        border-radius: 50%;
+        background: rgba(30, 25, 60, 0.9);
+        border: 4px solid var(--primary);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: var(--text-primary);
+        box-shadow: 0 0 20px rgba(138, 43, 226, 0.4);
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .timer-circle::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(
+            135deg,
+            rgba(255, 255, 255, 0.05) 0%,
+            rgba(255, 255, 255, 0) 50%,
+            rgba(255, 255, 255, 0.05) 100%
+        );
+    }
+    
+    /* Update indicator - Modern Floating */
+    .update-indicator {
+        position: fixed;
+        bottom: 80px;
+        right: 20px;
+        background: var(--success);
+        color: white;
+        padding: 10px 16px;
+        border-radius: 25px;
+        font-size: 0.85rem;
+        font-weight: 600;
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+        z-index: 100;
+        display: flex;
+        align-items: center;
+        opacity: 0;
+        transform: translateY(20px);
+        transition: all 0.3s ease;
+        backdrop-filter: blur(5px);
+        -webkit-backdrop-filter: blur(5px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    
+    .update-indicator.show {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    
+    .update-indicator i {
+        margin-right: 8px;
+        font-size: 1rem;
     }
     
     /* Responsive Adjustments */
@@ -647,12 +1094,26 @@
         }
         
         .btn {
-            padding: 14px 22px;
-            min-width: 140px;
+            padding: 16px 24px;
+            min-width: 150px;
+            font-size: 1rem;
         }
         
         .clock-container, .stats-container, .social-container {
             width: 95%;
+        }
+        
+        .signal-container {
+            width: min(220px, 65vw);
+            height: min(220px, 65vw);
+        }
+        
+        .notification-item {
+            padding: 16px;
+        }
+        
+        .popup-box {
+            padding: 20px;
         }
     }
     
@@ -663,154 +1124,6 @@
         height: 0;
         background: transparent;
     }
-
-    /* Popup Overlay */
-    .popup-overlay {
-        position: fixed;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background-color: rgba(0, 0, 0, 0.8);
-        z-index: 1000;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        opacity: 0;
-        pointer-events: none;
-        transition: opacity 0.3s ease;
-    }
-
-    .popup-overlay.active {
-        opacity: 1;
-        pointer-events: auto;
-    }
-
-    /* Popup Box - Centered and Mobile Friendly */
-    .popup-box {
-        background: var(--card-bg);
-        border-radius: 16px;
-        padding: 20px;
-        width: 90%;
-        max-width: 400px;
-        max-height: 90vh;
-        overflow-y: auto;
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-        transform: scale(0.9);
-        opacity: 0;
-        transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
-        position: relative;
-        border: 1px solid rgba(255, 255, 255, 0.1);
-    }
-
-    .popup-overlay.active .popup-box {
-        transform: scale(1);
-        opacity: 1;
-    }
-
-    .popup-header {
-        display: flex;
-        align-items: center;
-        margin-bottom: 15px;
-    }
-
-    .popup-icon {
-        font-size: 1.8rem;
-        color: var(--primary);
-        margin-right: 12px;
-    }
-
-    .popup-title {
-        font-size: 1.2rem;
-        font-weight: 700;
-        color: var(--text-primary);
-    }
-
-    .popup-content {
-        font-size: 0.9rem;
-        line-height: 1.5;
-        color: var(--text-secondary);
-        margin-bottom: 20px;
-    }
-
-    .popup-guide {
-        background: rgba(30, 30, 50, 0.6);
-        border-radius: 10px;
-        padding: 15px;
-        margin-bottom: 20px;
-    }
-
-    .guide-item {
-        margin-bottom: 8px;
-        display: flex;
-        align-items: flex-start;
-    }
-
-    .guide-item:last-child {
-        margin-bottom: 0;
-    }
-
-    .guide-bullet {
-        color: var(--primary);
-        margin-right: 8px;
-        font-size: 0.8rem;
-        margin-top: 3px;
-        flex-shrink: 0;
-    }
-
-    .guide-text {
-        flex: 1;
-    }
-
-    .popup-timer {
-        display: flex;
-        justify-content: center;
-        margin-top: 15px;
-    }
-
-    .timer-circle {
-        width: 60px;
-        height: 60px;
-        border-radius: 50%;
-        background: rgba(20, 20, 40, 0.8);
-        border: 3px solid var(--primary);
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        font-size: 1.2rem;
-        font-weight: 700;
-        color: var(--text-primary);
-        box-shadow: 0 0 15px rgba(106, 17, 203, 0.3);
-    }
-
-    /* Update indicator */
-    .update-indicator {
-        position: fixed;
-        bottom: 70px;
-        right: 15px;
-        background: var(--success);
-        color: white;
-        padding: 8px 12px;
-        border-radius: 20px;
-        font-size: 0.8rem;
-        font-weight: 600;
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-        z-index: 100;
-        display: flex;
-        align-items: center;
-        opacity: 0;
-        transform: translateY(20px);
-        transition: all 0.3s ease;
-    }
-
-    .update-indicator.show {
-        opacity: 1;
-        transform: translateY(0);
-    }
-
-    .update-indicator i {
-        margin-right: 5px;
-    }
     </style>
 </head>
 
@@ -818,7 +1131,7 @@
 <div class="app-container">
     <header class="app-header">
         <div class="header-content">
-            <h1 class="header-title">XTREME AVIATOR PREDICTOR 1XBET</h1>
+            <h1 class="header-title">XTREME AVIATOR PREDICTOR PRO</h1>
             <div class="header-actions">
                 <div class="notification-bell" id="notificationBell">
                     <i class="fas fa-bell"></i>
@@ -837,11 +1150,11 @@
     <div class="tab-content active" id="signalsTab">
         <div class="clock-container">
             <div class="clock-time">
-                <span class="clock-label">Live Time:</span>
+                <span class="clock-label"><i class="fas fa-clock"></i> Live Time:</span>
                 <span id="liveTime"></span>
             </div>
             <div class="clock-date">
-                <span class="clock-label">Date:</span>
+                <span class="clock-label"><i class="fas fa-calendar-alt"></i> Date:</span>
                 <span id="liveDate"></span>
             </div>
         </div>
@@ -857,14 +1170,14 @@
         </div>
         
         <div class="odd-box" id="oddValue">
-            <i class="fas fa-info-circle"></i> Signal Not Available
+            <i class="fas fa-calculator"></i> Calculating optimal odds...
         </div>
         
-        <!-- New Stats Section -->
+        <!-- Stats Section -->
         <div class="stats-container">
             <div class="stats-title">
                 <span>TODAY'S PERFORMANCE</span>
-                <span><i class="fas fa-chart-bar"></i></span>
+                <span><i class="fas fa-chart-line"></i></span>
             </div>
             <div class="stats-grid">
                 <div class="stat-item wins">
@@ -883,7 +1196,7 @@
         </div>
         
         <div class="social-container">
-            <div class="social-title">JOIN OUR COMMUNITY</div>
+            <div class="social-title">JOIN OUR VIP COMMUNITY</div>
             <div class="button-container">
                 <a class="btn whatsapp" href="https://chat.whatsapp.com/BE39Aj6enbP3SNkfmn8DeG" target="_blank">
                     <i class="fab fa-whatsapp"></i> WhatsApp
@@ -935,7 +1248,7 @@
 </div>
 
 <footer class="app-footer">
-    POWERED BY XTREME PREDICTOR PRO © 2025
+    POWERED BY XTREME AVIATOR PRO © 2025 | ALL RIGHTS RESERVED
 </footer>
 
 <audio id="beepSound" src="https://actions.google.com/sounds/v1/alarms/beep_short.ogg"></audio>
@@ -1334,9 +1647,16 @@ function renderNotifications() {
         
         const item = document.createElement('div');
         item.className = 'notification-item' + (n.unread ? ' unread' : '');
+        
+        // Determine icon based on notification type
+        let icon = 'fa-info-circle';
+        if (n.title.includes('Win') || n.content.includes('win')) icon = 'fa-trophy';
+        else if (n.title.includes('Loss') || n.content.includes('loss')) icon = 'fa-times-circle';
+        else if (n.title.includes('Signal') || n.content.includes('signal')) icon = 'fa-bolt';
+        
         item.innerHTML = `
             <div class="notification-header">
-                <div class="notification-title">${n.title}</div>
+                <div class="notification-title"><i class="fas ${icon}"></i> ${n.title}</div>
                 <div class="notification-time">${timeDisplay}</div>
             </div>
             <div class="notification-content">${n.content}</div>
@@ -1371,7 +1691,7 @@ function showInitialLoadingState() {
         <div class="loading-text">Please wait<span class="loading-dots"></span></div>
     `;
     document.getElementById('oddValue').innerHTML = `<i class="fas fa-calculator"></i> Calculating optimal odds...`;
-    document.getElementById('signalCircle').className = 'signal-circle';
+    document.getElementById('signalCircle').className = 'signal-circle blue';
 }
 
 // Show loading state in signal display (between signals)
@@ -1383,7 +1703,7 @@ function showLoadingState() {
         <div class="loading-text">Analyzing game<span class="loading-dots"></span></div>
     `;
     document.getElementById('oddValue').innerHTML = `<i class="fas fa-calculator"></i> Calculating optimal odds...`;
-    document.getElementById('signalCircle').className = 'signal-circle';
+    document.getElementById('signalCircle').className = 'signal-circle orange';
 }
 
 // Show popup with game guide
@@ -1403,27 +1723,27 @@ function showGameGuidePopup(signal) {
     // Create guide items
     popupGuide.innerHTML = `
         <div class="guide-item">
-            <div class="guide-bullet">*</div>
+            <div class="guide-bullet"><i class="fas fa-circle"></i></div>
             <div class="guide-text">Aviator Game ක්‍රීඩාව සඳහා ක්‍රියාමාර්ග මාර්ගෝපදේශය:</div>
         </div>
         <div class="guide-item">
-            <div class="guide-bullet">*</div>
+            <div class="guide-bullet"><i class="fas fa-circle"></i></div>
             <div class="guide-text">Entry Time: ${signal.time} ට පසු ආරම්භ වන round එකේ සිට ක්‍රීඩා ආරම්භ කරන්න.</div>
         </div>
         <div class="guide-item">
-            <div class="guide-bullet">*</div>
+            <div class="guide-bullet"><i class="fas fa-circle"></i></div>
             <div class="guide-text">Target: ${signal.odd}× odd අගය පසුකරන තුරු bet ක්‍රියාව පවත්වා ගන්න.</div>
         </div>
         <div class="guide-item">
-            <div class="guide-bullet">*</div>
+            <div class="guide-bullet"><i class="fas fa-circle"></i></div>
             <div class="guide-text">Attempt Limit: උපරිම round 03 ක් පමණක්.</div>
         </div>
         <div class="guide-item">
-            <div class="guide-bullet">*</div>
+            <div class="guide-bullet"><i class="fas fa-circle"></i></div>
             <div class="guide-text">Bet Mode: Auto Bet ක්‍රමය යොදා ගන්න.</div>
         </div>
         <div class="guide-item">
-            <div class="guide-bullet">*</div>
+            <div class="guide-bullet"><i class="fas fa-circle"></i></div>
             <div class="guide-text">Cash Out: ${signal.odd}× odd අගය පසුකර යන වහාම cash out ක්‍රියාත්මක කරන්න.</div>
         </div>
     `;
@@ -1697,7 +2017,7 @@ function updateSignalDisplay() {
             <div class="signal-time purple">${signal.time}</div>
             <div class="countdown-timer">Upcoming in: ${formatCountdown(secondsLeft)}</div>
         `;
-        odd.innerHTML = `<i class="fas fa-calculator"></i> Suggested multiplier : ${signal.odd}×`;
+        odd.innerHTML = `<i class="fas fa-calculator"></i> Suggested multiplier: ${signal.odd}×`;
         odd.className = 'odd-box';
         circle.className = 'signal-circle purple';
         
@@ -1722,7 +2042,7 @@ function updateSignalDisplay() {
             <div class="signal-time red">${signal.time}</div>
             <div class="countdown-timer">End in: ${formatCountdown(secondsLeft)}</div>
         `;
-        odd.innerHTML = `<i class="fas fa-calculator"></i> Suggested multiplier : ${signal.odd}×`;
+        odd.innerHTML = `<i class="fas fa-calculator"></i> Suggested multiplier: ${signal.odd}×`;
         odd.className = 'odd-box';
         circle.className = 'signal-circle red';
         
