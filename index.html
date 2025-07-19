@@ -1,3501 +1,1816 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>XTREME AVIATOR SHA512 HASH ULTRA PREDICTOR PRO</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <style>
-    /* Disable text selection */
-    body {
-      -webkit-user-select: none;
-      -moz-user-select: none;
-      -ms-user-select: none;
-      user-select: none;
-      margin: 0;
-      padding: 0;
-      overflow: hidden;
-      height: 100vh;
-    }
-    
-    /* Allow selection only in input fields */
-    input, textarea {
-      -webkit-user-select: text;
-      -moz-user-select: text;
-      -ms-user-select: text;
-      user-select: text;
-    }
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>XTREME AVIATOR PRO | 20× FREE SIGNALS</title>
+    <link rel="icon" href="https://upload.wikimedia.org/wikipedia/commons/3/3c/Aviator_helmet_icon.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+    /* Base Styles */
     :root {
-      --primary: #3a86ff;
-      --primary-dark: #2667cc;
-      --secondary: #8338ec;
-      --danger: #ff006e;
-      --success: #06d6a0;
-      --warning: #ffbe0b;
-      --dark-1: #0a0e17;
-      --dark-2: #121827;
-      --dark-3: #1e2538;
-      --light-1: #f8f9fa;
-      --light-2: #e9ecef;
-      --accent: #3a86ff;
-      --extreme: #ff00ff;
-      --nav-height: 60px;
-      --header-height: 80px;
+        --primary: #6a11cb;
+        --secondary: #2575fc;
+        --success: #00b09b;
+        --danger: #ff416c;
+        --warning: #ff8a00;
+        --dark: #0f0f1a;
+        --darker: #0a0a12;
+        --light: #f8f9fa;
+        --card-bg: rgba(20, 20, 40, 0.8);
+        --text-primary: #ffffff;
+        --text-secondary: #b8c2cc;
     }
     
     * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        -khtml-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+        -webkit-tap-highlight-color: transparent;
+        box-sizing: border-box;
+    }
+    
+    html, body {
+        height: 100%;
+        width: 100%;
+        overflow-x: hidden;
+        touch-action: pan-y;
+        -webkit-overflow-scrolling: touch;
+        font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
     }
     
     body {
-      background: linear-gradient(135deg, var(--dark-1), var(--dark-2));
-      color: var(--light-1);
-      line-height: 1.6;
-      touch-action: manipulation;
+        background: linear-gradient(135deg, var(--darker) 0%, var(--dark) 100%);
+        color: var(--text-primary);
+        margin: 0;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+        opacity: 0;
+        animation: fadeIn 0.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+        position: relative;
+        overflow-y: auto;
     }
     
-    /* Hide scrollbars but keep scrolling */
-    ::-webkit-scrollbar {
-      display: none;
-      width: 0;
-      background: transparent;
-    }
-    * {
-      -ms-overflow-style: none;
-      scrollbar-width: none;
+    @keyframes fadeIn {
+        to { opacity: 1; }
     }
     
-    /* App container structure */
+    /* Main Layout */
     .app-container {
-      display: flex;
-      flex-direction: column;
-      height: 100vh;
-      position: relative;
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        max-width: 100%;
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
     }
     
-    /* Fixed Header */
-    .header {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: var(--header-height);
-      background: linear-gradient(90deg, var(--primary), var(--secondary));
-      padding: 10px 20px;
-      text-align: center;
-      z-index: 100;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
+    /* Header with Gradient */
+    .app-header {
+        position: relative;
+        padding: 18px 0;
+        background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+        width: 100%;
+        flex-shrink: 0;
+        z-index: 10;
     }
     
-    .header h1 {
-      font-weight: 800;
-      font-size: 1.4rem;
-      margin-bottom: 2px;
-      line-height: 1.2;
+    .header-content {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0 20px;
     }
     
-    .header p {
-      opacity: 0.9;
-      font-size: 0.8rem;
+    .header-title {
+        font-size: clamp(0.9rem, 4vw, 1.1rem);
+        font-weight: 700;
+        color: var(--text-primary);
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        margin: 0;
+        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
     }
     
-    /* Scrollable content area */
-    .scroll-container {
-      position: fixed;
-      top: var(--header-height);
-      bottom: var(--nav-height);
-      left: 0;
-      right: 0;
-      overflow-y: auto;
-      -webkit-overflow-scrolling: touch;
+    .header-actions {
+        display: flex;
+        gap: 15px;
     }
     
-    /* Main content container - UPDATED border-radius */
-    .main-container {
-      width: 100%;
-      max-width: 900px;
-      margin: 0 auto;
-      background: var(--dark-2);
-      border-radius: 0 0 16px 16px; /* Only rounded corners at bottom */
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
-      overflow: hidden;
-      border: 1px solid rgba(255, 255, 255, 0.05);
-      position: relative;
+    .notification-bell {
+        position: relative;
+        color: var(--text-primary);
+        font-size: 1.2rem;
+        cursor: pointer;
+        transition: transform 0.3s ease;
     }
     
-    .datetime {
-      display: flex;
-      justify-content: space-between;
-      background: rgba(0, 0, 0, 0.2);
-      padding: 10px 20px;
-      font-size: 0.9rem;
+    .notification-bell:hover {
+        transform: scale(1.1);
     }
     
-    .content {
-      padding: 15px;
-    }
-    
-    /* Fixed Navigation Bar */
-    .nav-bar {
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      height: var(--nav-height);
-      background: var(--dark-2);
-      display: flex;
-      border-top: 1px solid rgba(255, 255, 255, 0.05);
-      z-index: 100;
-    }
-    
-    .nav-item {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      color: var(--light-2);
-      text-decoration: none;
-      font-size: 0.7rem;
-      transition: all 0.3s ease;
-      position: relative;
-    }
-    
-    .nav-item i {
-      font-size: 1.2rem;
-      margin-bottom: 4px;
-    }
-    
-    .nav-item.active {
-      color: var(--primary);
-      background: rgba(58, 134, 255, 0.1);
-    }
-    
-    .nav-item:hover {
-      background: var(--dark-3);
-    }
-    
-    /* Notification badge */
     .notification-badge {
-      position: absolute;
-      top: 5px;
-      right: 15px;
-      background: var(--danger);
-      color: white;
-      border-radius: 50%;
-      width: 18px;
-      height: 18px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 0.6rem;
-      font-weight: bold;
-      pointer-events: none;
+        position: absolute;
+        top: -5px;
+        right: -5px;
+        background-color: var(--danger);
+        color: white;
+        border-radius: 50%;
+        width: 18px;
+        height: 18px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.6rem;
+        font-weight: bold;
+    }
+    
+    /* Tab Navigation */
+    .tab-container {
+        display: flex;
+        background: rgba(15, 15, 25, 0.9);
+        backdrop-filter: blur(5px);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        z-index: 5;
+    }
+    
+    .tab {
+        flex: 1;
+        text-align: center;
+        padding: 14px 0;
+        font-size: 0.85rem;
+        font-weight: 600;
+        color: var(--text-secondary);
+        cursor: pointer;
+        transition: all 0.3s ease;
+        position: relative;
+    }
+    
+    .tab.active {
+        color: var(--text-primary);
+    }
+    
+    .tab.active::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 50%;
+        height: 3px;
+        background: linear-gradient(90deg, var(--primary), var(--secondary));
+        border-radius: 3px 3px 0 0;
     }
     
     /* Tab Content */
     .tab-content {
-      display: none;
+        display: none;
+        flex: 1;
+        overflow-y: auto;
+        padding-bottom: 20px;
+        -webkit-overflow-scrolling: touch;
     }
     
     .tab-content.active {
-      display: block;
+        display: flex;
+        flex-direction: column;
     }
     
-    /* Predictor Tab */
-    .input-group {
-      margin-bottom: 20px;
-      position: relative;
+    /* Clock Section */
+    .clock-container {
+        background: var(--card-bg);
+        border-radius: 14px;
+        padding: 14px;
+        margin: 20px auto 15px;
+        width: 90%;
+        max-width: 320px;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+        backdrop-filter: blur(8px);
+        flex-shrink: 0;
+        animation: slideUp 0.6s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+        opacity: 0;
+        transform: translateY(20px);
     }
     
-    .input-group label {
-      display: block;
-      margin-bottom: 8px;
-      font-weight: 500;
-      font-size: 0.9rem;
-      color: var(--light-2);
+    .clock-time, .clock-date {
+        margin: 6px 0;
+        font-size: clamp(0.9rem, 3.5vw, 1rem);
+        font-weight: 500;
+        display: flex;
+        justify-content: space-between;
     }
     
-    #hashInput {
-      width: 100%;
-      padding: 14px 16px;
-      background: var(--dark-3);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      border-radius: 8px;
-      color: var(--light-1);
-      font-size: 1rem;
-      transition: all 0.3s ease;
+    .clock-label {
+        color: var(--text-secondary);
     }
     
-    #hashInput:focus {
-      outline: none;
-      border-color: var(--primary);
-      box-shadow: 0 0 0 3px rgba(58, 134, 255, 0.2);
+    /* Signal Circle - Premium Design */
+    .signal-container {
+        position: relative;
+        margin: 20px auto;
+        width: min(220px, 55vw);
+        height: min(220px, 55vw);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-shrink: 0;
+        animation: pulse 2s infinite alternate;
     }
     
-    .input-actions {
-      display: flex;
-      justify-content: space-between;
-      margin-top: 10px;
-      gap: 10px;
+    @keyframes pulse {
+        0% { transform: scale(1); }
+        100% { transform: scale(1.03); }
     }
     
-    .paste-btn {
-      background: rgba(58, 134, 255, 0.2);
-      color: var(--primary);
-      border: none;
-      border-radius: 8px;
-      padding: 10px 15px;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      flex: 1;
-      justify-content: center;
+    .signal-circle {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        z-index: 2;
+        background: radial-gradient(circle at center, #111 0%, #000 100%);
+        box-shadow: 0 0 30px rgba(0, 0, 0, 0.6);
+        border: 4px solid;
+        transition: all 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+        animation: fadeInUp 0.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+        opacity: 0;
+        transform: translateY(20px);
     }
     
-    .paste-btn:hover {
-      background: rgba(58, 134, 255, 0.3);
+    .signal-circle.purple {
+        border-color: var(--primary);
+        box-shadow: 0 0 25px rgba(106, 17, 203, 0.5);
     }
     
-    .clear-btn {
-      background: rgba(255, 0, 110, 0.2);
-      color: var(--danger);
-      border: none;
-      border-radius: 8px;
-      padding: 10px 15px;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      flex: 1;
-      justify-content: center;
+    .signal-circle.red {
+        border-color: var(--danger);
+        box-shadow: 0 0 25px rgba(255, 65, 108, 0.5);
     }
     
-    .clear-btn:hover {
-      background: rgba(255, 0, 110, 0.3);
+    .signal-circle.green {
+        border-color: var(--success);
+        box-shadow: 0 0 20px rgba(0, 176, 155, 0.4);
     }
     
-    .odd-buttons {
-      display: grid;
-      grid-template-columns: repeat(6, 1fr);
-      gap: 12px;
-      margin: 25px 0;
+    .signal-content {
+        text-align: center;
+        padding: 0 15px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
     }
     
-    .odd-btn {
-      padding: 12px;
-      border: none;
-      border-radius: 8px;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      background: var(--dark-3);
-      color: var(--light-1);
-      position: relative;
-      overflow: hidden;
+    .signal-status {
+        font-size: clamp(1.1rem, 5vw, 1.3rem); /* Increased font size */
+        font-weight: 700;
+        margin-bottom: 8px;
+        background: linear-gradient(135deg, var(--primary), var(--secondary));
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
     }
     
-    .odd-btn:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    .signal-time {
+        font-size: clamp(1.3rem, 6vw, 1.6rem);
+        font-weight: 800;
+        margin: 5px 0;
     }
     
-    .odd-btn:nth-child(1) { border-top: 3px solid var(--success); }
-    .odd-btn:nth-child(2) { border-top: 3px solid var(--warning); }
-    .odd-btn:nth-child(3) { border-top: 3px solid #ff9e00; }
-    .odd-btn:nth-child(4) { border-top: 3px solid var(--secondary); }
-    .odd-btn:nth-child(5) { border-top: 3px solid var(--danger); }
-    .odd-btn:nth-child(6) { border-top: 3px solid var(--extreme); }
-    
-    .odd-btn span:first-child {
-      font-size: 1.2rem;
-      font-weight: 700;
-      margin-bottom: 3px;
-      z-index: 2;
+    .signal-time.purple {
+        color: var(--primary);
+        text-shadow: 0 0 15px rgba(106, 17, 203, 0.7);
     }
     
-    .odd-btn span:last-child {
-      font-size: 0.8rem;
-      opacity: 0.8;
-      z-index: 2;
+    .signal-time.red {
+        color: var(--danger);
+        text-shadow: 0 0 15px rgba(255, 65, 108, 0.7);
     }
     
-    .confidence-bar {
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      height: 4px;
-      transition: width 0.5s ease;
+    .signal-time.green {
+        color: var(--success);
+        text-shadow: 0 0 12px rgba(0, 176, 155, 0.6);
     }
     
-    #confidence-2 { background: var(--success); }
-    #confidence-3 { background: var(--warning); }
-    #confidence-4 { background: #ff9e00; }
-    #confidence-7 { background: var(--secondary); }
-    #confidence-10 { background: var(--danger); }
-    #confidence-100 { background: var(--extreme); }
-    
-    .results {
-      background: var(--dark-3);
-      border-radius: 10px;
-      padding: 20px;
-      margin-top: 25px;
-      border-left: 4px solid var(--primary);
+    .countdown-timer {
+        font-size: clamp(0.9rem, 4vw, 1rem);
+        font-weight: 600;
+        margin-top: 8px;
+        color: var(--text-secondary);
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
     
-    .result-item {
-      display: flex;
-      justify-content: space-between;
-      padding: 10px 0;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    /* Loading dots animation with text jump */
+    .loading-text {
+        font-size: clamp(0.9rem, 4vw, 1rem);
+        color: var(--text-primary);
+        margin-top: 5px;
+        text-align: center;
+        animation: textJump 1.5s infinite;
     }
     
-    .result-item:last-child {
-      border-bottom: none;
+    @keyframes textJump {
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(-3px); }
     }
     
-    .result-item .label {
-      color: var(--light-2);
-      font-weight: 500;
+    .loading-gradient {
+        font-size: clamp(1.1rem, 5vw, 1.3rem); /* Increased font size */
+        font-weight: 700;
+        background: linear-gradient(135deg, var(--primary), var(--secondary));
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+        margin-bottom: 5px;
     }
     
-    .result-item .value {
-      font-weight: 600;
+    /* Odd Box - Premium Design - Fixed Size */
+    .odd-box {
+        background: var(--card-bg);
+        border-radius: 14px;
+        padding: 16px;
+        margin: 15px auto;
+        width: 90%;
+        max-width: 280px;
+        height: 60px; /* Fixed height */
+        min-height: 60px; /* Ensure it doesn't collapse */
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        font-size: clamp(1.1rem, 4.5vw, 1.3rem);
+        font-weight: 700;
+        color: var(--text-primary);
+        backdrop-filter: blur(8px);
+        text-align: center;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+        animation: slideUp 0.6s 0.1s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+        opacity: 0;
+        transform: translateY(20px);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
     }
     
-    .countdown {
-      background: rgba(6, 214, 160, 0.1);
-      border-left: 4px solid var(--success);
-      padding: 15px;
-      border-radius: 8px;
-      margin: 20px 0;
-      text-align: center;
-      font-weight: 600;
-      font-size: 1.1rem;
-      transition: all 0.3s ease;
+    .odd-box i {
+        margin-right: 8px; /* Added space between icon and text */
     }
     
-    .countdown.warning {
-      background: rgba(255, 190, 11, 0.1);
-      border-left: 4px solid var(--warning);
-    }
-    
-    .countdown.danger {
-      background: rgba(255, 0, 110, 0.1);
-      border-left: 4px solid var(--danger);
-    }
-    
-    .countdown.extreme {
-      background: rgba(255, 0, 255, 0.1);
-      border-left: 4px solid var(--extreme);
-    }
-    
-    /* History Tab Styles */
-    .history-tab {
-      padding: 15px;
-    }
-    
-    .history-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 15px;
-    }
-    
-    .history-header h3 {
-      font-weight: 500;
-    }
-    
-    .history-clear-btn {
-      background: transparent;
-      color: var(--danger);
-      border: 1px solid var(--danger);
-      padding: 5px 10px;
-      border-radius: 5px;
-      font-size: 0.8rem;
-      cursor: pointer;
-      transition: all 0.2s ease;
-    }
-    
-    .history-clear-btn:hover {
-      background: rgba(255, 0, 110, 0.1);
-    }
-    
-    .history-list {
-      background: var(--dark-3);
-      border-radius: 10px;
-      overflow: hidden;
-      max-height: calc(100vh - 250px);
-      overflow-y: auto;
-    }
-    
-    .history-item {
-      padding: 15px;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-      display: grid;
-      grid-template-columns: 1fr 1fr auto;
-      gap: 10px;
-      align-items: center;
-      transition: all 0.2s ease;
-      position: relative;
-    }
-    
-    .history-item.active {
-      background: rgba(6, 214, 160, 0.05);
-      border-left: 3px solid var(--success);
-    }
-    
-    .history-item.success {
-      background: rgba(6, 214, 160, 0.05);
-    }
-    
-    .history-item.failure {
-      background: rgba(255, 0, 110, 0.05);
-    }
-    
-    .history-item.extreme {
-      background: rgba(255, 0, 255, 0.05);
-    }
-    
-    .history-item:last-child {
-      border-bottom: none;
-    }
-    
-    .history-time {
-      font-size: 0.9rem;
-      color: var(--light-2);
-    }
-    
-    .history-multiplier {
-      font-weight: 600;
-      text-align: center;
-    }
-    
-    .history-multiplier span {
-      display: inline-block;
-      padding: 3px 8px;
-      border-radius: 4px;
-      font-size: 0.8rem;
-    }
-    
-    .history-multiplier-2 span { background: rgba(6, 214, 160, 0.2); color: var(--success); }
-    .history-multiplier-3 span { background: rgba(255, 190, 11, 0.2); color: var(--warning); }
-    .history-multiplier-4 span { background: rgba(255, 158, 0, 0.2); color: #ff9e00; }
-    .history-multiplier-7 span { background: rgba(131, 56, 236, 0.2); color: var(--secondary); }
-    .history-multiplier-10 span { background: rgba(255, 0, 110, 0.2); color: var(--danger); }
-    .history-multiplier-100 span { background: rgba(255, 0, 255, 0.2); color: var(--extreme); }
-    
-    .history-details {
-      text-align: right;
-      font-size: 0.85rem;
-    }
-    
-    .history-details span {
-      display: block;
-      margin-bottom: 3px;
-    }
-    
-    .copy-btn {
-      background: rgba(58, 134, 255, 0.2);
-      color: var(--primary);
-      border: none;
-      border-radius: 4px;
-      padding: 8px 12px;
-      font-size: 0.9rem;
-      cursor: pointer;
-      transition: all 0.2s ease;
-      display: flex;
-      align-items: center;
-      gap: 5px;
-      margin-left: 10px;
-    }
-    
-    .copy-btn:hover {
-      background: rgba(58, 134, 255, 0.3);
-    }
-
-    .copy-result-btn {
-      background: rgba(58, 134, 255, 0.2);
-      color: var(--primary);
-      border: none;
-      border-radius: 8px;
-      padding: 10px 15px;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      margin-top: 15px;
-      width: 100%;
-    }
-    
-    .copy-result-btn:hover {
-      background: rgba(58, 134, 255, 0.3);
-    }
-    
-    .copy-result-btn:disabled {
-      opacity: 0.5;
-      cursor: not-allowed;
-    }
-    
+    /* Stats Container - New Section */
     .stats-container {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 15px;
-      margin: 20px 0;
+        background: var(--card-bg);
+        border-radius: 14px;
+        padding: 18px;
+        margin: 20px auto;
+        width: 90%;
+        max-width: 420px;
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+        backdrop-filter: blur(8px);
+        animation: slideUp 0.6s 0.2s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+        opacity: 0;
+        transform: translateY(20px);
     }
     
-    .stat-card {
-      background: var(--dark-3);
-      border-radius: 10px;
-      padding: 15px;
-      text-align: center;
+    .stats-title {
+        font-size: clamp(0.9rem, 3.5vw, 1rem);
+        font-weight: 600;
+        margin-bottom: 12px;
+        color: var(--text-secondary);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
     }
     
-    .stat-card h4 {
-      font-size: 0.9rem;
-      color: var(--light-2);
-      margin-bottom: 8px;
+    .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 10px;
+        margin-top: 10px;
     }
     
-    .stat-card .value {
-      font-size: 1.5rem;
-      font-weight: 700;
+    .stat-item {
+        background: rgba(30, 30, 50, 0.9);
+        border-radius: 10px;
+        padding: 12px;
+        text-align: center;
+        color: var(--text-primary);
+        font-weight: 700;
+        font-size: clamp(0.9rem, 3.5vw, 1rem);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        transition: all 0.3s ease;
     }
     
-    .stat-card.success .value {
-      color: var(--success);
+    .stat-item .stat-value {
+        font-size: clamp(1.2rem, 5vw, 1.5rem);
+        margin-top: 5px;
+        display: block;
     }
     
-    .stat-card.warning .value {
-      color: var(--warning);
+    .stat-item.wins {
+        color: var(--success);
+        border-color: var(--success);
     }
     
-    .stat-card.danger .value {
-      color: var(--danger);
+    .stat-item.losses {
+        color: var(--danger);
+        border-color: var(--danger);
     }
     
-    .stat-card.extreme .value {
-      color: var(--extreme);
+    .stat-item.passing {
+        color: var(--warning);
+        border-color: var(--warning);
     }
     
-    /* Notification Tab Styles - UPDATED */
-    .notification-tab {
-      padding: 15px;
+    /* Buttons - Premium Design */
+    .button-container {
+        display: flex;
+        justify-content: center;
+        gap: 15px;
+        margin: 25px 0;
+        padding: 0 15px;
+        flex-shrink: 0;
+        flex-wrap: wrap;
+    }
+    
+    .btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--text-primary);
+        padding: 16px 28px;
+        border-radius: 12px;
+        text-decoration: none;
+        font-weight: 700;
+        font-size: clamp(1rem, 3.5vw, 1.1rem);
+        border: none;
+        transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+        box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+        min-width: 160px;
+        flex-shrink: 0;
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .btn::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0));
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+    
+    .btn:hover::after {
+        opacity: 1;
+    }
+    
+    .btn.whatsapp {
+        background: linear-gradient(135deg, #25D366 0%, #128C7E 100%);
+    }
+    
+    .btn.telegram {
+        background: linear-gradient(135deg, #0088cc 0%, #005b8c 100%);
+    }
+    
+    .btn:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+    }
+    
+    .btn:active {
+        transform: translateY(0);
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    }
+    
+    /* Social Buttons Container */
+    .social-container {
+        background: var(--card-bg);
+        border-radius: 14px;
+        padding: 15px;
+        margin: 15px auto;
+        width: 90%;
+        max-width: 420px;
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+        backdrop-filter: blur(8px);
+        animation: slideUp 0.6s 0.3s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    
+    .social-title {
+        font-size: clamp(0.9rem, 3.5vw, 1rem);
+        font-weight: 600;
+        margin-bottom: 15px;
+        color: var(--text-secondary);
+        text-align: center;
+    }
+    
+    /* Notifications Tab */
+    .notifications-container {
+        padding: 15px;
+        -webkit-overflow-scrolling: touch;
     }
     
     .notification-item {
-      background: var(--dark-3);
-      border-radius: 10px;
-      padding: 15px;
-      margin-bottom: 15px;
-      border-left: 4px solid var(--primary);
-      opacity: 0;
-      transform: translateY(10px);
-      transition: all 0.3s ease;
-      animation: fadeIn 0.3s forwards;
+        background: var(--card-bg);
+        border-radius: 12px;
+        padding: 15px;
+        margin-bottom: 12px;
+        border-left: 4px solid var(--primary);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        animation: fadeIn 0.5s ease forwards;
+        opacity: 0;
     }
     
-    @keyframes fadeIn {
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
+    .notification-item.unread {
+        border-left-color: var(--danger);
+        background: rgba(30, 30, 50, 0.9);
+    }
+    
+    .notification-header {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 8px;
     }
     
     .notification-title {
-      font-weight: 600;
-      margin-bottom: 5px;
-      display: flex;
-      align-items: center;
-      gap: 10px;
+        font-weight: 700;
+        font-size: 0.95rem;
+        color: var(--text-primary);
     }
     
     .notification-time {
-      font-size: 0.8rem;
-      color: var(--light-2);
-      margin-bottom: 10px;
+        font-size: 0.75rem;
+        color: var(--text-secondary);
     }
     
-    .notification-message {
-      font-size: 0.9rem;
-      line-height: 1.5;
+    .notification-content {
+        font-size: 0.85rem;
+        color: var(--text-secondary);
+        line-height: 1.4;
     }
     
-    /* Notification type colors */
-    .notification-algorithm_update {
-      border-left-color: var(--primary);
+    /* Footer */
+    .app-footer {
+        margin-top: auto;
+        padding: 15px;
+        font-size: clamp(0.7rem, 3vw, 0.8rem);
+        color: var(--text-secondary);
+        background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%); /* Added gradient */
+        backdrop-filter: blur(8px);
+        text-align: center;
+        flex-shrink: 0;
+        width: 100%;
     }
     
-    .notification-algorithm_update .notification-title i {
-      color: var(--primary);
+    /* Animations */
+    @keyframes slideUp {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
     }
     
-    .notification-bug_fix {
-      border-left-color: var(--danger);
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(15px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
     }
     
-    .notification-bug_fix .notification-title i {
-      color: var(--danger);
+    /* Loading Animation */
+    .loading-spinner {
+        width: 50px;
+        height: 50px;
+        border: 4px solid rgba(255, 255, 255, 0.1);
+        border-radius: 50%;
+        border-top-color: var(--primary);
+        animation: spin 1s ease-in-out infinite;
+        margin: 15px auto;
     }
     
-    .notification-general {
-      border-left-color: var(--warning);
+    @keyframes spin {
+        to { transform: rotate(360deg); }
     }
     
-    .notification-general .notification-title i {
-      color: var(--warning);
+    /* Empty State */
+    .empty-state {
+        text-align: center;
+        padding: 20px;
+        color: var(--text-secondary);
+        height: 60px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
     }
     
-    /* Support Tab Styles */
-    .support-tab {
-      padding: 15px;
+    .empty-icon {
+        font-size: 1.5rem;
+        margin-bottom: 8px;
+        color: rgba(255, 255, 255, 0.2);
     }
     
-    .support-card {
-      background: var(--dark-3);
-      border-radius: 10px;
-      padding: 20px;
-      margin-bottom: 15px;
+    .empty-text {
+        font-size: 0.9rem;
     }
     
-    .support-card h3 {
-      margin-bottom: 15px;
-      display: flex;
-      align-items: center;
-      gap: 10px;
+    /* Responsive Adjustments */
+    @media (max-width: 480px) {
+        .header-title {
+            font-size: 0.95rem;
+        }
+        
+        .btn {
+            padding: 14px 22px;
+            min-width: 140px;
+        }
+        
+        .clock-container, .stats-container, .social-container {
+            width: 95%;
+        }
     }
     
-    .support-btn {
-      display: block;
-      width: 100%;
-      padding: 12px;
-      background: rgba(58, 134, 255, 0.2);
-      color: var(--primary);
-      border: none;
-      border-radius: 8px;
-      margin-bottom: 10px;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      text-align: left;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-    
-    .support-btn:hover {
-      background: rgba(58, 134, 255, 0.3);
-    }
-    
-    .support-btn i {
-      font-size: 1.2rem;
-    }
-    
-    /* Tooltip */
-    .tooltip {
-      position: relative;
-      display: inline-block;
-    }
-    
-    .tooltip .tooltiptext {
-      visibility: hidden;
-      width: 200px;
-      background-color: var(--dark-1);
-      color: var(--light-1);
-      text-align: center;
-      border-radius: 6px;
-      padding: 8px;
-      position: absolute;
-      z-index: 1;
-      top: 100%;
-      left: 50%;
-      transform: translateX(-50%);
-      margin-top: 5px;
-      opacity: 0;
-      transition: opacity 0.3s;
-      font-size: 0.8rem;
-      border: 1px solid var(--dark-3);
-    }
-    
-    .tooltip:hover .tooltiptext {
-      visibility: visible;
-      opacity: 1;
+    /* Hide scrollbar but allow scrolling */
+    ::-webkit-scrollbar {
+        display: none;
+        width: 0;
+        height: 0;
+        background: transparent;
     }
 
-    /* New styles for actual multiplier display */
-    .actual-multiplier {
-      margin-left: 8px;
-      font-size: 0.8em;
-    }
-    
-    .actual-multiplier-2 { color: var(--success); }
-    .actual-multiplier-3 { color: var(--warning); }
-    .actual-multiplier-4 { color: #ff9e00; }
-    .actual-multiplier-7 { color: var(--secondary); }
-    .actual-multiplier-10 { color: var(--danger); }
-    .actual-multiplier-100 { color: var(--extreme); }
-
-    /* Updated Disclaimer Badge Animation */
-    .disclaimer-badge {
-      position: fixed;
-      bottom: 25px;
-      right: 25px;
-      background: linear-gradient(145deg, rgba(255, 0, 110, 0.3), rgba(255, 0, 110, 0.4));
-      color: var(--danger);
-      border-radius: 50%;
-      width: 50px;
-      height: 50px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      z-index: 9999;
-      box-shadow: 0 5px 20px rgba(255, 0, 110, 0.3);
-      transition: all 0.3s ease;
-      font-size: 1.2rem;
-      animation: pulseDanger 2s infinite;
+    /* Popup Overlay */
+    .popup-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: rgba(0, 0, 0, 0.8);
+        z-index: 1000;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.3s ease;
     }
 
-    @keyframes pulseDanger {
-      0% {
-        box-shadow: 0 0 0 0 rgba(255, 0, 110, 0.4);
-      }
-      70% {
-        box-shadow: 0 0 0 15px rgba(255, 0, 110, 0);
-      }
-      100% {
-        box-shadow: 0 0 0 0 rgba(255, 0, 110, 0);
-      }
+    .popup-overlay.active {
+        opacity: 1;
+        pointer-events: auto;
     }
 
-    .disclaimer-badge:hover {
-      background: linear-gradient(145deg, rgba(255, 0, 110, 0.4), rgba(255, 0, 110, 0.5));
-      transform: scale(1.1);
-      animation: pulseDangerHover 1.5s infinite;
+    /* Popup Box - Centered and Mobile Friendly */
+    .popup-box {
+        background: var(--card-bg);
+        border-radius: 16px;
+        padding: 20px;
+        width: 90%;
+        max-width: 400px;
+        max-height: 90vh;
+        overflow-y: auto;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        transform: scale(0.9);
+        opacity: 0;
+        transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+        position: relative;
+        border: 1px solid rgba(255, 255, 255, 0.1);
     }
 
-    @keyframes pulseDangerHover {
-      0% {
-        box-shadow: 0 0 0 0 rgba(255, 0, 110, 0.6), 
-                    0 0 0 10px rgba(255, 0, 110, 0.4),
-                    0 0 0 20px rgba(255, 0, 110, 0.2);
-      }
-      100% {
-        box-shadow: 0 0 0 10px rgba(255, 0, 110, 0), 
-                    0 0 0 20px rgba(255, 0, 110, 0),
-                    0 0 0 30px rgba(255, 0, 110, 0);
-      }
-    }
-
-    /* Disclaimer popup */
-    .disclaimer-popup {
-      position: fixed;
-      bottom: 85px;
-      right: 25px;
-      width: 300px;
-      max-width: 90%;
-      background: var(--dark-2);
-      border-radius: 10px;
-      padding: 15px;
-      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-      border-left: 4px solid var(--danger);
-      transform: translateY(20px);
-      opacity: 0;
-      transition: all 0.3s ease;
-      z-index: 9998;
-      pointer-events: none;
-    }
-
-    .disclaimer-popup.show {
-      transform: translateY(0);
-      opacity: 1;
-      pointer-events: all;
-    }
-
-    .disclaimer-popup h4 {
-      color: var(--danger);
-      margin-bottom: 10px;
-      font-size: 1rem;
-    }
-
-    .disclaimer-popup p {
-      font-size: 0.8rem;
-      line-height: 1.4;
-      color: var(--light-2);
-      margin-bottom: 10px;
-    }
-
-    .disclaimer-popup a {
-      color: var(--primary);
-      text-decoration: none;
-      font-weight: 500;
-    }
-
-    .disclaimer-popup a:hover {
-      text-decoration: underline;
-    }
-
-    /* New Light Bulb Badge */
-    .tips-badge {
-      position: fixed;
-      bottom: 230px; /* Increased from 180px to 230px to move it higher */
-      right: 25px;
-      background: linear-gradient(145deg, rgba(255, 190, 11, 0.3), rgba(255, 190, 11, 0.4));
-      color: var(--warning);
-      border-radius: 50%;
-      width: 50px;
-      height: 50px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      z-index: 9997;
-      box-shadow: 0 5px 20px rgba(255, 190, 11, 0.3);
-      transition: all 0.3s ease;
-      font-size: 1.2rem;
-      animation: pulseWarning 2s infinite;
-    }
-    
-    /* New animation for light bulb badge */
-    @keyframes pulseWarning {
-      0% { box-shadow: 0 0 0 0 rgba(255, 190, 11, 0.4); }
-      70% { box-shadow: 0 0 0 15px rgba(255, 190, 11, 0); }
-      100% { box-shadow: 0 0 0 0 rgba(255, 190, 11, 0); }
-    }
-    
-    /* Hover effects for light bulb */
-    .tips-badge:hover {
-      background: linear-gradient(145deg, rgba(255, 190, 11, 0.4), rgba(255, 190, 11, 0.5));
-      transform: scale(1.1);
-      animation: pulseWarningHover 1.5s infinite;
-    }
-    
-    @keyframes pulseWarningHover {
-      0% { box-shadow: 0 0 0 0 rgba(255, 190, 11, 0.6), 
-                    0 0 0 10px rgba(255, 190, 11, 0.4),
-                    0 0 0 20px rgba(255, 190, 11, 0.2); }
-      100% { box-shadow: 0 0 0 10px rgba(255, 190, 11, 0), 
-                      0 0 0 20px rgba(255, 190, 11, 0),
-                      0 0 0 30px rgba(255, 190, 11, 0); }
-    }
-    
-    /* Tips popup styles */
-    .tips-popup {
-      position: fixed;
-      bottom: 290px; /* Increased from 240px to 290px to match the new badge position */
-      right: 25px;
-      width: 300px;
-      max-width: 90%;
-      background: var(--dark-2);
-      border-radius: 10px;
-      padding: 15px;
-      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-      border-left: 4px solid var(--warning);
-      transform: translateY(20px);
-      opacity: 0;
-      transition: all 0.3s ease;
-      z-index: 9996;
-      pointer-events: none;
-    }
-    
-    .tips-popup.show {
-      transform: translateY(0);
-      opacity: 1;
-      pointer-events: all;
-    }
-    
-    .tips-popup h4 {
-      color: var(--warning);
-      margin-bottom: 10px;
-      font-size: 1rem;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-    
-    .tips-popup p {
-      font-size: 0.8rem;
-      line-height: 1.4;
-      color: var(--light-2);
-      margin-bottom: 10px;
-    }
-    
-    .tips-popup ul {
-      padding-left: 20px;
-      margin-bottom: 10px;
-    }
-    
-    .tips-popup li {
-      margin-bottom: 5px;
-      font-size: 0.8rem;
-    }
-    
-    .tips-popup a {
-      color: var(--primary);
-      text-decoration: none;
-      font-weight: 500;
-      font-size: 0.8rem;
-      display: inline-block;
-      margin-top: 5px;
-    }
-    
-    .tips-popup a:hover {
-      text-decoration: underline;
-    }
-
-    /* Custom Dialog Styles */
-    .dialog-overlay {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: rgba(0, 0, 0, 0.7);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      z-index: 1000;
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 0.3s ease;
-    }
-
-    .dialog-overlay.active {
-      opacity: 1;
-      pointer-events: all;
-    }
-
-    .dialog-box {
-      background: var(--dark-2);
-      border-radius: 10px;
-      padding: 20px;
-      width: 90%;
-      max-width: 400px;
-      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
-      transform: translateY(20px);
-      transition: transform 0.3s ease;
-    }
-
-    .dialog-overlay.active .dialog-box {
-      transform: translateY(0);
-    }
-
-    .dialog-title {
-      font-size: 1.2rem;
-      margin-bottom: 15px;
-      color: var(--light-1);
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .dialog-message {
-      margin-bottom: 20px;
-      color: var(--light-2);
-      line-height: 1.5;
-    }
-
-    .dialog-buttons {
-      display: flex;
-      justify-content: flex-end;
-      gap: 10px;
-    }
-
-    .dialog-btn {
-      padding: 8px 15px;
-      border-radius: 5px;
-      font-weight: 500;
-      cursor: pointer;
-      transition: all 0.2s ease;
-    }
-
-    .dialog-btn-cancel {
-      background: var(--dark-3);
-      color: var(--light-1);
-      border: 1px solid var(--dark-3);
-    }
-
-    .dialog-btn-cancel:hover {
-      background: var(--dark-1);
-    }
-
-    .dialog-btn-confirm {
-      background: var(--danger);
-      color: white;
-      border: 1px solid var(--danger);
-    }
-
-    .dialog-btn-confirm:hover {
-      background: #e00064;
-    }
-
-    .dialog-icon {
-      font-size: 1.5rem;
-      color: var(--danger);
-    }
-    
-    /* Animation for active signal */
-    @keyframes pulse {
-      0% { box-shadow: 0 0 0 0 rgba(6, 214, 160, 0.4); }
-      70% { box-shadow: 0 0 0 10px rgba(6, 214, 160, 0); }
-      100% { box-shadow: 0 0 0 0 rgba(6, 214, 160, 0); }
-    }
-    
-    .active-signal {
-      animation: pulse 2s infinite;
-    }
-
-    /* Premium Signal Popup Styles */
-    .signal-container {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: rgba(0, 0, 0, 0.7);
-      backdrop-filter: blur(8px);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      z-index: 2000;
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 0.4s ease-out;
-    }
-    
-    .signal-container.active {
-      opacity: 1;
-      pointer-events: all;
-    }
-    
-    .signal-card {
-      width: 100%;
-      max-width: 440px;
-      background: linear-gradient(145deg, #1e293b, #0f172a);
-      border-radius: 20px;
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.4);
-      overflow: hidden;
-      transform: translateY(20px) scale(0.98);
-      opacity: 0;
-      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.2);
-    }
-    
-    .signal-container.active .signal-card {
-      transform: translateY(0) scale(1);
-      opacity: 1;
-    }
-    
-    /* Header Section */
-    .signal-header {
-      padding: 24px;
-      background: linear-gradient(90deg, var(--primary), var(--secondary));
-      position: relative;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-    
-    .signal-title {
-      font-size: 1.5rem;
-      font-weight: 800;
-      letter-spacing: 1px;
-      text-transform: uppercase;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      transform: translateY(5px);
-    }
-    
-    .signal-title i {
-      color: white;
-      font-size: 1.2em;
-    }
-    
-    .close-btn {
-      width: 36px;
-      height: 36px;
-      border-radius: 50%;
-      background: rgba(0, 0, 0, 0.2);
-      border: none;
-      color: white;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      transform: translateY(5px);
-    }
-    
-    .close-btn:hover {
-      background: var(--danger);
-      transform: translateY(5px) rotate(90deg);
-    }
-    
-    /* Signal Meta Section */
-    .signal-meta {
-      display: flex;
-      justify-content: space-between;
-      padding: 30px 24px 0;
-    }
-    
-    .meta-item {
-      text-align: center;
-      flex: 1;
-    }
-    
-    .meta-label {
-      font-size: 0.75rem;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      opacity: 0.7;
-      margin-bottom: 6px;
-    }
-    
-    .meta-value {
-      font-size: 1.4rem;
-      font-weight: 700;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 5px;
-    }
-    
-    .meta-value.time {
-      color: var(--warning);
-    }
-    
-    .meta-value.odd {
-      color: var(--success);
-      font-size: 1.8rem;
-    }
-    
-    /* Countdown Section */
-    .countdown-section {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      margin: 20px 0;
-    }
-    
-    .countdown-circle {
-      width: 120px;
-      height: 120px;
-      border-radius: 50%;
-      background: rgba(255, 255, 255, 0.08);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      position: relative;
-      border: 3px solid var(--danger);
-      box-shadow: 0 0 20px rgba(255, 32, 110, 0.3);
-      margin-bottom: 10px;
-    }
-    
-    .countdown-circle::before {
-      content: '';
-      position: absolute;
-      width: calc(100% + 10px);
-      height: calc(100% + 10px);
-      border-radius: 50%;
-      border: 3px solid transparent;
-      border-top-color: var(--primary);
-      animation: spin 2s linear infinite;
-    }
-    
-    #countdown-timer {
-      font-size: 2.2rem;
-      font-weight: 800;
-      color: var(--danger);
-      line-height: 1;
-      z-index: 1;
-    }
-    
-    .countdown-label {
-      font-size: 0.9rem;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      color: var(--danger);
-      margin-top: 5px;
-    }
-    
-    /* Strategy Section */
-    .strategy-section {
-      background: rgba(6, 214, 160, 0.05);
-      border-top: 1px solid rgba(6, 214, 160, 0.1);
-      border-bottom: 1px solid rgba(6, 214, 160, 0.1);
-      margin: 20px 0;
-      padding: 24px;
-      position: relative;
-    }
-    
-    .strategy-title {
-      font-size: 1rem;
-      font-weight: 700;
-      margin-bottom: 18px;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      color: var(--success);
-    }
-    
-    .strategy-title i {
-      color: var(--success);
-    }
-    
-    .strategy-steps {
-      display: grid;
-      gap: 16px;
-    }
-    
-    .strategy-step {
-      display: flex;
-      gap: 12px;
-      font-size: 0.92rem;
-      line-height: 1.5;
-    }
-    
-    .step-number {
-      flex-shrink: 0;
-      width: 24px;
-      height: 24px;
-      border-radius: 50%;
-      background: rgba(6, 214, 160, 0.2);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 0.7rem;
-      font-weight: 700;
-      color: var(--success);
-    }
-    
-    .highlight {
-      font-weight: 700;
-      color: var(--warning);
-    }
-    
-    /* Signal Footer Section - UPDATED */
-    .signal-footer {
-      padding: 10px 24px 15px;
-      text-align: center;
-      font-size: 0.7rem; /* Reduced from 0.8rem */
-      color: var(--light-2);
-      opacity: 0.8;
-      line-height: 1.3;
-    }
-    
-    /* RISK SIGNAL Popup Styles */
-    .risk-signal-container {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: rgba(0, 0, 0, 0.7);
-      backdrop-filter: blur(8px);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      z-index: 2000;
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 0.4s ease-out;
-    }
-    
-    .risk-signal-container.active {
-      opacity: 1;
-      pointer-events: all;
-    }
-    
-    .risk-signal-card {
-      width: 100%;
-      max-width: 440px;
-      background: linear-gradient(145deg, #1e293b, #0f172a);
-      border-radius: 20px;
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.4);
-      overflow: hidden;
-      transform: translateY(20px) scale(0.98);
-      opacity: 0;
-      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.2);
-    }
-    
-    .risk-signal-container.active .risk-signal-card {
-      transform: translateY(0) scale(1);
-      opacity: 1;
-    }
-    
-    /* Header Section - Modified for RISK SIGNAL */
-    .risk-signal-header {
-      padding: 24px;
-      background: var(--danger);
-      position: relative;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-    
-    .risk-signal-title {
-      font-size: 1.5rem;
-      font-weight: 800;
-      letter-spacing: 1px;
-      text-transform: uppercase;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      transform: translateY(5px);
-    }
-    
-    .risk-signal-title i {
-      color: white;
-      font-size: 1.2em;
-    }
-    
-    .risk-close-btn {
-      width: 36px;
-      height: 36px;
-      border-radius: 50%;
-      background: rgba(0, 0, 0, 0.2);
-      border: none;
-      color: white;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      transform: translateY(5px);
-    }
-    
-    .risk-close-btn:hover {
-      background: rgba(0, 0, 0, 0.4);
-      transform: translateY(5px) rotate(90deg);
-    }
-    
-    /* Signal Meta Section */
-    .risk-signal-meta {
-      display: flex;
-      justify-content: space-between;
-      padding: 30px 24px 0;
-    }
-    
-    .risk-meta-item {
-      text-align: center;
-      flex: 1;
-    }
-    
-    .risk-meta-label {
-      font-size: 0.75rem;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      opacity: 0.7;
-      margin-bottom: 6px;
-    }
-    
-    .risk-meta-value {
-      font-size: 1.4rem;
-      font-weight: 700;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 5px;
-    }
-    
-    .risk-meta-value.time {
-      color: var(--warning);
-    }
-    
-    .risk-meta-value.odd {
-      color: var(--danger);
-      font-size: 1.8rem;
-    }
-    
-    /* Countdown Section - Original blue animation */
-    .risk-countdown-section {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      margin: 20px 0;
-    }
-    
-    .risk-countdown-circle {
-      width: 120px;
-      height: 120px;
-      border-radius: 50%;
-      background: rgba(255, 255, 255, 0.08);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      position: relative;
-      border: 3px solid var(--danger);
-      box-shadow: 0 0 20px rgba(255, 32, 110, 0.3);
-      margin-bottom: 10px;
-    }
-    
-    .risk-countdown-circle::before {
-      content: '';
-      position: absolute;
-      width: calc(100% + 10px);
-      height: calc(100% + 10px);
-      border-radius: 50%;
-      border: 3px solid transparent;
-      border-top-color: var(--primary); /* Original blue color */
-      animation: spin 2s linear infinite;
-    }
-    
-    #risk-countdown-timer {
-      font-size: 2.2rem;
-      font-weight: 800;
-      color: var(--danger);
-      line-height: 1;
-      z-index: 1;
-    }
-    
-    .risk-countdown-label {
-      font-size: 0.9rem;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      color: var(--danger);
-      margin-top: 5px;
-    }
-    
-    /* Strategy Section */
-    .risk-strategy-section {
-      background: rgba(255, 0, 110, 0.05);
-      border-top: 1px solid rgba(255, 0, 110, 0.1);
-      border-bottom: 1px solid rgba(255, 0, 110, 0.1);
-      margin: 20px 0;
-      padding: 24px;
-      position: relative;
-    }
-    
-    .risk-strategy-title {
-      font-size: 1rem;
-      font-weight: 700;
-      margin-bottom: 18px;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      color: var(--danger);
-    }
-    
-    .risk-strategy-title i {
-      color: var(--danger);
-    }
-    
-    .risk-strategy-steps {
-      display: grid;
-      gap: 16px;
-    }
-    
-    .risk-strategy-step {
-      display: flex;
-      gap: 12px;
-      font-size: 0.92rem;
-      line-height: 1.5;
-    }
-    
-    .risk-step-number {
-      flex-shrink: 0;
-      width: 24px;
-      height: 24px;
-      border-radius: 50%;
-      background: rgba(255, 0, 110, 0.2);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 0.7rem;
-      font-weight: 700;
-      color: var(--danger);
-    }
-    
-    .risk-highlight {
-      font-weight: 700;
-      color: var(--warning);
-    }
-    
-    /* Risk Signal Footer Section - UPDATED */
-    .risk-signal-footer {
-      padding: 10px 24px 15px;
-      text-align: center;
-      font-size: 0.7rem; /* Reduced from 0.8rem */
-      color: var(--light-2);
-      opacity: 0.8;
-      line-height: 1.3;
-    }
-    
-    /* Offline Page Styles */
-    .offline-overlay {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: var(--dark-1);
-      z-index: 9999;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      padding: 20px;
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 0.5s ease;
-    }
-
-    .offline-overlay.active {
-      opacity: 1;
-      pointer-events: all;
-    }
-
-    .offline-container {
-      width: 100%;
-      max-width: 500px;
-      background: var(--dark-2);
-      border-radius: 16px;
-      padding: 40px;
-      text-align: center;
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
-      border: 1px solid rgba(255, 0, 110, 0.3);
-      transform: scale(0.9);
-      opacity: 0;
-      animation: fadeIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
-      position: relative;
-      z-index: 2;
-      backdrop-filter: blur(10px);
-    }
-    
-    @keyframes fadeIn {
-      to {
+    .popup-overlay.active .popup-box {
         transform: scale(1);
         opacity: 1;
-      }
-    }
-    
-    .offline-icon {
-      font-size: 80px;
-      color: var(--danger);
-      margin-bottom: 20px;
-    }
-    
-    .offline-title {
-      font-size: 1.8rem;
-      margin-bottom: 15px;
-      color: var(--danger);
-      font-weight: 600;
-    }
-    
-    .offline-message {
-      color: var(--light-2);
-      margin-bottom: 30px;
-      line-height: 1.6;
-    }
-    
-    .retry-btn {
-      background: linear-gradient(90deg, var(--primary), var(--secondary));
-      color: white;
-      border: none;
-      border-radius: 8px;
-      padding: 14px 28px;
-      font-size: 1rem;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      box-shadow: 0 4px 15px rgba(58, 134, 255, 0.3);
-      position: relative;
-      overflow: hidden;
-    }
-    
-    .retry-btn::before {
-      content: '';
-      position: absolute;
-      top: -50%;
-      left: -50%;
-      width: 200%;
-      height: 200%;
-      background: linear-gradient(
-        to bottom right,
-        rgba(255,255,255,0) 0%,
-        rgba(255,255,255,0.1) 45%,
-        rgba(255,255,255,0.15) 50%,
-        rgba(255,255,255,0.1) 55%,
-        rgba(255,255,255,0) 100%
-      );
-      transform: rotate(30deg);
-      animation: shine 3s infinite;
-    }
-    
-    @keyframes shine {
-      0% { transform: translateX(-100%) rotate(30deg); }
-      100% { transform: translateX(100%) rotate(30deg); }
-    }
-    
-    .retry-btn:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 6px 20px rgba(58, 134, 255, 0.4);
-    }
-    
-    .retry-btn:active {
-      transform: translateY(0);
-    }
-    
-    .connection-animation {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      z-index: 1;
-      opacity: 0.1;
-    }
-    
-    .connection-animation div {
-      position: absolute;
-      width: 20px;
-      height: 20px;
-      border-radius: 50%;
-      background: var(--primary);
-      filter: blur(5px);
-      animation: float 15s infinite linear;
-    }
-    
-    @keyframes float {
-      0% { transform: translate(0, 0) scale(1); opacity: 0; }
-      50% { opacity: 0.3; }
-      100% { transform: translate(random(200) - 100px, random(200) - 100px) scale(0); opacity: 0; }
     }
 
-    @keyframes spin {
-      to { transform: rotate(360deg); }
+    .popup-header {
+        display: flex;
+        align-items: center;
+        margin-bottom: 15px;
     }
-    
-    /* Responsive adjustments */
-    @media (max-width: 768px) {
-      .odd-buttons {
-        grid-template-columns: repeat(3, 1fr);
-      }
-      
-      .history-item {
-        grid-template-columns: 1fr 1fr;
-      }
-      
-      .history-details {
-        grid-column: span 2;
-        text-align: left;
-        margin-top: 8px;
-      }
 
-      .copy-btn {
-        position: static;
-        margin-top: 10px;
-        width: 100%;
-        justify-content: center;
-        margin-left: 0;
-      }
-      
-      .stats-container {
-        grid-template-columns: 1fr;
-      }
+    .popup-icon {
+        font-size: 1.8rem;
+        color: var(--primary);
+        margin-right: 12px;
     }
-    
-    @media (max-width: 480px) {
-      .header h1 {
+
+    .popup-title {
         font-size: 1.2rem;
-      }
-      
-      .header p {
-        font-size: 0.7rem;
-      }
-      
-      .content {
-        padding: 15px 10px;
-      }
-      
-      .input-actions {
-        flex-direction: column;
-      }
-      
-      .odd-buttons {
-        grid-template-columns: repeat(2, 1fr);
-      }
-      
-      .nav-item span {
-        display: none;
-      }
-      
-      .nav-item i {
-        font-size: 1.4rem;
+        font-weight: 700;
+        color: var(--text-primary);
+    }
+
+    .popup-content {
+        font-size: 0.9rem;
+        line-height: 1.5;
+        color: var(--text-secondary);
+        margin-bottom: 20px;
+    }
+
+    .popup-guide {
+        background: rgba(30, 30, 50, 0.6);
+        border-radius: 10px;
+        padding: 15px;
+        margin-bottom: 20px;
+    }
+
+    .guide-item {
+        margin-bottom: 8px;
+        display: flex;
+        align-items: flex-start;
+    }
+
+    .guide-item:last-child {
         margin-bottom: 0;
-      }
-      
-      /* Adjust badge positions for mobile */
-      .tips-badge {
-        bottom: 150px;
-        right: 15px;
-      }
-      
-      .disclaimer-badge {
-        bottom: 80px;
-        right: 15px;
-      }
-      
-      .tips-popup {
-        bottom: 200px;
-        right: 15px;
-        width: calc(100% - 30px);
-      }
-      
-      .disclaimer-popup {
-        bottom: 130px;
-        right: 15px;
-        width: calc(100% - 30px);
-      }
-      
-      /* Fix for signal popups on mobile */
-      .signal-card, .risk-signal-card {
-        width: calc(100% - 30px);
-        margin: 0 15px;
-        max-width: none;
-      }
-
-      /* Adjust signal popup footer for mobile */
-      .signal-footer, .risk-signal-footer {
-        padding: 8px 15px 12px;
-        font-size: 0.65rem;
-      }
     }
 
-    /* New style for failed signal message */
-    .failed-signal-message {
-      color: var(--danger) !important;
-      font-weight: bold;
+    .guide-bullet {
+        color: var(--primary);
+        margin-right: 8px;
+        font-size: 0.8rem;
+        margin-top: 3px;
+        flex-shrink: 0;
     }
-  </style>
+
+    .guide-text {
+        flex: 1;
+    }
+
+    .popup-timer {
+        display: flex;
+        justify-content: center;
+        margin-top: 15px;
+    }
+
+    .timer-circle {
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        background: rgba(20, 20, 40, 0.8);
+        border: 3px solid var(--primary);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 1.2rem;
+        font-weight: 700;
+        color: var(--text-primary);
+        box-shadow: 0 0 15px rgba(106, 17, 203, 0.3);
+    }
+
+    /* Update indicator */
+    .update-indicator {
+        position: fixed;
+        bottom: 70px;
+        right: 15px;
+        background: var(--success);
+        color: white;
+        padding: 8px 12px;
+        border-radius: 20px;
+        font-size: 0.8rem;
+        font-weight: 600;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        z-index: 100;
+        display: flex;
+        align-items: center;
+        opacity: 0;
+        transform: translateY(20px);
+        transition: all 0.3s ease;
+    }
+
+    .update-indicator.show {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    .update-indicator i {
+        margin-right: 5px;
+    }
+    </style>
 </head>
+
 <body>
-  <!-- Offline Overlay -->
-  <div class="offline-overlay" id="offlineOverlay">
-    <div class="connection-animation" id="connectionAnimation"></div>
+<div class="app-container">
+    <header class="app-header">
+        <div class="header-content">
+            <h1 class="header-title">XTREME AVIATOR PREDICTOR 1XBET</h1>
+            <div class="header-actions">
+                <div class="notification-bell" id="notificationBell">
+                    <i class="fas fa-bell"></i>
+                    <span class="notification-badge" id="notificationBadge">0</span>
+                </div>
+            </div>
+        </div>
+    </header>
     
-    <div class="offline-container">
-      <div class="offline-icon">
-        <i class="fas fa-unlink"></i>
-      </div>
-      <h1 class="offline-title">CONNECTION LOST</h1>
-      <p class="offline-message">XTREME AVIATOR predictor requires stable internet connection for real-time predictions. Please check your network and try again.</p>
-      <button class="retry-btn" id="retryBtn">
-        <i class="fas fa-sync-alt"></i> RETRY CONNECTION
-      </button>
-    </div>
-  </div>
-
-  <!-- App Structure -->
-  <div class="app-container">
-    <!-- Fixed Header -->
-    <div class="header">
-      <h1>XTREME AVIATOR SHA512 HASH ULTRA PREDICTOR PRO</h1>
-      <p>Advanced AI-powered prediction with 70%+ accuracy</p>
+    <div class="tab-container">
+        <div class="tab active" data-tab="signals">SIGNALS</div>
+        <div class="tab" data-tab="notifications">NOTIFICATIONS</div>
     </div>
     
-    <!-- Scrollable Content Area -->
-    <div class="scroll-container">
-      <!-- Main Content Container -->
-      <div class="main-container">
-        <div class="datetime">
-          <div id="current-date"></div>
-          <div id="current-time"></div>
+    <!-- Signals Tab -->
+    <div class="tab-content active" id="signalsTab">
+        <div class="clock-container">
+            <div class="clock-time">
+                <span class="clock-label">Live Time:</span>
+                <span id="liveTime"></span>
+            </div>
+            <div class="clock-date">
+                <span class="clock-label">Date:</span>
+                <span id="liveDate"></span>
+            </div>
         </div>
         
-        <div class="content">
-          <!-- Predictor Tab -->
-          <div class="tab-content active" id="predictorTab">
-            <div class="input-group">
-              <label for="hashInput">Enter SHA512 Hash <span class="tooltip"><i class="fas fa-info-circle"></i><span class="tooltiptext">Must be 128-character hexadecimal string (0-9, a-f)</span></span></label>
-              <input type="text" id="hashInput" placeholder="Paste your hash here..." autocomplete="off" autocorrect="off" spellcheck="false">
-              <div class="input-actions">
-                <button class="paste-btn" id="pasteHashInput">
-                  <i class="fas fa-paste"></i> Paste Hash
-                </button>
-                <button class="clear-btn" id="clearHashInput">
-                  <i class="fas fa-broom"></i> Clear
-                </button>
-              </div>
+        <div class="signal-container">
+            <div class="signal-circle" id="signalCircle">
+                <div class="signal-content" id="signalDisplay">
+                    <div class="loading-gradient">SYSTEM</div>
+                    <div class="loading-gradient">INITIALIZING</div>
+                    <div class="loading-text">Please wait<span class="loading-dots"></span></div>
+                </div>
             </div>
-            
-            <div class="stats-container">
-              <div class="stat-card success">
-                <h4>Success Rate</h4>
-                <div class="value" id="success-rate">-</div>
-              </div>
-              <div class="stat-card warning">
-                <h4>Avg. Delay</h4>
-                <div class="value" id="avg-delay">-</div>
-              </div>
-              <div class="stat-card">
-                <h4>Total Predictions</h4>
-                <div class="value" id="total-predictions">-</div>
-              </div>
-            </div>
-            
-            <div class="odd-buttons">
-              <button class="odd-btn" onclick="predict('2')" id="odd-2">
-                <span>2x</span>
-                <span>Low Risk</span>
-                <div class="confidence-bar" id="confidence-2" style="width: 0%"></div>
-              </button>
-              <button class="odd-btn" onclick="predict('3')" id="odd-3">
-                <span>3x</span>
-                <span>Balanced</span>
-                <div class="confidence-bar" id="confidence-3" style="width: 0%"></div>
-              </button>
-              <button class="odd-btn" onclick="predict('4')" id="odd-4">
-                <span>4x</span>
-                <span>Moderate</span>
-                <div class="confidence-bar" id="confidence-4" style="width: 0%"></div>
-              </button>
-              <button class="odd-btn" onclick="predict('7')" id="odd-7">
-                <span>7x</span>
-                <span>High Risk</span>
-                <div class="confidence-bar" id="confidence-7" style="width: 0%"></div>
-              </button>
-              <button class="odd-btn" onclick="predict('10')" id="odd-10">
-                <span>10x</span>
-                <span>Very High Risk</span>
-                <div class="confidence-bar" id="confidence-10" style="width: 0%"></div>
-              </button>
-              <button class="odd-btn" onclick="predict('100')" id="odd-100">
-                <span>100x</span>
-                <span>Extreme Risk</span>
-                <div class="confidence-bar" id="confidence-100" style="width: 0%"></div>
-              </button>
-            </div>
-            
-            <div class="results" id="output">
-              <div class="result-item">
-                <span class="label">Target Multiplier:</span>
-                <span class="value" id="result-odd">-</span>
-              </div>
-              <div class="result-item">
-                <span class="label">Hash Entropy:</span>
-                <span class="value" id="result-entropy">-</span>
-              </div>
-              <div class="result-item">
-                <span class="label">Hash Score:</span>
-                <span class="value" id="result-score">-</span>
-              </div>
-              <div class="result-item">
-                <span class="label">Confidence Level:</span>
-                <span class="value" id="result-confidence">-</span>
-              </div>
-              <div class="result-item">
-                <span class="label">Estimated Delay:</span>
-                <span class="value" id="result-delay">-</span>
-              </div>
-              <div class="result-item">
-                <span class="label">Next Signal Time:</span>
-                <span class="value" id="result-time">-</span>
-              </div>
-              <button class="copy-result-btn" id="copyResultBtn" onclick="copyResultToClipboard(event)" disabled>
-                <i class="fas fa-copy"></i> Copy Signal
-              </button>
-            </div>
-            
-            <div class="countdown" id="countdown">No active signals. Create a new prediction.</div>
-          </div>
-          
-          <!-- History Tab -->
-          <div class="tab-content" id="historyTab">
-            <div class="history-tab">
-              <div class="history-header">
-                <h3><i class="fas fa-history"></i> Prediction History</h3>
-                <button class="history-clear-btn" onclick="showClearDialog()">
-                  <i class="fas fa-trash-alt"></i> Clear
-                </button>
-              </div>
-              <div class="history-list" id="historyLog"></div>
-            </div>
-          </div>
-          
-          <!-- Notification Tab -->
-          <div class="tab-content" id="notificationTab">
-            <div class="notification-tab" id="notificationTabContent">
-              <!-- Dynamic content will be inserted here -->
-            </div>
-          </div>
-          
-          <!-- Support Tab -->
-          <div class="tab-content" id="supportTab">
-            <div class="support-tab">
-              <div class="support-card">
-                <h3><i class="fas fa-question-circle"></i> Need Help?</h3>
-                <button class="support-btn" onclick="window.open('https://damindu817.github.io/Aviator-Sha512-Hash-Professional-Strategy-Guide/','_blank')" style="background: rgba(255, 190, 11, 0.2); color: var(--warning);">
-                  <i class="fas fa-book"></i> User Guide
-                </button>
-                <button class="support-btn" onclick="window.open('https://damindu817.github.io/DISCLAIMER-/','_blank')" style="background: rgba(255, 0, 110, 0.2); color: var(--danger);">
-                  <i class="fas fa-exclamation-triangle"></i> Disclaimer
-                </button>
-                <button class="support-btn" onclick="window.open('https://t.me/aviatorpredictor')" style="background: rgba(0, 136, 204, 0.2); color: #0088cc;">
-                  <i class="fab fa-telegram"></i> Telegram Support
-                </button>
-                <button class="support-btn" onclick="window.open('https://wa.me/1234567890')" style="background: rgba(37, 211, 102, 0.2); color: #25D366;">
-                  <i class="fab fa-whatsapp"></i> WhatsApp Support
-                </button>
-              </div>
-              
-              <div class="support-card">
-                <h3><i class="fas fa-crown"></i> Premium</h3>
-                <button class="support-btn" onclick="showPremiumDialog()">
-                  <i class="fas fa-star"></i> Upgrade to Premium
-                </button>
-                <button class="support-btn" onclick="showPremiumFeatures()">
-                  <i class="fas fa-gem"></i> Premium Features
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    
-    <!-- Fixed Navigation Bar -->
-    <div class="nav-bar">
-      <a href="#" class="nav-item active" onclick="switchTab('predictorTab', this)">
-        <i class="fas fa-chart-line"></i>
-        <span>PREDICTOR</span>
-      </a>
-      <a href="#" class="nav-item" onclick="switchTab('historyTab', this)">
-        <i class="fas fa-history"></i>
-        <span>HISTORY</span>
-      </a>
-      <a href="#" class="nav-item" onclick="switchTab('notificationTab', this)" id="notificationNavItem">
-        <i class="fas fa-bell"></i>
-        <span>NOTIFICATION</span>
-        <div class="notification-badge" id="notificationBadge" style="display: none;"></div>
-      </a>
-      <a href="#" class="nav-item" onclick="switchTab('supportTab', this)">
-        <i class="fas fa-headset"></i>
-        <span>SUPPORT</span>
-      </a>
-    </div>
-  </div>
-
-  <!-- Tips Badge -->
-  <div class="tips-badge" id="tipsBadge">
-    <i class="fas fa-lightbulb"></i>
-  </div>
-
-  <!-- Tips Popup -->
-  <div class="tips-popup" id="tipsPopup">
-    <h4><i class="fas fa-lightbulb"></i> TIPS & TRICKS</h4>
-    <p>Here are some expert tips to improve your predictions:</p>
-    <ul>
-      <li>Use signals with confidence above 70%</li>
-      <li>Start with small bets to test the system</li>
-      <li>Combine multiple signals for better accuracy</li>
-      <li>Set auto-cashout slightly below target</li>
-    </ul>
-    <a href="https://damindu817.github.io/Aviator-Sha512-Hash-Professional-Strategy-Guide/" target="_blank">Click here to view the full winning guide</a>
-  </div>
-
-  <!-- Disclaimer Badge -->
-  <div class="disclaimer-badge" id="disclaimerBadge" onclick="window.open('https://damindu817.github.io/DISCLAIMER-/','_blank')">
-    <i class="fas fa-exclamation-triangle"></i>
-  </div>
-
-  <!-- Disclaimer Popup -->
-  <div class="disclaimer-popup" id="disclaimerPopup">
-    <h4>DISCLAIMER!</h4>
-    <p>This tool provides analytical insights based on patterns and probability. Predictions are not guaranteed. Gambling involves risk. Only play with money you can afford to lose.</p>
-    <a href="https://damindi817.github.io/DISCLAIMER-/" target="_blank">Click icon for guide & creator contact</a>
-  </div>
-
-  <!-- Custom Dialogs -->
-  <div class="dialog-overlay" id="clearDialog">
-    <div class="dialog-box">
-      <div class="dialog-title">
-        <i class="fas fa-exclamation-triangle dialog-icon"></i>
-        <span>Confirm Clear History</span>
-      </div>
-      <div class="dialog-message">Are you sure you want to clear all prediction history? This cannot be undone.</div>
-      <div class="dialog-buttons">
-        <button class="dialog-btn dialog-btn-cancel" onclick="hideClearDialog()">Cancel</button>
-        <button class="dialog-btn dialog-btn-confirm" onclick="clearHistory()">OK</button>
-      </div>
-    </div>
-  </div>
-
-  <div class="dialog-overlay" id="errorDialog">
-    <div class="dialog-box">
-      <div class="dialog-title">
-        <i class="fas fa-exclamation-circle dialog-icon"></i>
-        <span>Invalid Input</span>
-      </div>
-      <div class="dialog-message" id="errorMessage">Invalid SHA512 hash. Must be exactly 128 hexadecimal characters.</div>
-      <div class="dialog-buttons">
-        <button class="dialog-btn dialog-btn-confirm" onclick="hideErrorDialog()">OK</button>
-      </div>
-    </div>
-  </div>
-
-  <div class="dialog-overlay" id="successDialog">
-    <div class="dialog-box">
-      <div class="dialog-title">
-        <i class="fas fa-check-circle dialog-icon" style="color: var(--success);"></i>
-        <span>Signal Generated</span>
-      </div>
-      <div class="dialog-message" id="successMessage">Prediction signal created successfully!</div>
-      <div class="dialog-buttons">
-        <button class="dialog-btn dialog-btn-confirm" onclick="hideSuccessDialog()" style="background: var(--success);">OK</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- Premium Dialog -->
-  <div class="dialog-overlay" id="premiumDialog">
-    <div class="dialog-box">
-      <div class="dialog-title">
-        <i class="fas fa-crown" style="color: var(--warning);"></i>
-        <span>Premium Features</span>
-      </div>
-      <div class="dialog-message">
-        <ul style="padding-left: 20px; margin-bottom: 15px;">
-          <li>Higher accuracy predictions</li>
-          <li>Exclusive signals</li>
-          <li>Advanced analytics</li>
-          <li>Priority support</li>
-          <li>No ads</li>
-        </ul>
-        <p>Upgrade now to unlock all premium features!</p>
-      </div>
-      <div class="dialog-buttons">
-        <button class="dialog-btn dialog-btn-cancel" onclick="hidePremiumDialog()">Later</button>
-        <button class="dialog-btn dialog-btn-confirm" onclick="window.open('https://damindu817.github.io/Aviator-Sha512-Hash-Professional-Strategy-Guide/','_blank')" style="background: var(--warning);">Upgrade</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- Premium Signal Popup -->
-  <div class="signal-container" id="signalPopup">
-    <div class="signal-card">
-      <div class="signal-header">
-        <div class="signal-title">
-          <i class="fas fa-bell"></i> PREMIUM SIGNAL
-        </div>
-        <button class="close-btn" onclick="closeSignalPopup()">
-          <i class="fas fa-times"></i>
-        </button>
-      </div>
-      
-      <div class="signal-meta">
-        <div class="meta-item">
-          <div class="meta-label">Signal Time</div>
-          <div class="meta-value time" id="signal-time">-</div>
-        </div>
-        <div class="meta-item">
-          <div class="meta-label">Target</div>
-          <div class="meta-value odd" id="signal-odd">-</div>
-        </div>
-      </div>
-      
-      <div class="countdown-section">
-        <div class="countdown-circle">
-          <div id="countdown-timer">20</div>
-        </div>
-        <div class="countdown-label">SECONDS REMAINING</div>
-      </div>
-      
-      <div class="strategy-section">
-        <div class="strategy-title">
-          <i class="fas fa-chart-line"></i> WINNING STRATEGY
         </div>
         
-        <div class="strategy-steps" id="strategy-steps">
-          <!-- Dynamic content will be inserted here -->
-        </div>
-      </div>
-      
-      <div class="signal-footer">
-        THIS SIGNAL IS GENERATED USING THE XTREME AVIATOR SHA512 HASH ULTRA PREDICTOR PRO TOOL WITH AI-POWERED ACCURACY
-      </div>
-    </div>
-  </div>
-
-  <!-- RISK SIGNAL Popup -->
-  <div class="risk-signal-container" id="riskSignalPopup">
-    <div class="risk-signal-card">
-      <div class="risk-signal-header">
-        <div class="risk-signal-title">
-          <i class="fas fa-exclamation-triangle"></i> RISK SIGNAL
-        </div>
-        <button class="risk-close-btn" onclick="closeRiskSignalPopup()">
-          <i class="fas fa-times"></i>
-        </button>
-      </div>
-      
-      <div class="risk-signal-meta">
-        <div class="risk-meta-item">
-          <div class="risk-meta-label">Signal Time</div>
-          <div class="risk-meta-value time" id="risk-signal-time">-</div>
-        </div>
-        <div class="risk-meta-item">
-          <div class="risk-meta-label">Target</div>
-          <div class="risk-meta-value odd" id="risk-signal-odd">-</div>
-        </div>
-      </div>
-      
-      <div class="risk-countdown-section">
-        <div class="risk-countdown-circle">
-          <div id="risk-countdown-timer">20</div>
-        </div>
-        <div class="risk-countdown-label">SECONDS REMAINING</div>
-      </div>
-      
-      <div class="risk-strategy-section">
-        <div class="risk-strategy-title">
-          <i class="fas fa-chart-line"></i> RISK MANAGEMENT STRATEGY
+        <div class="odd-box" id="oddValue">
+            <i class="fas fa-info-circle"></i> Signal Not Available
         </div>
         
-        <div class="risk-strategy-steps" id="risk-strategy-steps">
-          <!-- Dynamic content will be inserted here -->
+        <!-- New Stats Section -->
+        <div class="stats-container">
+            <div class="stats-title">
+                <span>TODAY'S PERFORMANCE</span>
+                <span><i class="fas fa-chart-bar"></i></span>
+            </div>
+            <div class="stats-grid">
+                <div class="stat-item wins">
+                    <div>WINS TODAY</div>
+                    <div class="stat-value" id="winsCount">0</div>
+                </div>
+                <div class="stat-item losses">
+                    <div>LOSSES TODAY</div>
+                    <div class="stat-value" id="lossesCount">0</div>
+                </div>
+                <div class="stat-item passing">
+                    <div>TIMES PASSED</div>
+                    <div class="stat-value" id="passingCount">0</div>
+                </div>
+            </div>
         </div>
-      </div>
-      
-      <div class="risk-signal-footer">
-        THIS SIGNAL IS GENERATED USING THE XTREME AVIATOR SHA512 HASH ULTRA PREDICTOR PRO TOOL WITH AI-POWERED ACCURACY
-      </div>
+        
+        <div class="social-container">
+            <div class="social-title">JOIN OUR COMMUNITY</div>
+            <div class="button-container">
+                <a class="btn whatsapp" href="https://chat.whatsapp.com/BE39Aj6enbP3SNkfmn8DeG" target="_blank">
+                    <i class="fab fa-whatsapp"></i> WhatsApp
+                </a>
+                <a class="btn telegram" href="https://t.me/xtremepredictor" target="_blank">
+                    <i class="fab fa-telegram"></i> Telegram
+                </a>
+            </div>
+        </div>
     </div>
-  </div>
-
-  <audio id="signalSound" src="https://assets.mixkit.co/sfx/preview/mixkit-alarm-digital-clock-beep-989.mp3" preload="auto"></audio>
-  <audio id="successSound" src="https://assets.mixkit.co/sfx/preview/mixkit-achievement-bell-600.mp3" preload="auto"></audio>
-  <audio id="beepSound" src="https://assets.mixkit.co/sfx/preview/mixkit-positive-interface-beep-221.mp3" preload="auto"></audio>
-  <audio id="warningSound" src="https://assets.mixkit.co/sfx/preview/mixkit-sci-fi-alarm-905.mp3" preload="auto"></audio>
-  <textarea id="copyTemplate" style="position: absolute; left: -9999px;"></textarea>
-
-  <script>
-    // Global variables
-    let activeSignals = [];
-    let currentCountdown = null;
-    let serverTimeOffset = 0;
-    let lastHash = '';
-    let selectedOdd = null;
-    let activeSignalPopup = null;
-    let signalQueue = [];
-    let currentSignalIndex = 0;
-    let signalEndInterval = null;
-    let signalCountdownInterval = null;
-    let riskSignalCountdownInterval = null;
-    let disclaimerShown = false;
-    let tipsPopupShown = false;
-    let firstSignalGenerated = false;
-    let signalResultReceived = false;
-    let notificationCheckInterval = null;
-    let lastNotificationETag = '';
-    let lastNotificationModified = '';
-    let unseenNotifications = 0;
     
-    // Initialize on load
-    window.onload = function() {
-      initializeApp();
-    };
+    <!-- Notifications Tab -->
+    <div class="tab-content" id="notificationsTab">
+        <div class="notifications-container">
+            <div class="empty-state" id="noNotifications">
+                <div class="empty-icon">
+                    <i class="fas fa-bell-slash"></i>
+                </div>
+                <div class="empty-text">Loading notifications...</div>
+            </div>
+        </div>
+    </div>
+</div>
 
-    function initializeApp() {
-      updateDateTime();
-      loadHistory();
-      updateStats();
-      
-      // Check connection status immediately
-      checkConnection();
-      
-      // Set up connection monitoring
-      window.addEventListener('online', checkConnection);
-      window.addEventListener('offline', checkConnection);
-      
-      // Auto-focus input field
-      document.getElementById("hashInput").focus();
-      
-      // Auto-predict if hash is pasted
-      document.getElementById("hashInput").addEventListener('input', function(e) {
-        const hash = e.target.value.trim();
-        if (hash.length === 128 && /^[a-f0-9]+$/.test(hash)) {
-          lastHash = hash;
-          preAnalyzeHash(hash);
-          // Don't enable copy button here - wait for odd selection
+<!-- Popup Overlay -->
+<div class="popup-overlay" id="popupOverlay">
+    <div class="popup-box">
+        <div class="popup-header">
+            <div class="popup-icon">
+                <i class="fas fa-lightbulb"></i>
+            </div>
+            <div class="popup-title">GAME GUIDE</div>
+        </div>
+        <div class="popup-content">
+            Signal will be active in <span id="popupSignalTime"></span>. Follow these guidelines for best results:
+        </div>
+        <div class="popup-guide" id="popupGuide">
+            <!-- Guide items will be inserted here -->
+        </div>
+        <div class="popup-timer">
+            <div class="timer-circle" id="popupTimer">10</div>
+        </div>
+    </div>
+</div>
+
+<!-- Update indicator -->
+<div class="update-indicator" id="updateIndicator">
+    <i class="fas fa-sync-alt"></i> <span id="updateMessage">New data loaded</span>
+</div>
+
+<footer class="app-footer">
+    POWERED BY XTREME PREDICTOR PRO © 2025
+</footer>
+
+<audio id="beepSound" src="https://actions.google.com/sounds/v1/alarms/beep_short.ogg"></audio>
+<audio id="notificationSound" src="https://actions.google.com/sounds/v1/alarms/beep_short.ogg"></audio>
+
+<script>
+let signals = [];
+let currentIndex = 0;
+let loadingPhase = true;
+let notifications = [];
+let stats = {
+    wins: 0,
+    losses: 0,
+    passing: 0,
+    date: new Date().toDateString()
+};
+let statsCleanupInterval;
+let notificationCleanupInterval;
+let signalFetchInterval;
+let notificationFetchInterval;
+let statsFetchInterval;
+let loadingTimeout;
+let isFirstLoad = true;
+let popupTimerInterval;
+let popupActive = false;
+let nextSignalTimeout;
+let currentSignalId = null;
+let beepState = {
+    upcomingPlayed: false,
+    activePlayed: false
+};
+let lastStatsHash = '';
+let lastSignalsHash = '';
+
+// Initialize the app
+function initApp() {
+    setupTabs();
+    fetchNotifications();
+    updateNotificationBadge();
+    loadSignals();
+    updateLiveClock();
+    setInterval(updateLiveClock, 1000);
+    setInterval(updateSignalDisplay, 1000);
+    
+    // Load stats from localStorage and JSON
+    loadStats();
+    
+    // Start fetch intervals with cache busting
+    signalFetchInterval = setInterval(() => {
+        fetchSignals(true);
+    }, 5000); // Check every 5 seconds
+    
+    notificationFetchInterval = setInterval(() => {
+        fetchNotifications(true);
+    }, 5000); // Check every 5 seconds
+    
+    statsFetchInterval = setInterval(() => {
+        fetchStats(true);
+    }, 5000); // Check stats every 5 seconds
+    
+    // Start cleanup intervals (daily for stats)
+    statsCleanupInterval = setInterval(cleanupStats, 3600000); // Check every hour
+    notificationCleanupInterval = setInterval(cleanupNotifications, 60000); // Check every minute
+}
+
+// Setup tab navigation
+function setupTabs() {
+    const tabs = document.querySelectorAll('.tab');
+    tabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+            // Remove active class from all tabs and content
+            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+            
+            // Add active class to clicked tab and corresponding content
+            tab.classList.add('active');
+            const tabId = tab.getAttribute('data-tab') + 'Tab';
+            document.getElementById(tabId).classList.add('active');
+            
+            // Mark notifications as read when viewing them
+            if (tab.getAttribute('data-tab') === 'notifications') {
+                markNotificationsAsRead();
+            }
+        });
+    });
+    
+    // Notification bell click handler
+    document.getElementById('notificationBell').addEventListener('click', () => {
+        // Switch to notifications tab
+        document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+        document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+        
+        document.querySelector('.tab[data-tab="notifications"]').classList.add('active');
+        document.getElementById('notificationsTab').classList.add('active');
+        
+        // Mark notifications as read
+        markNotificationsAsRead();
+    });
+}
+
+// Mark all notifications as read
+function markNotificationsAsRead() {
+    notifications.forEach(notification => {
+        notification.unread = false;
+    });
+    updateNotificationBadge();
+    renderNotifications();
+}
+
+// Update notification badge count
+function updateNotificationBadge() {
+    const unreadCount = notifications.filter(n => n.unread).length;
+    const badge = document.getElementById('notificationBadge');
+    
+    if (unreadCount > 0) {
+        badge.textContent = unreadCount;
+        badge.style.display = 'flex';
+    } else {
+        badge.style.display = 'none';
+    }
+}
+
+// Generate a simple hash for data comparison
+function generateHash(obj) {
+    return JSON.stringify(obj);
+}
+
+// Show update indicator
+function showUpdateIndicator(message) {
+    const indicator = document.getElementById('updateIndicator');
+    const messageElement = document.getElementById('updateMessage');
+    
+    messageElement.textContent = message;
+    indicator.classList.add('show');
+    
+    setTimeout(() => {
+        indicator.classList.remove('show');
+    }, 3000);
+}
+
+// Load stats from localStorage
+function loadStats() {
+    const savedStats = localStorage.getItem('aviatorStats');
+    if (savedStats) {
+        const parsedStats = JSON.parse(savedStats);
+        
+        // Check if stats are from today
+        const today = new Date().toDateString();
+        if (parsedStats.date !== today) {
+            // Reset stats if it's a new day
+            stats = { wins: 0, losses: 0, passing: 0, date: today };
+            saveStats();
         } else {
-          document.getElementById("copyResultBtn").disabled = true;
+            stats = parsedStats;
         }
-      });
-      
-      // Initialize signal popup events
-      document.getElementById("signalPopup").addEventListener('click', function(e) {
-        if (e.target === this) {
-          closeSignalPopup();
-        }
-      });
-      
-      // Initialize risk signal popup events
-      document.getElementById("riskSignalPopup").addEventListener('click', function(e) {
-        if (e.target === this) {
-          closeRiskSignalPopup();
-        }
-      });
-      
-      // Initialize tips badge
-      const tipsBadge = document.getElementById("tipsBadge");
-      const tipsPopup = document.getElementById("tipsPopup");
-      
-      tipsBadge.addEventListener('click', function(e) {
-        e.preventDefault();
-        e.stopPropagation();
-        tipsPopup.classList.toggle("show");
-        
-        // Hide disclaimer popup if showing
-        document.getElementById("disclaimerPopup").classList.remove("show");
-      });
-      
-      // Close popups when clicking elsewhere
-      document.addEventListener('click', function(e) {
-        if (!tipsBadge.contains(e.target) && !tipsPopup.contains(e.target)) {
-          tipsPopup.classList.remove("show");
-        }
-        
-        if (!disclaimerBadge.contains(e.target) && !disclaimerPopup.contains(e.target)) {
-          document.getElementById("disclaimerPopup").classList.remove("show");
-        }
-      });
-      
-      // Show disclaimer popup after 5 seconds if not shown before
-      if (!sessionStorage.getItem('disclaimerShown')) {
-        setTimeout(() => {
-          showDisclaimer();
-          setTimeout(hideDisclaimer, 8000);
-          sessionStorage.setItem('disclaimerShown', 'true');
-        }, 5000);
-      }
-      
-      // Create floating animation elements for offline page
-      const animationContainer = document.getElementById('connectionAnimation');
-      for (let i = 0; i < 15; i++) {
-        const dot = document.createElement('div');
-        dot.style.left = `${Math.random() * 100}%`;
-        dot.style.top = `${Math.random() * 100}%`;
-        dot.style.animationDelay = `${Math.random() * 15}s`;
-        dot.style.animationDuration = `${10 + Math.random() * 20}s`;
-        animationContainer.appendChild(dot);
-      }
-      
-      // Retry button functionality
-      const retryBtn = document.getElementById('retryBtn');
-      retryBtn.addEventListener('click', function() {
-        const btn = this;
-        const icon = btn.querySelector('i');
-        
-        // Show loading state
-        btn.disabled = true;
-        btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> CONNECTING...';
-        
-        // Simulate connection check
-        setTimeout(() => {
-          if (navigator.onLine) {
-            // Success state
-            btn.innerHTML = '<i class="fas fa-check"></i> CONNECTION RESTORED!';
-            btn.style.background = `linear-gradient(90deg, var(--success), var(--primary))`;
-            
-            // Hide offline overlay
-            document.getElementById('offlineOverlay').classList.remove('active');
-            
-            // Sync server time
-            syncServerTime();
-            
-            // Start notification checking
-            startNotificationChecking();
-            
-            // Redirect back to app
-            setTimeout(() => {
-              window.location.reload();
-            }, 1000);
-          } else {
-            // Error state
-            btn.innerHTML = '<i class="fas fa-times"></i> CONNECTION FAILED';
-            btn.style.background = `linear-gradient(90deg, var(--danger), var(--warning))`;
-            
-            // Reset button after delay
-            setTimeout(() => {
-              btn.innerHTML = '<i class="fas fa-sync-alt"></i> RETRY CONNECTION';
-              btn.style.background = `linear-gradient(90deg, var(--primary), var(--secondary))`;
-              btn.disabled = false;
-            }, 1500);
-          }
-        }, 2000);
-      });
-      
-      // Start checking for notifications
-      startNotificationChecking();
-      
-      // Load initial notifications
-      loadNotifications();
+    } else {
+        // Initialize stats for the first time
+        stats = { wins: 0, losses: 0, passing: 0, date: new Date().toDateString() };
+        saveStats();
     }
     
-    // Start checking for notifications
-    function startNotificationChecking() {
-      if (notificationCheckInterval) {
-        clearInterval(notificationCheckInterval);
-      }
-      
-      // Check every 15 seconds
-      notificationCheckInterval = setInterval(checkForNewNotifications, 15000);
+    updateStatsDisplay();
+}
+
+// Fetch stats from JSON file
+async function fetchStats(forceRefresh = false) {
+    try {
+        const url = 'stats.json' + (forceRefresh ? '?v=' + Date.now() : '');
+        const res = await fetch(url);
+        
+        if (!res.ok) {
+            throw new Error('Failed to fetch stats');
+        }
+        
+        const jsonData = await res.json();
+        const currentHash = generateHash(jsonData);
+        
+        // Check if we have valid stats data
+        if (jsonData && typeof jsonData.wins !== 'undefined' && typeof jsonData.losses !== 'undefined' && typeof jsonData.passing !== 'undefined') {
+            // Only update if the stats are from today and different from current
+            const today = new Date().toDateString();
+            if (jsonData.date === today && currentHash !== lastStatsHash) {
+                lastStatsHash = currentHash;
+                
+                // Only update if values are different
+                if (stats.wins !== jsonData.wins || stats.losses !== jsonData.losses || stats.passing !== jsonData.passing) {
+                    stats.wins = jsonData.wins;
+                    stats.losses = jsonData.losses;
+                    stats.passing = jsonData.passing;
+                    saveStats();
+                    
+                    // Show update indicator
+                    showUpdateIndicator('Stats updated');
+                }
+            }
+        }
+    } catch (err) {
+        console.error("Failed to load stats:", err);
     }
+}
+
+// Save stats to localStorage
+function saveStats() {
+    stats.date = new Date().toDateString(); // Update date whenever saving
+    localStorage.setItem('aviatorStats', JSON.stringify(stats));
+    updateStatsDisplay();
+}
+
+// Update stats display
+function updateStatsDisplay() {
+    document.getElementById('winsCount').textContent = stats.wins;
+    document.getElementById('lossesCount').textContent = stats.losses;
+    document.getElementById('passingCount').textContent = stats.passing;
+}
+
+// Clean up stats at midnight
+function cleanupStats() {
+    const now = new Date();
+    const hours = now.getHours();
+    const minutes = now.getMinutes();
     
-    // Check for new notifications
-    async function checkForNewNotifications() {
-      try {
-        const response = await fetch('notifications.json', {
-          method: 'HEAD'
+    // Check if it's midnight (00:00)
+    if (hours === 0 && minutes === 0) {
+        // Reset stats for the new day
+        stats = { wins: 0, losses: 0, passing: 0, date: now.toDateString() };
+        saveStats();
+        
+        // Add notification about stats reset
+        addNotification(
+            'Daily Stats Reset', 
+            'Statistics have been reset for the new day. Good luck with today\'s signals!'
+        );
+    }
+}
+
+// Increment wins counter
+function incrementWins() {
+    stats.wins++;
+    saveStats();
+}
+
+// Increment losses counter
+function incrementLosses() {
+    stats.losses++;
+    saveStats();
+}
+
+// Increment passing counter
+function incrementPassing() {
+    stats.passing++;
+    saveStats();
+}
+
+// Fetch notifications from JSON file
+async function fetchNotifications(forceRefresh = false) {
+    try {
+        const url = 'notifications.json' + (forceRefresh ? '?v=' + Date.now() : '');
+        const res = await fetch(url);
+        
+        if (!res.ok) {
+            throw new Error('Failed to fetch notifications');
+        }
+        
+        const jsonData = await res.json();
+        
+        // Process notifications - add timestamps if not present
+        const now = new Date();
+        const newNotifications = jsonData.map(notification => {
+            if (!notification.timestamp) {
+                // If timestamp is not provided, use current time minus some minutes based on "time" field
+                let minutesAgo = 0;
+                if (notification.time.includes('min ago')) {
+                    minutesAgo = parseInt(notification.time);
+                } else if (notification.time.includes('hour ago')) {
+                    minutesAgo = parseInt(notification.time) * 60;
+                } else if (notification.time === 'Just now') {
+                    minutesAgo = 0;
+                } else if (notification.time === 'Yesterday') {
+                    minutesAgo = 1440; // 24 hours
+                }
+                
+                return {
+                    ...notification,
+                    timestamp: new Date(now.getTime() - minutesAgo * 60000).toISOString()
+                };
+            }
+            return notification;
         });
         
-        const currentETag = response.headers.get('ETag');
-        const currentModified = response.headers.get('Last-Modified');
+        // Check if we have new notifications
+        const hasNewNotifications = newNotifications.some(newNotif => 
+            !notifications.some(existingNotif => 
+                existingNotif.title === newNotif.title && 
+                existingNotif.content === newNotif.content &&
+                existingNotif.timestamp === newNotif.timestamp
+            )
+        );
         
-        if (currentETag !== lastNotificationETag || currentModified !== lastNotificationModified) {
-          // There are changes, load the new notifications
-          loadNotifications();
-          lastNotificationETag = currentETag;
-          lastNotificationModified = currentModified;
-        }
-      } catch (e) {
-        console.error("Failed to check for notifications:", e);
-      }
-    }
-    
-    // Load notifications from JSON file
-    async function loadNotifications() {
-      try {
-        const response = await fetch('notifications.json');
-        const notifications = await response.json();
-        
-        // Store the ETag and Last-Modified headers for future checks
-        lastNotificationETag = response.headers.get('ETag');
-        lastNotificationModified = response.headers.get('Last-Modified');
-        
-        // Get the last seen notification time from localStorage
-        const lastSeen = localStorage.getItem('lastSeenNotification') || '0';
-        
-        // Count unseen notifications
-        unseenNotifications = notifications.filter(n => {
-          const notifTime = new Date(n.timestamp).getTime();
-          return notifTime > parseInt(lastSeen);
-        }).length;
-        
-        // Update badge
-        updateNotificationBadge();
-        
-        // Render notifications
-        renderNotifications(notifications);
-      } catch (e) {
-        console.error("Failed to load notifications:", e);
-        
-        // If the file doesn't exist, use default notifications
-        const defaultNotifications = [
-          {
-            "title": "Algorithm Updated",
-            "message": "100x prediction සඳහා නව ඇල්ගොරිතමය යාවත්කාලීන කරන ලදි.",
-            "type": "algorithm_update",
-            "timestamp": new Date().toISOString()
-          },
-          {
-            "title": "Bug Fixed",
-            "message": "Timer ක්‍රියාවලියේ සිදුවූ දෝෂයක් නිවැරදි කරන ලදි.",
-            "type": "bug_fix",
-            "timestamp": new Date(Date.now() - 3600000).toISOString()
-          },
-          {
-            "title": "Welcome Message",
-            "message": "නව තොරතුරු සහ උපදෙස් සඳහා Telegram channel එක සෙවීම නිවැරදියි.",
-            "type": "general",
-            "timestamp": new Date(Date.now() - 86400000).toISOString()
-          }
-        ];
-        
-        renderNotifications(defaultNotifications);
-      }
-    }
-    
-    // Update notification badge
-    function updateNotificationBadge() {
-      const badge = document.getElementById('notificationBadge');
-      
-      if (unseenNotifications > 0) {
-        badge.style.display = 'flex';
-        badge.textContent = unseenNotifications > 9 ? '9+' : unseenNotifications;
-      } else {
-        badge.style.display = 'none';
-      }
-    }
-    
-    // Render notifications in the UI
-    function renderNotifications(notifications) {
-      const container = document.getElementById('notificationTabContent');
-      container.innerHTML = '';
-      
-      // Sort by timestamp (newest first)
-      notifications.sort((a, b) => {
-        return new Date(b.timestamp) - new Date(a.timestamp);
-      });
-      
-      notifications.forEach(notification => {
-        const item = document.createElement('div');
-        item.className = `notification-item notification-${notification.type}`;
-        
-        // Get icon based on type
-        let icon, iconClass;
-        switch(notification.type) {
-          case 'algorithm_update':
-            icon = '⚙️';
-            iconClass = 'fas fa-cogs';
-            break;
-          case 'bug_fix':
-            icon = '🐞';
-            iconClass = 'fas fa-bug';
-            break;
-          default:
-            icon = '🔔';
-            iconClass = 'fas fa-bell';
-        }
-        
-        // Format time
-        const timeStr = formatRelativeTime(new Date(notification.timestamp));
-        
-        item.innerHTML = `
-          <div class="notification-title">
-            <i class="${iconClass}"></i> ${notification.title}
-          </div>
-          <div class="notification-time">
-            <i class="far fa-clock"></i> ${timeStr}
-          </div>
-          <div class="notification-message">
-            ${notification.message}
-          </div>
-        `;
-        
-        container.appendChild(item);
-      });
-    }
-    
-    // Format time as "X time ago"
-    function formatRelativeTime(date) {
-      const now = new Date();
-      const diff = now - date;
-      
-      const minute = 60 * 1000;
-      const hour = 60 * minute;
-      const day = 24 * hour;
-      const month = 30 * day;
-      const year = 365 * day;
-      
-      if (diff < minute) {
-        return "Just now";
-      } else if (diff < hour) {
-        const minutes = Math.floor(diff / minute);
-        return `${minutes} minute${minutes > 1 ? 's' : ''} ago`;
-      } else if (diff < day) {
-        const hours = Math.floor(diff / hour);
-        return `${hours} hour${hours > 1 ? 's' : ''} ago`;
-      } else if (diff < month) {
-        const days = Math.floor(diff / day);
-        return `${days} day${days > 1 ? 's' : ''} ago`;
-      } else if (diff < year) {
-        const months = Math.floor(diff / month);
-        return `${months} month${months > 1 ? 's' : ''} ago`;
-      } else {
-        const years = Math.floor(diff / year);
-        return `${years} year${years > 1 ? 's' : ''} ago`;
-      }
-    }
-    
-    // Tab switching function - UPDATED to handle notification badge
-    function switchTab(tabId, clickedElement) {
-      // Hide all tab contents
-      document.querySelectorAll('.tab-content').forEach(tab => {
-        tab.classList.remove('active');
-      });
-      
-      // Show selected tab content
-      document.getElementById(tabId).classList.add('active');
-      
-      // Update active nav item
-      document.querySelectorAll('.nav-item').forEach(item => {
-        item.classList.remove('active');
-      });
-      
-      clickedElement.classList.add('active');
-      
-      // If switching to notification tab, mark notifications as seen
-      if (tabId === 'notificationTab') {
-        markNotificationsAsSeen();
-      }
-      
-      // Scroll to top
-      document.querySelector('.scroll-container').scrollTo(0, 0);
-    }
-    
-    // Mark notifications as seen
-    function markNotificationsAsSeen() {
-      unseenNotifications = 0;
-      updateNotificationBadge();
-      
-      // Store the current time as last seen
-      localStorage.setItem('lastSeenNotification', Date.now().toString());
-    }
-    
-    // Check connection status
-    function checkConnection() {
-      if (navigator.onLine) {
-        document.getElementById('offlineOverlay').classList.remove('active');
-        syncServerTime(); // Sync time when connection is restored
-      } else {
-        document.getElementById('offlineOverlay').classList.add('active');
-      }
-    }
-    
-    // Show disclaimer popup
-    function showDisclaimer() {
-      const popup = document.getElementById("disclaimerPopup");
-      popup.classList.add("show");
-    }
-    
-    // Hide disclaimer popup
-    function hideDisclaimer() {
-      const popup = document.getElementById("disclaimerPopup");
-      popup.classList.remove("show");
-    }
-    
-    // Show tips popup after signal generation and result
-    function showTipsPopup() {
-      if (!tipsPopupShown && signalResultReceived) {
-        const tipsPopup = document.getElementById("tipsPopup");
-        tipsPopup.classList.add("show");
-        tipsPopupShown = true;
-        
-        // Auto-hide after 8 seconds
-        setTimeout(() => {
-          tipsPopup.classList.remove("show");
-        }, 8000);
-      }
-    }
-    
-    // Show premium dialog
-    function showPremiumDialog() {
-      document.getElementById("premiumDialog").classList.add("active");
-    }
-    
-    // Hide premium dialog
-    function hidePremiumDialog() {
-      document.getElementById("premiumDialog").classList.remove("active");
-    }
-    
-    // Show premium features
-    function showPremiumFeatures() {
-      showPremiumDialog();
-    }
-    
-    // Update current date and time with server sync
-    function updateDateTime() {
-      const now = new Date(Date.now() + serverTimeOffset);
-      document.getElementById("current-date").textContent = now.toLocaleDateString('en-US', { 
-        weekday: 'short', year: 'numeric', month: 'short', day: 'numeric' 
-      });
-      document.getElementById("current-time").textContent = now.toLocaleTimeString();
-    }
-    
-    setInterval(updateDateTime, 1000);
-    
-    // Sync with server time for maximum accuracy (runs in background)
-    async function syncServerTime() {
-      try {
-        const start = Date.now();
-        const response = await fetch('https://worldtimeapi.org/api/ip');
-        const data = await response.json();
-        const serverTime = new Date(data.utc_datetime).getTime();
-        const end = Date.now();
-        const rtt = end - start;
-        
-        // Calculate offset accounting for network latency
-        serverTimeOffset = serverTime - end + (rtt / 2);
-        
-        console.log(`Time synced successfully (${rtt}ms latency)`);
-        
-        // Recheck any active signals with corrected time
-        checkNextSignal();
-      } catch (e) {
-        console.error("Time sync failed, using local time:", e);
-      }
-    }
-    
-    // ====== UPDATED CORE ALGORITHMS ====== //
-    
-    // 1. Corrected entropy calculation (unchanged)
-    function calcEntropy(hash) {
-      const freq = {};
-      for (let c of hash) freq[c] = (freq[c] || 0) + 1;
-      return Object.values(freq).reduce((acc, f) => {
-        const p = f / hash.length;
-        return acc - p * Math.log2(p);
-      }, 0);
-    }
-    
-    // 2. UPDATED hash scoring with improved index positions
-    function scoreFromHash(hash) {
-      const indexes = [5, 15, 25, 35, 50, 75, 100, 120];
-      return indexes.reduce((sum, i) => sum + parseInt(hash[i], 16), 0);
-    }
-    
-    // 3. UPDATED confidence calculation with improved logic for 3× odds
-    function calculateConfidence(entropy, score, oddTarget, hash) {
-      let confidence = 50;
-      
-      // Improved entropy scoring
-      if (entropy > 4.2) confidence += 10;
-      if (entropy > 4.5) confidence += 15;
-      
-      // Improved pattern recognition
-      if (score % 7 === 0) confidence += 8;
-      if (score % 5 === 0) confidence += 5;
-      if (/(\w)\1{2,}/.test(hash)) confidence += 15;
-      if (/(\w{2,4})\1{1,}/.test(hash)) confidence += 10;
-      
-      // Tail pattern detection
-      const tail = hash.slice(-4);
-      if (/^(aaaa|ffff|0000|1111)$/.test(tail)) confidence += 20;
-      
-      // Odd-specific adjustments
-      if (oddTarget === '2') confidence += 5;
-      if (oddTarget === '3') confidence += 5;
-      if (oddTarget === '7') confidence += 5;
-      if (oddTarget === '10') confidence += 10;
-      if (oddTarget === '100') confidence += 15;
-      
-      // New logic for 4×, 7×, and 10× multipliers
-      if (oddTarget === '4') {
-        if (entropy > 3.91 && entropy < 3.97) confidence += 10;
-        if (score >= 45 && score <= 80) confidence += 8;
-      }
-      
-      if (oddTarget === '7') {
-        if (entropy > 4.1 && entropy < 4.4) confidence += 12;
-        if (score >= 55 && score <= 90) confidence += 6;
-      }
-      
-      if (oddTarget === '10') {
-        if (entropy > 4.25 && entropy < 4.5) confidence += 15;
-        if (score >= 60 && score <= 100) confidence += 10;
-      }
-      
-      return Math.min(98, Math.max(5, Math.round(confidence)));
-    }
-    
-    // 4. UPDATED delay calculation with improved timing for 3× odds
-    function calculateDelay(score, entropy, oddTarget, hash) {
-      let base = parseInt(oddTarget) * 45;
-      
-      if (entropy > 4.3) base += 20;
-      if (score % 7 === 0) base += 30;
-      if (score % 5 === 0) base += 15;
-      if (/(\w)\1{2,}/.test(hash)) base += 20;
-      if (/(\w{2,4})\1{1,}/.test(hash)) base += 15;
-      
-      // Odd-specific adjustments
-      if (oddTarget === '10') base += 60;
-      if (oddTarget === '100') base += 600;
-      
-      return Math.max(45, base);
-    }
-    
-    // Pre-analyze hash to show confidence levels
-    function preAnalyzeHash(hash) {
-      if (!hash || hash.length !== 128 || !/^[a-f0-9]+$/.test(hash)) return;
-      
-      const entropy = calcEntropy(hash);
-      const score = scoreFromHash(hash);
-      
-      // Update confidence bars for each odd
-      [2, 3, 4, 7, 10, 100].forEach(odd => {
-        const confidence = calculateConfidence(entropy, score, odd.toString(), hash);
-        document.getElementById(`confidence-${odd}`).style.width = `${confidence}%`;
-      });
-    }
-    
-    // ====== END OF UPDATED ALGORITHMS ====== //
-    
-    // Paste hash from clipboard
-    document.getElementById("pasteHashInput").addEventListener('click', async function() {
-      try {
-        const text = await navigator.clipboard.readText();
-        document.getElementById("hashInput").value = text;
-        lastHash = text.trim();
-        if (lastHash.length === 128 && /^[a-f0-9]+$/.test(lastHash)) {
-          preAnalyzeHash(lastHash);
-          // Don't enable copy button here - wait for odd selection
-        } else {
-          document.getElementById("copyResultBtn").disabled = true;
-        }
-      } catch (err) {
-        showErrorDialog("Failed to read from clipboard. Please paste manually.");
-        console.error("Failed to read clipboard contents: ", err);
-      }
-    });
-    
-    // Clear hash input
-    document.getElementById("clearHashInput").addEventListener('click', function() {
-      document.getElementById("hashInput").value = '';
-      lastHash = '';
-      document.getElementById("copyResultBtn").disabled = true;
-      selectedOdd = null;
-      
-      // Reset confidence bars
-      [2, 3, 4, 7, 10, 100].forEach(odd => {
-        document.getElementById(`confidence-${odd}`).style.width = '0%';
-      });
-      
-      // Reset results display
-      document.getElementById("result-odd").textContent = "-";
-      document.getElementById("result-entropy").textContent = "-";
-      document.getElementById("result-score").textContent = "-";
-      document.getElementById("result-confidence").textContent = "-";
-      document.getElementById("result-delay").textContent = "-";
-      document.getElementById("result-time").textContent = "-";
-    });
-    
-    // Audio functions
-    function playSignalSound() {
-      const audio = document.getElementById("signalSound");
-      audio.currentTime = 0;
-      audio.play().catch(e => console.log("Audio play failed:", e));
-    }
-    
-    function playSuccessSound() {
-      const audio = document.getElementById("successSound");
-      audio.currentTime = 0;
-      audio.play().catch(e => console.log("Audio play failed:", e));
-    }
-    
-    function playBeepSound() {
-      const audio = document.getElementById("beepSound");
-      audio.currentTime = 0;
-      audio.play().catch(e => console.log("Beep sound play failed:", e));
-    }
-    
-    function playWarningSound() {
-      const audio = document.getElementById("warningSound");
-      audio.currentTime = 0;
-      audio.play().catch(e => console.log("Warning sound play failed:", e));
-    }
-    
-    // Countdown and active signal tracking
-    function updateCountdown(targetTime, odd) {
-      // Clear any existing countdown
-      if (currentCountdown) {
-        clearInterval(currentCountdown);
-      }
-      
-      const signalId = Date.now();
-      activeSignals.push({ id: signalId, time: targetTime, odd });
-      
-      // Schedule popup to show 20 seconds before signal time
-      const popupTime = new Date(targetTime.getTime() - 20000);
-      const now = new Date(Date.now() + serverTimeOffset);
-      const popupDelay = popupTime - now;
-      
-      if (popupDelay > 0) {
-        setTimeout(() => {
-          // Only show popup if the signal time hasn't passed yet
-          if (new Date(Date.now() + serverTimeOffset) < targetTime) {
-            // Check if we should show RISK SIGNAL or PREMIUM SIGNAL
-            if (['7', '10', '100'].includes(odd)) {
-              showRiskSignalPopup(targetTime, odd, signalId);
-            } else {
-              showSignalPopup(targetTime, odd, signalId);
+        if (hasNewNotifications || forceRefresh) {
+            notifications = newNotifications;
+            renderNotifications();
+            updateNotificationBadge();
+            
+            // Check for stats-related notifications
+            processStatsNotifications();
+            
+            // Show update indicator if new notifications
+            if (hasNewNotifications) {
+                showUpdateIndicator('New notifications');
             }
-          }
-        }, popupDelay);
-      }
-      
-      currentCountdown = setInterval(() => {
-        const now = new Date(Date.now() + serverTimeOffset);
-        const diff = Math.floor((targetTime - now) / 1000);
+        }
+    } catch (err) {
+        console.error("Failed to load notifications:", err);
+        const emptyState = document.getElementById('noNotifications');
+        if (emptyState) {
+            emptyState.querySelector('.empty-text').textContent = "Failed to load notifications";
+        }
+    }
+}
+
+// Process notifications for stats updates
+function processStatsNotifications() {
+    notifications.forEach(notification => {
+        // Check for win notification
+        if (notification.title.includes('Win') || notification.content.includes('win')) {
+            incrementWins();
+        }
+        // Check for loss notification
+        else if (notification.title.includes('Loss') || notification.content.includes('loss')) {
+            incrementLosses();
+        }
+        // Check for passed signal notification
+        else if (notification.title.includes('Passed') || notification.content.includes('passed')) {
+            incrementPassing();
+        }
+    });
+}
+
+// Clean up old notifications (older than 24 hours)
+function cleanupNotifications() {
+    const now = new Date();
+    const twentyFourHoursAgo = new Date(now.getTime() - 24 * 60 * 60 * 1000);
+    
+    notifications = notifications.filter(notification => {
+        const notificationTime = new Date(notification.timestamp || now);
+        return notificationTime > twentyFourHoursAgo;
+    });
+    
+    renderNotifications();
+    updateNotificationBadge();
+}
+
+// Render notifications to the UI
+function renderNotifications() {
+    const container = document.querySelector('.notifications-container');
+    const emptyState = document.getElementById('noNotifications');
+    
+    if (notifications.length === 0) {
+        emptyState.style.display = 'flex';
+        emptyState.querySelector('.empty-text').textContent = "No notifications available";
+        container.innerHTML = '';
+        container.appendChild(emptyState);
+        return;
+    }
+    
+    emptyState.style.display = 'none';
+    container.innerHTML = '';
+    
+    // Sort notifications by timestamp (newest first)
+    const sortedNotifications = [...notifications].sort((a, b) => {
+        const timeA = new Date(a.timestamp || 0);
+        const timeB = new Date(b.timestamp || 0);
+        return timeB - timeA;
+    });
+    
+    sortedNotifications.forEach(n => {
+        // Format time display
+        let timeDisplay = n.time;
+        if (n.timestamp) {
+            const now = new Date();
+            const notificationTime = new Date(n.timestamp);
+            const diffMinutes = Math.floor((now - notificationTime) / 60000);
+            
+            if (diffMinutes < 1) {
+                timeDisplay = "Just now";
+            } else if (diffMinutes < 60) {
+                timeDisplay = `${diffMinutes} min ago`;
+            } else if (diffMinutes < 1440) {
+                const hours = Math.floor(diffMinutes / 60);
+                timeDisplay = `${hours} hour${hours > 1 ? 's' : ''} ago`;
+            } else {
+                const days = Math.floor(diffMinutes / 1440);
+                timeDisplay = `${days} day${days > 1 ? 's' : ''} ago`;
+            }
+        }
         
-        if (diff <= 0) {
-          clearInterval(currentCountdown);
-          document.getElementById("countdown").textContent = `Signal for ${odd}x reached! Place your bet now!`;
-          document.getElementById("countdown").className = odd === "100" ? "countdown extreme" : "countdown";
-          playSignalSound();
-          playBeepSound(); // Play beep sound when signal is reached
-          highlightActiveSignal(signalId);
-          removeSignal(signalId);
-          
-          // Check for next signal after this one completes
-          setTimeout(checkNextSignal, 1000);
+        const item = document.createElement('div');
+        item.className = 'notification-item' + (n.unread ? ' unread' : '');
+        item.innerHTML = `
+            <div class="notification-header">
+                <div class="notification-title">${n.title}</div>
+                <div class="notification-time">${timeDisplay}</div>
+            </div>
+            <div class="notification-content">${n.content}</div>
+        `;
+        container.appendChild(item);
+    });
+}
+
+// Load signals with loading phase
+function loadSignals() {
+    signals = [];
+    loadingPhase = true;
+    showInitialLoadingState();
+    
+    // Set minimum loading time of 8 seconds
+    loadingTimeout = setTimeout(() => {
+        loadingPhase = false;
+        isFirstLoad = false;
+        fetchSignals(true);
+    }, 8000);
+    
+    // Initial fetch
+    fetchSignals(true);
+}
+
+// Show initial loading state in signal display (first page load)
+function showInitialLoadingState() {
+    const signalDisplay = document.getElementById('signalDisplay');
+    signalDisplay.innerHTML = `
+        <div class="loading-gradient">SYSTEM</div>
+        <div class="loading-gradient">INITIALIZING</div>
+        <div class="loading-text">Please wait<span class="loading-dots"></span></div>
+    `;
+    document.getElementById('oddValue').innerHTML = `<i class="fas fa-calculator"></i> Calculating optimal odds...`;
+    document.getElementById('signalCircle').className = 'signal-circle';
+}
+
+// Show loading state in signal display (between signals)
+function showLoadingState() {
+    const signalDisplay = document.getElementById('signalDisplay');
+    signalDisplay.innerHTML = `
+        <div class="loading-gradient">PREDICTING</div>
+        <div class="loading-gradient">NEXT SIGNAL</div>
+        <div class="loading-text">Analyzing game<span class="loading-dots"></span></div>
+    `;
+    document.getElementById('oddValue').innerHTML = `<i class="fas fa-calculator"></i> Calculating optimal odds...`;
+    document.getElementById('signalCircle').className = 'signal-circle';
+}
+
+// Show popup with game guide
+function showGameGuidePopup(signal) {
+    if (popupActive) return;
+    
+    popupActive = true;
+    const popupOverlay = document.getElementById('popupOverlay');
+    const popupGuide = document.getElementById('popupGuide');
+    const popupSignalTime = document.getElementById('popupSignalTime');
+    
+    // Format signal time
+    const signalTime = new Date(`${signal.date}T${signal.time}`);
+    const timeOptions = { hour: '2-digit', minute: '2-digit', second: '2-digit' };
+    popupSignalTime.textContent = signalTime.toLocaleTimeString('en-US', timeOptions);
+    
+    // Create guide items
+    popupGuide.innerHTML = `
+        <div class="guide-item">
+            <div class="guide-bullet">*</div>
+            <div class="guide-text">Aviator Game ක්‍රීඩාව සඳහා ක්‍රියාමාර්ග මාර්ගෝපදේශය:</div>
+        </div>
+        <div class="guide-item">
+            <div class="guide-bullet">*</div>
+            <div class="guide-text">Entry Time: ${signal.time} ට පසු ආරම්භ වන round එකේ සිට ක්‍රීඩා ආරම්භ කරන්න.</div>
+        </div>
+        <div class="guide-item">
+            <div class="guide-bullet">*</div>
+            <div class="guide-text">Target: ${signal.odd}× odd අගය පසුකරන තුරු bet ක්‍රියාව පවත්වා ගන්න.</div>
+        </div>
+        <div class="guide-item">
+            <div class="guide-bullet">*</div>
+            <div class="guide-text">Attempt Limit: උපරිම round 03 ක් පමණක්.</div>
+        </div>
+        <div class="guide-item">
+            <div class="guide-bullet">*</div>
+            <div class="guide-text">Bet Mode: Auto Bet ක්‍රමය යොදා ගන්න.</div>
+        </div>
+        <div class="guide-item">
+            <div class="guide-bullet">*</div>
+            <div class="guide-text">Cash Out: ${signal.odd}× odd අගය පසුකර යන වහාම cash out ක්‍රියාත්මක කරන්න.</div>
+        </div>
+    `;
+    
+    // Start countdown timer
+    let countdown = 10;
+    const timerElement = document.getElementById('popupTimer');
+    timerElement.textContent = countdown;
+    
+    popupTimerInterval = setInterval(() => {
+        countdown--;
+        timerElement.textContent = countdown;
+        
+        if (countdown <= 0) {
+            closePopup();
+        }
+    }, 1000);
+    
+    // Show popup with animation
+    popupOverlay.classList.add('active');
+}
+
+// Close the popup
+function closePopup() {
+    clearInterval(popupTimerInterval);
+    const popupOverlay = document.getElementById('popupOverlay');
+    popupOverlay.classList.remove('active');
+    popupActive = false;
+}
+
+// Schedule next signal popup
+function scheduleNextSignalPopup(signal) {
+    const now = new Date();
+    const signalTime = new Date(`${signal.date}T${signal.time}`);
+    const timeUntilSignal = signalTime - now;
+    
+    // Clear any existing timeout
+    if (nextSignalTimeout) {
+        clearTimeout(nextSignalTimeout);
+    }
+    
+    // Show popup 10 seconds before signal
+    if (timeUntilSignal > 10000) {
+        nextSignalTimeout = setTimeout(() => {
+            showGameGuidePopup(signal);
+        }, timeUntilSignal - 10000);
+    } else if (timeUntilSignal > 0) {
+        // If less than 10 seconds remaining, show immediately
+        showGameGuidePopup(signal);
+    }
+}
+
+// Fetch signals from JSON file
+async function fetchSignals(forceRefresh = false) {
+    try {
+        const url = 'signals.json' + (forceRefresh ? '?v=' + Date.now() : '');
+        const res = await fetch(url);
+        
+        if (!res.ok) {
+            throw new Error('Failed to fetch signals');
+        }
+        
+        const jsonData = await res.json();
+        const currentHash = generateHash(jsonData);
+        
+        // Only update signals if we get valid data
+        if (Array.isArray(jsonData)) {
+            // Immediately check if the array is empty
+            if (jsonData.length === 0) {
+                // Clear any loading states immediately
+                loadingPhase = false;
+                isFirstLoad = false;
+                if (loadingTimeout) {
+                    clearTimeout(loadingTimeout);
+                }
+                
+                // Update UI to show completed state
+                signals = [];
+                currentIndex = 0;
+                updateSignalImmediately();
+                
+                // Add notification about completed signals
+                addNotification(
+                    'All Signals Completed',
+                    'There are no more signals available at this time. Please check back later for updates.'
+                );
+                
+                return;
+            }
+            
+            // Check if we have new upcoming signals
+            const now = new Date();
+            const hasNewSignals = jsonData.some(signal => {
+                const signalTime = new Date(`${signal.date}T${signal.time}`);
+                return signalTime > now && !signals.some(s => 
+                    s.date === signal.date && s.time === signal.time && s.odd === signal.odd
+                );
+            });
+            
+            // Only update if signals have changed
+            if (currentHash !== lastSignalsHash) {
+                lastSignalsHash = currentHash;
+                signals = jsonData;
+                
+                // Show update indicator
+                showUpdateIndicator('Signals updated');
+                
+                // Immediately check if there are no upcoming signals
+                const upcomingSignals = signals.filter(signal => {
+                    const signalTime = new Date(`${signal.date}T${signal.time}`);
+                    return signalTime > now;
+                });
+                
+                if (upcomingSignals.length === 0) {
+                    loadingPhase = false;
+                    isFirstLoad = false;
+                    if (loadingTimeout) {
+                        clearTimeout(loadingTimeout);
+                    }
+                    updateSignalImmediately();
+                } else {
+                    updateSignalImmediately();
+                    
+                    // Schedule popup for the next signal
+                    const nextSignal = upcomingSignals[0];
+                    scheduleNextSignalPopup(nextSignal);
+                }
+                
+                // If we had new signals, add notification
+                if (hasNewSignals && upcomingSignals.length > 0) {
+                    const nextSignal = upcomingSignals[0];
+                    const signalTime = new Date(`${nextSignal.date}T${nextSignal.time}`);
+                    const timeOptions = { hour: '2-digit', minute: '2-digit' };
+                    const timeString = signalTime.toLocaleTimeString('en-US', timeOptions);
+                    
+                    addNotification(
+                        `New Signal Available (${nextSignal.odd}×)`,
+                        `Next signal at ${timeString} with multiplier ${nextSignal.odd}×. Get ready!`
+                    );
+                }
+            }
         } else {
-          const min = Math.floor(diff / 60);
-          const sec = diff % 60;
-          document.getElementById("countdown").textContent = `Next ${odd}x signal in: ${min}m ${sec}s`;
-          
-          // Change color based on urgency
-          if (odd === "100") {
-            document.getElementById("countdown").className = "countdown extreme";
-          } else if (diff < 30) {
-            document.getElementById("countdown").className = "countdown danger";
-          } else if (diff < 60) {
-            document.getElementById("countdown").className = "countdown warning";
-          } else {
-            document.getElementById("countdown").className = "countdown";
-          }
+            // If no signals, clear the array and show completed state
+            signals = [];
+            loadingPhase = false;
+            isFirstLoad = false;
+            if (loadingTimeout) {
+                clearTimeout(loadingTimeout);
+            }
+            updateSignalImmediately();
         }
-      }, 1000);
+    } catch (err) {
+        console.error("Failed to load signals:", err);
     }
+}
+
+// Add notification to the system
+function addNotification(title, content) {
+    const now = new Date();
+    const timeOptions = { hour: '2-digit', minute: '2-digit' };
+    const timeString = now.toLocaleTimeString('en-US', timeOptions);
     
-    // Enhanced function to show signal popup
-    function showSignalPopup(targetTime, odd, signalId) {
-      const popup = document.getElementById("signalPopup");
-      const timeStr = targetTime.toLocaleTimeString();
-      
-      // Update popup content
-      document.getElementById("signal-time").textContent = timeStr;
-      document.getElementById("signal-odd").textContent = `${odd}x`;
-      
-      // Generate strategy steps
-      const strategyContent = `
-        <div class="strategy-step">
-          <div class="step-number">1</div>
-          <div>Enter at <span class="highlight">${timeStr}</span> in the next available round</div>
-        </div>
-        <div class="strategy-step">
-          <div class="step-number">2</div>
-          <div>Maintain bet until reaching <span class="highlight">${odd}x</span> target</div>
-        </div>
-        <div class="strategy-step">
-          <div class="step-number">3</div>
-          <div>Limit to maximum <span class="highlight">3 rounds</span> only</div>
-        </div>
-        <div class="strategy-step">
-          <div class="step-number">4</div>
-          <div>Use <span class="highlight">Auto Cashout</span> for consistent results</div>
-        </div>
-        <div class="strategy-step">
-          <div class="step-number">5</div>
-          <div>Cash out immediately after passing <span class="highlight">${odd}x</span></div>
-        </div>
-      `;
-      
-      document.getElementById("strategy-steps").innerHTML = strategyContent;
-      
-      // Start 20-second countdown
-      let countdown = 20;
-      document.getElementById("countdown-timer").textContent = countdown;
-      
-      if (signalCountdownInterval) {
-        clearInterval(signalCountdownInterval);
-      }
-      
-      signalCountdownInterval = setInterval(() => {
-        countdown--;
-        document.getElementById("countdown-timer").textContent = countdown;
+    // Check for duplicate notifications
+    const isDuplicate = notifications.some(n => 
+        n.title === title && n.content === content && 
+        new Date(n.timestamp).getTime() > now.getTime() - 60000 // Within last minute
+    );
+    
+    if (!isDuplicate) {
+        notifications.unshift({
+            title: title,
+            content: content,
+            time: "Just now",
+            timestamp: now.toISOString(),
+            unread: true
+        });
         
-        if (countdown <= 0) {
-          clearInterval(signalCountdownInterval);
-          closeSignalPopup();
+        updateNotificationBadge();
+        document.getElementById('notificationSound').play();
+        renderNotifications();
+        
+        // Check if this notification affects stats
+        if (title.includes('Win') || content.includes('win')) {
+            incrementWins();
+        } else if (title.includes('Loss') || content.includes('loss')) {
+            incrementLosses();
+        } else if (title.includes('Passed') || content.includes('passed')) {
+            incrementPassing();
         }
-      }, 1000);
-      
-      // Show popup
-      popup.classList.add("active");
-      
-      // Auto-close when signal time arrives
-      const now = new Date(Date.now() + serverTimeOffset);
-      const timeUntilSignal = targetTime - now;
-      
-      if (timeUntilSignal > 0) {
-        setTimeout(() => {
-          closeSignalPopup();
-        }, timeUntilSignal);
-      }
+    }
+}
+
+function updateLiveClock() {
+    const now = new Date();
+    const timeOptions = { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false };
+    const dateOptions = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+    
+    document.getElementById("liveTime").textContent = now.toLocaleTimeString('en-GB', timeOptions);
+    document.getElementById("liveDate").textContent = now.toLocaleDateString('en-GB', dateOptions);
+}
+
+function formatCountdown(seconds) {
+    const m = Math.floor(seconds / 60).toString().padStart(2, '0');
+    const s = (seconds % 60).toString().padStart(2, '0');
+    return `${m}:${s}`;
+}
+
+function updateSignalImmediately() {
+    const now = new Date();
+    currentIndex = 0;
+    
+    // Find the first signal that is either upcoming or active
+    for (let i = 0; i < signals.length; i++) {
+        const signalTime = new Date(`${signals[i].date}T${signals[i].time}`);
+        const endTime = new Date(signalTime.getTime() + 60000);
+        
+        if ((now < signalTime) || (now >= signalTime && now < endTime)) {
+            currentIndex = i;
+            break;
+        }
+    }
+}
+
+function updateSignalDisplay() {
+    const now = new Date();
+    const circle = document.getElementById('signalCircle');
+    const odd = document.getElementById('oddValue');
+    const beep = document.getElementById('beepSound');
+    const signalDisplay = document.getElementById('signalDisplay');
+
+    if (loadingPhase) {
+        if (isFirstLoad) {
+            // Initial loading state
+            signalDisplay.innerHTML = `
+                <div class="loading-gradient">SYSTEM</div>
+                <div class="loading-gradient">INITIALIZING</div>
+                <div class="loading-text">Please wait<span class="loading-dots"></span></div>
+            `;
+        } else {
+            // Between signals loading state
+            signalDisplay.innerHTML = `
+                <div class="loading-gradient">PREDICTING</div>
+                <div class="loading-gradient">NEXT SIGNAL</div>
+                <div class="loading-text">Analyzing game<span class="loading-dots"></span></div>
+            `;
+        }
+        odd.innerHTML = `<i class="fas fa-calculator"></i> Calculating optimal odds...`;
+        return;
     }
 
-    // Enhanced function to show RISK signal popup
-    function showRiskSignalPopup(targetTime, odd, signalId) {
-      const popup = document.getElementById("riskSignalPopup");
-      const timeStr = targetTime.toLocaleTimeString();
-      
-      // Update popup content
-      document.getElementById("risk-signal-time").textContent = timeStr;
-      document.getElementById("risk-signal-odd").textContent = `${odd}x`;
-      
-      // Generate risk management strategy steps
-      let strategyContent = '';
-      
-      if (odd === '100') {
-        strategyContent = `
-          <div class="risk-strategy-step">
-            <div class="risk-step-number">1</div>
-            <div><span class="risk-highlight">EXTREME RISK WARNING:</span> This is a rare 100× opportunity</div>
-          </div>
-          <div class="risk-strategy-step">
-            <div class="risk-step-number">2</div>
-            <div>Enter at <span class="risk-highlight">${timeStr}</span> with minimum bet amount</div>
-          </div>
-          <div class="risk-strategy-step">
-            <div class="risk-step-number">3</div>
-            <div>Use <span class="risk-highlight">Auto Cashout at 100×</span> only</div>
-          </div>
-          <div class="risk-strategy-step">
-            <div class="risk-step-number">4</div>
-            <div>Limit to <span class="risk-highlight">1 attempt only</span> per signal</div>
-          </div>
-          <div class="risk-strategy-step">
-            <div class="risk-step-number">5</div>
-            <div>Do not chase losses if the signal fails</div>
-          </div>
+    if (signals.length === 0 || currentIndex >= signals.length) {
+        signalDisplay.innerHTML = `
+            <div class="signal-time green">COMPLETED</div>
+            <div class="countdown-timer">Signal Round Finished</div>
         `;
-      } else if (odd === '10') {
-        strategyContent = `
-          <div class="risk-strategy-step">
-            <div class="risk-step-number">1</div>
-            <div><span class="risk-highlight">HIGH RISK WARNING:</span> This is a 10× signal</div>
-          </div>
-          <div class="risk-strategy-step">
-            <div class="risk-step-number">2</div>
-            <div>Enter at <span class="risk-highlight">${timeStr}</span> with small bet amount</div>
-          </div>
-          <div class="risk-strategy-step">
-            <div class="risk-step-number">3</div>
-            <div>Use <span class="risk-highlight">Auto Cashout at 10×</span></div>
-          </div>
-          <div class="risk-strategy-step">
-            <div class="risk-step-number">4</div>
-            <div>Limit to <span class="risk-highlight">2 attempts</span> per signal</div>
-          </div>
-          <div class="risk-strategy-step">
-            <div class="risk-step-number">5</div>
-            <div>Cash out immediately if multiplier reaches 10×</div>
-          </div>
-        `;
-      } else { // 7x
-        strategyContent = `
-          <div class="risk-strategy-step">
-            <div class="risk-step-number">1</div>
-            <div><span class="risk-highlight">RISK WARNING:</span> This is a 7× signal</div>
-          </div>
-          <div class="risk-strategy-step">
-            <div class="risk-step-number">2</div>
-            <div>Enter at <span class="risk-highlight">${timeStr}</span> with moderate bet amount</div>
-          </div>
-          <div class="risk-strategy-step">
-            <div class="risk-step-number">3</div>
-            <div>Use <span class="risk-highlight">Auto Cashout at 7×</span></div>
-          </div>
-          <div class="risk-strategy-step">
-            <div class="risk-step-number">4</div>
-            <div>Limit to <span class="risk-highlight">3 attempts</span> per signal</div>
-          </div>
-          <div class="risk-strategy-step">
-            <div class="risk-step-number">5</div>
-            <div>Cash out immediately if multiplier reaches 7×</div>
-          </div>
-        `;
-      }
-      
-      document.getElementById("risk-strategy-steps").innerHTML = strategyContent;
-      
-      // Start 20-second countdown
-      let countdown = 20;
-      document.getElementById("risk-countdown-timer").textContent = countdown;
-      
-      if (riskSignalCountdownInterval) {
-        clearInterval(riskSignalCountdownInterval);
-      }
-      
-      riskSignalCountdownInterval = setInterval(() => {
-        countdown--;
-        document.getElementById("risk-countdown-timer").textContent = countdown;
-        
-        if (countdown <= 0) {
-          clearInterval(riskSignalCountdownInterval);
-          closeRiskSignalPopup();
-        }
-      }, 1000);
-      
-      // Show popup and play warning sound
-      popup.classList.add("active");
-      playWarningSound();
-      
-      // Auto-close when signal time arrives
-      const now = new Date(Date.now() + serverTimeOffset);
-      const timeUntilSignal = targetTime - now;
-      
-      if (timeUntilSignal > 0) {
-        setTimeout(() => {
-          closeRiskSignalPopup();
-        }, timeUntilSignal);
-      }
+        odd.innerHTML = `<i class="fas fa-info-circle"></i> Signal Not Available`;
+        odd.className = 'odd-box';
+        circle.className = 'signal-circle green';
+        return;
     }
 
-    // Enhanced function to close signal popup
-    function closeSignalPopup() {
-      const popup = document.getElementById("signalPopup");
-      popup.classList.remove("active");
-      activeSignalPopup = null;
-      
-      // Clear countdown interval
-      if (signalCountdownInterval) {
-        clearInterval(signalCountdownInterval);
-        signalCountdownInterval = null;
-      }
-    }
-    
-    // Function to close RISK signal popup
-    function closeRiskSignalPopup() {
-      const popup = document.getElementById("riskSignalPopup");
-      popup.classList.remove("active");
-      activeSignalPopup = null;
-      
-      // Clear countdown interval
-      if (riskSignalCountdownInterval) {
-        clearInterval(riskSignalCountdownInterval);
-        riskSignalCountdownInterval = null;
-      }
-    }
-    
-    function checkNextSignal() {
-      const now = new Date(Date.now() + serverTimeOffset);
-      const history = JSON.parse(localStorage.getItem('aviatorHistory')) || [];
-      
-      // Find the next upcoming signal that hasn't passed yet
-      const upcomingSignals = history.filter(item => {
-        const signalTime = new Date(parseInt(item.timestamp));
-        return signalTime > now;
-      }).sort((a, b) => a.timestamp - b.timestamp);
-      
-      if (upcomingSignals.length > 0) {
-        const nextSignal = upcomingSignals[0];
-        const signalTime = new Date(parseInt(nextSignal.timestamp));
-        updateCountdown(signalTime, nextSignal.odd);
-      } else {
-        document.getElementById("countdown").textContent = "No active signals. Create a new prediction.";
-        document.getElementById("countdown").className = "countdown warning";
-      }
-    }
-    
-    function highlightActiveSignal(id) {
-      const historyItems = document.querySelectorAll('.history-item');
-      historyItems.forEach(item => {
-        if (item.dataset.id == id) {
-          item.classList.add('active', 'active-signal');
-          setTimeout(() => {
-            item.classList.remove('active-signal');
-          }, 10000);
-        }
-      });
-    }
-    
-    function removeSignal(id) {
-      activeSignals = activeSignals.filter(signal => signal.id !== id);
-    }
-    
-    // Generate WhatsApp message template
-    function generateWhatsAppTemplate(odd, timeStr, confidence) {
-      let riskText = "";
-      if (odd === "100") {
-        riskText = " (EXTREME RISK - RARE OPPORTUNITY)";
-        return `Xtreme Aviator Predictor - 1xBet\n\nTime: ${timeStr}\nOdd: ${odd}×${riskText}\nConfidence: ${confidence}%\n\nThis signal is generated using the XTREME AVIATOR SHA512 HASH ULTRA PREDICTOR PRO tool with AI-powered accuracy.`;
-      } else if (odd === "10") {
-        riskText = " (Very High Risk)";
-      } else if (odd === "7") {
-        riskText = " (High Risk)";
-      }
-      
-      return `Xtreme Aviator Predictor - 1xBet\n\nTime: ${timeStr}\nOdd: ${odd}×${riskText}\n\nThis signal is generated using the XTREME AVIATOR SHA512 HASH ULTRA PREDICTOR PRO tool with AI-powered accuracy.`;
-    }
-    
-    // Generate result copy template
-    function generateResultCopyTemplate() {
-      const odd = document.getElementById("result-odd").textContent;
-      const time = document.getElementById("result-time").textContent;
-      const confidence = document.getElementById("result-confidence").textContent;
-      
-      if (odd === "100x") {
-        return `Xtreme Aviator Predictor - 1xBet\n\nTime: ${time}\nOdd: ${odd} (EXTREME RISK - RARE OPPORTUNITY)\nConfidence: ${confidence}\n\nThis signal is generated using the XTREME AVIATOR SHA512 HASH ULTRA PREDICTOR PRO tool with AI-powered accuracy.`;
-      } else if (odd === "10x") {
-        return `Xtreme Aviator Predictor - 1xBet\n\nTime: ${time}\nOdd: ${odd} (Very High Risk)\n\nThis signal is generated using the XTREME AVIATOR SHA512 HASH ULTRA PREDICTOR PRO tool with AI-powered accuracy.`;
-      } else if (odd === "7x") {
-        return `Xtreme Aviator Predictor - 1xBet\n\nTime: ${time}\nOdd: ${odd} (High Risk)\n\nThis signal is generated using the XTREME AVIATOR SHA512 HASH ULTRA PREDICTOR PRO tool with AI-powered accuracy.`;
-      } else {
-        return `Xtreme Aviator Predictor - 1xBet\n\nTime: ${time}\nOdd: ${odd}\n\nThis signal is generated using the XTREME AVIATOR SHA512 HASH ULTRA PREDICTOR PRO tool with AI-powered accuracy.`;
-      }
-    }
-    
-    // Copy to clipboard function
-    function copyToClipboard(text) {
-      const textarea = document.getElementById("copyTemplate");
-      textarea.value = text;
-      textarea.select();
-      document.execCommand("copy");
-      
-      // Show feedback
-      const originalText = document.activeElement.innerHTML;
-      document.activeElement.innerHTML = '<i class="fas fa-check"></i> Copied!';
-      setTimeout(() => {
-        document.activeElement.innerHTML = originalText;
-      }, 2000);
-    }
-    
-    function copyResultToClipboard(e) {
-      e.preventDefault();
-      const hash = document.getElementById("hashInput").value.trim();
-      if (!hash || hash.length !== 128 || !/^[a-f0-9]+$/.test(hash)) {
-        showErrorDialog("Please enter a valid SHA512 hash first.");
-        return;
-      }
-      
-      if (!selectedOdd) {
-        showErrorDialog("Please select an odd first.");
-        return;
-      }
-      
-      const template = generateResultCopyTemplate();
-      copyToClipboard(template);
-    }
-    
-    function copySignalToClipboard(e, odd, timeStr, confidence) {
-      e.preventDefault();
-      e.stopPropagation();
-      const template = generateWhatsAppTemplate(odd, timeStr, confidence);
-      copyToClipboard(template);
-    }
-    
-    // History functions
-    function logHistory(odd, timeStr, entropy, score, delay, confidence) {
-      const log = document.getElementById("historyLog");
-      const entry = document.createElement("div");
-      entry.className = `history-item history-multiplier-${odd}`;
-      if (odd === "100") entry.classList.add('extreme');
-      entry.dataset.id = Date.now();
-      entry.dataset.time = new Date(Date.now() + serverTimeOffset + delay * 1000).getTime();
-      
-      entry.innerHTML = `
-        <div class="history-time">
-          <i class="far fa-clock"></i> ${new Date(Date.now() + serverTimeOffset).toLocaleTimeString()}
-        </div>
-        <div class="history-multiplier">
-          <span>${odd}x</span>
-        </div>
-        <div class="history-details">
-          <span><i class="fas fa-bolt"></i> ${timeStr}</span>
-          <span><i class="fas fa-chart-line"></i> Score: ${score}</span>
-          <span><i class="fas fa-random"></i> Entropy: ${entropy.toFixed(2)}</span>
-          <span><i class="fas fa-shield-alt"></i> Confidence: ${confidence}%</span>
-        </div>
-        <button class="copy-btn" onclick="copySignalToClipboard(event, '${odd}', '${timeStr}', '${confidence}')">
-          <i class="fas fa-copy"></i> Copy
-        </button>
-      `;
-      
-      log.insertBefore(entry, log.firstChild);
-      
-      // Save to localStorage
-      const history = JSON.parse(localStorage.getItem('aviatorHistory')) || [];
-      history.unshift({
-        id: entry.dataset.id,
-        time: new Date(Date.now() + serverTimeOffset).toLocaleTimeString(),
-        odd,
-        signalTime: timeStr,
-        score,
-        entropy: entropy.toFixed(2),
-        delay,
-        confidence,
-        timestamp: entry.dataset.time,
-        wasSuccessful: null,
-        actualMultiplier: null
-      });
-      localStorage.setItem('aviatorHistory', JSON.stringify(history));
-      
-      // Update stats
-      updateStats();
-    }
-    
-    function updateStats() {
-      const history = JSON.parse(localStorage.getItem('aviatorHistory')) || [];
-      const successful = history.filter(x => x.wasSuccessful === true).length;
-      const failed = history.filter(x => x.wasSuccessful === false).length;
-      const total = successful + failed;
-      
-      // Success rate
-      if (total > 0) {
-        const successRate = Math.round((successful / total) * 100);
-        document.getElementById("success-rate").textContent = `${successRate}%`;
-      } else {
-        document.getElementById("success-rate").textContent = "-";
-      }
-      
-      // Average delay
-      if (history.length > 0) {
-        const avgDelay = Math.round(history.reduce((sum, item) => sum + item.delay, 0) / history.length);
-        document.getElementById("avg-delay").textContent = `${avgDelay}s`;
-      } else {
-        document.getElementById("avg-delay").textContent = "-";
-      }
-      
-      // Total predictions
-      document.getElementById("total-predictions").textContent = history.length;
-    }
-    
-    // Dialog functions
-    function showClearDialog() {
-      document.getElementById("clearDialog").classList.add("active");
-    }
-    
-    function hideClearDialog() {
-      document.getElementById("clearDialog").classList.remove("active");
-    }
-    
-    function showErrorDialog(message) {
-      document.getElementById("errorMessage").textContent = message;
-      document.getElementById("errorDialog").classList.add("active");
-    }
-    
-    function hideErrorDialog() {
-      document.getElementById("errorDialog").classList.remove("active");
-    }
-    
-    function showSuccessDialog(message) {
-      document.getElementById("successMessage").textContent = message;
-      document.getElementById("successDialog").classList.add("active");
-      playSuccessSound();
-    }
-    
-    function hideSuccessDialog() {
-      document.getElementById("successDialog").classList.remove("active");
-      
-      // After hiding the success dialog, check if we should show tips popup
-      if (signalResultReceived) {
-        setTimeout(showTipsPopup, 1000);
-      }
-    }
-    
-    function clearHistory() {
-      document.getElementById("historyLog").innerHTML = '';
-      localStorage.removeItem('aviatorHistory');
-      document.getElementById("countdown").textContent = "No active signals. Create a new prediction.";
-      document.getElementById("countdown").className = "countdown warning";
-      if (currentCountdown) {
-        clearInterval(currentCountdown);
-        currentCountdown = null;
-      }
-      
-      // Clear the results display
-      document.getElementById("result-odd").textContent = "-";
-      document.getElementById("result-entropy").textContent = "-";
-      document.getElementById("result-score").textContent = "-";
-      document.getElementById("result-confidence").textContent = "-";
-      document.getElementById("result-delay").textContent = "-";
-      document.getElementById("result-time").textContent = "-";
-      
-      // Reset stats
-      updateStats();
-      
-      hideClearDialog();
-    }
-    
-    function loadHistory() {
-      const history = JSON.parse(localStorage.getItem('aviatorHistory')) || [];
-      const log = document.getElementById("historyLog");
-      log.innerHTML = '';
-      
-      // Sort by timestamp (newest first)
-      history.sort((a, b) => b.timestamp - a.timestamp);
-      
-      history.forEach(item => {
-        const entry = document.createElement("div");
-        entry.className = `history-item history-multiplier-${item.odd}`;
-        if (item.odd === "100") entry.classList.add('extreme');
-        if (item.wasSuccessful === true) entry.classList.add('success');
-        if (item.wasSuccessful === false) entry.classList.add('failure');
-        entry.dataset.id = item.id;
-        entry.dataset.time = item.timestamp;
-        
-        // Check if this signal is currently active
-        const now = new Date(Date.now() + serverTimeOffset);
-        const signalTime = new Date(parseInt(item.timestamp));
-        if (now >= signalTime && now <= new Date(signalTime.getTime() + 10000)) {
-          entry.classList.add('active');
-        }
-        
-        // Determine the color class for the actual multiplier
-        let multiplierClass = '';
-        if (item.actualMultiplier) {
-          if (item.actualMultiplier >= 100) {
-            multiplierClass = 'actual-multiplier-100';
-          } else if (item.actualMultiplier >= 10) {
-            multiplierClass = 'actual-multiplier-10';
-          } else if (item.actualMultiplier >= 7) {
-            multiplierClass = 'actual-multiplier-7';
-          } else if (item.actualMultiplier >= 4) {
-            multiplierClass = 'actual-multiplier-4';
-          } else if (item.actualMultiplier >= 3) {
-            multiplierClass = 'actual-multiplier-3';
-          } else {
-            multiplierClass = 'actual-multiplier-2';
-          }
-        }
-        
-        entry.innerHTML = `
-          <div class="history-time">
-            <i class="far fa-clock"></i> ${item.time}
-            ${item.wasSuccessful !== null ? 
-              `<span class="actual-multiplier ${multiplierClass}" style="margin-left: 8px; font-size: 0.8em;">
-                <i class="fas ${item.wasSuccessful ? 'fa-check' : 'fa-times'}"></i>
-                ${item.actualMultiplier ? `${item.actualMultiplier}x` : ''}
-              </span>` : ''}
-          </div>
-          <div class="history-multiplier">
-            <span>${item.odd}x</span>
-          </div>
-          <div class="history-details">
-            <span><i class="fas fa-bolt"></i> ${item.signalTime}</span>
-            <span><i class="fas fa-chart-line"></i> Score: ${item.score}</span>
-            <span><i class="fas fa-random"></i> Entropy: ${item.entropy}</span>
-            <span><i class="fas fa-shield-alt"></i> Confidence: ${item.confidence}%</span>
-          </div>
-          <button class="copy-btn" onclick="copySignalToClipboard(event, '${item.odd}', '${item.signalTime}', '${item.confidence}')">
-            <i class="fas fa-copy"></i> Copy
-          </button>
+    const signal = signals[currentIndex];
+    const signalTime = new Date(`${signal.date}T${signal.time}`);
+    const endTime = new Date(signalTime.getTime() + 60000);
+    const signalId = `${signal.date}_${signal.time}_${signal.odd}`;
+
+    // Signal is upcoming
+    if (now < signalTime) {
+        const secondsLeft = Math.floor((signalTime - now) / 1000);
+        signalDisplay.innerHTML = `
+            <div class="signal-time purple">${signal.time}</div>
+            <div class="countdown-timer">Upcoming in: ${formatCountdown(secondsLeft)}</div>
         `;
+        odd.innerHTML = `<i class="fas fa-calculator"></i> Suggested multiplier : ${signal.odd}×`;
+        odd.className = 'odd-box';
+        circle.className = 'signal-circle purple';
         
-        log.appendChild(entry);
-      });
-      
-      // Check for active signals on load
-      checkNextSignal();
-    }
-    
-    // Main prediction function
-    function predict(oddStr) {
-      const hash = document.getElementById("hashInput").value.trim().toLowerCase();
-      const output = document.getElementById("output");
-      
-      if (!hash || hash.length !== 128 || !/^[a-f0-9]+$/.test(hash)) {
-        showErrorDialog("Invalid SHA512 hash. Must be exactly 128 hexadecimal characters (0-9, a-f).");
+        // Play beep once when signal is upcoming (only if not already played for this signal)
+        if (signalId !== currentSignalId) {
+            currentSignalId = signalId;
+            beepState.upcomingPlayed = false;
+            beepState.activePlayed = false;
+        }
+        
+        if (!beepState.upcomingPlayed) {
+            beep.play();
+            beepState.upcomingPlayed = true;
+        }
         return;
-      }
-      
-      selectedOdd = oddStr;
-      const entropy = calcEntropy(hash);
-      const score = scoreFromHash(hash);
-      const confidence = calculateConfidence(entropy, score, oddStr, hash);
-      const delay = calculateDelay(score, entropy, oddStr, hash);
-      const future = new Date(Date.now() + serverTimeOffset + delay * 1000);
-      const timeStr = future.toLocaleTimeString();
-      
-      // Update results display
-      document.getElementById("result-odd").textContent = `${oddStr}x`;
-      document.getElementById("result-entropy").textContent = entropy.toFixed(3);
-      document.getElementById("result-score").textContent = score;
-      document.getElementById("result-confidence").textContent = `${confidence}%`;
-      document.getElementById("result-delay").textContent = `${delay} seconds`;
-      document.getElementById("result-time").textContent = timeStr;
-      
-      // Enable copy button only after odd is selected
-      document.getElementById("copyResultBtn").disabled = false;
-      
-      output.style.display = 'block';
-      updateCountdown(future, oddStr);
-      logHistory(oddStr, timeStr, entropy, score, delay, confidence);
-      showSuccessDialog(`Signal for ${oddStr}x generated with ${confidence}% confidence!`);
-      
-      // Scroll to results
-      output.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-      
-      // Set flag that first signal has been generated
-      firstSignalGenerated = true;
-    }
-    
-    // Function to record actual results (call this after a round completes)
-    function recordResult(signalId, actualMultiplier) {
-      const history = JSON.parse(localStorage.getItem('aviatorHistory')) || [];
-      const signalIndex = history.findIndex(item => item.id == signalId);
-      
-      if (signalIndex !== -1) {
-        history[signalIndex].actualMultiplier = actualMultiplier;
-        history[signalIndex].wasSuccessful = actualMultiplier >= parseInt(history[signalIndex].odd);
-        localStorage.setItem('aviatorHistory', JSON.stringify(history));
-        loadHistory(); // Refresh the display
-        updateStats();
-        
-        // Set flag that we've received a signal result
-        signalResultReceived = true;
-        
-        // Show result notification
-        const resultMessage = `Result recorded! Multiplier: ${actualMultiplier}x - ${
-          history[signalIndex].wasSuccessful ? 'SUCCESS!' : 'TRY AGAIN'
-        }`;
-        
-        // Create a temporary element to check if message contains "TRY AGAIN"
-        const tempDiv = document.createElement('div');
-        tempDiv.innerHTML = resultMessage;
-        const isFailure = tempDiv.textContent.includes('TRY AGAIN');
-        
-        // Update the dialog message with appropriate styling
-        const messageElement = document.getElementById("successMessage");
-        messageElement.innerHTML = isFailure 
-          ? `<span class="failed-signal-message">${resultMessage}</span>`
-          : resultMessage;
-        
-        showSuccessDialog(resultMessage);
-      }
     }
 
-    // Auto result tracking simulation (for demo purposes)
-    function simulateAutoTracking() {
-      setInterval(() => {
-        const history = JSON.parse(localStorage.getItem('aviatorHistory')) || [];
-        if (history.length > 0 && history[0].wasSuccessful === null) {
-          // Simulate a random result between 1x and 150x (with very low chance for 100x+)
-          let actualMultiplier;
-          if (Math.random() < 0.01) { // 1% chance for 100x+
-            actualMultiplier = (Math.random() * 50 + 100).toFixed(2);
-          } else {
-            actualMultiplier = (Math.random() * 14 + 1).toFixed(2);
-          }
-          recordResult(history[0].id, parseFloat(actualMultiplier));
+    // Signal is active (now >= signalTime && now < endTime)
+    if (now < endTime) {
+        const secondsLeft = Math.floor((endTime - now) / 1000);
+        signalDisplay.innerHTML = `
+            <div class="signal-time red">${signal.time}</div>
+            <div class="countdown-timer">End in: ${formatCountdown(secondsLeft)}</div>
+        `;
+        odd.innerHTML = `<i class="fas fa-calculator"></i> Suggested multiplier : ${signal.odd}×`;
+        odd.className = 'odd-box';
+        circle.className = 'signal-circle red';
+        
+        // Play beep twice when signal is active (only if not already played for this signal)
+        if (signalId !== currentSignalId) {
+            currentSignalId = signalId;
+            beepState.upcomingPlayed = false;
+            beepState.activePlayed = false;
         }
-      }, 10000); // Check every 10 seconds
+        
+        if (!beepState.activePlayed) {
+            beep.play();
+            setTimeout(() => beep.play(), 500);
+            beepState.activePlayed = true;
+            
+            // Add notification for active signal
+            const timeOptions = { hour: '2-digit', minute: '2-digit' };
+            const timeString = signalTime.toLocaleTimeString('en-US', timeOptions);
+            
+            addNotification(
+                `Signal ${signal.odd}× Active`, 
+                `Signal is now active! Place your bet with multiplier ${signal.odd}× before it ends at ${timeString}.`
+            );
+        }
+        return;
     }
-    
-    // Start simulation (remove in production)
-    simulateAutoTracking();
-  </script>
+
+    // Signal has ended (now >= endTime)
+    if (now >= endTime) {
+        // Check if there's another signal coming up soon
+        const nextSignal = signals[currentIndex + 1];
+        let nextStartTime = null;
+        if (nextSignal) {
+            nextStartTime = new Date(`${nextSignal.date}T${nextSignal.time}`);
+        }
+
+        // Only show loading if there's a gap of at least 1 second between signals
+        if (!nextSignal || (nextStartTime - now >= 1000)) {
+            loadingPhase = true;
+            isFirstLoad = false;
+            showLoadingState();
+            loadingTimeout = setTimeout(() => {
+                loadingPhase = false;
+                currentIndex++;
+                updateSignalImmediately();
+                
+                // Schedule popup for next signal if available
+                if (nextSignal) {
+                    scheduleNextSignalPopup(nextSignal);
+                }
+            }, 8000);
+        } else {
+            currentIndex++;
+            updateSignalImmediately();
+            
+            // Schedule popup for next signal if available
+            if (nextSignal) {
+                scheduleNextSignalPopup(nextSignal);
+            }
+        }
+
+        currentSignalId = null;
+        beepState.upcomingPlayed = false;
+        beepState.activePlayed = false;
+    }
+}
+
+// Disable zooming but allow scrolling
+document.addEventListener('touchmove', function(e) {
+    // Only prevent default for non-scrollable elements
+    if (!e.target.classList.contains('tab-content') &&
+        !e.target.classList.contains('notifications-container')) {
+        e.preventDefault();
+    }
+}, { passive: false });
+
+document.addEventListener('gesturestart', function(e) {
+    e.preventDefault();
+});
+
+// Prevent context menu
+document.addEventListener('contextmenu', function(e) {
+    e.preventDefault();
+});
+
+// Initialize the app when the page loads
+window.addEventListener("load", initApp);
+</script>
+
 </body>
 </html>
